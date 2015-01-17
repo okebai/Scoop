@@ -6,7 +6,7 @@
     <ProductVersion>3.9</ProductVersion>
     <ProjectGuid>4d92efd1-3d9f-4a0a-b610-3f19c3431025</ProjectGuid>
     <SchemaVersion>2.0</SchemaVersion>
-    <OutputName>Scoop.Service.Installer</OutputName>
+    <OutputName>Scoop Service Installer</OutputName>
     <OutputType>Package</OutputType>
     <WixTargetsPath Condition=" '$(WixTargetsPath)' == '' AND '$(MSBuildExtensionsPath32)' != '' ">$(MSBuildExtensionsPath32)\Microsoft\WiX\v3.x\Wix.targets</WixTargetsPath>
     <WixTargetsPath Condition=" '$(WixTargetsPath)' == '' ">$(MSBuildExtensionsPath)\Microsoft\WiX\v3.x\Wix.targets</WixTargetsPath>
@@ -21,7 +21,8 @@
     <IntermediateOutputPath>obj\$(Configuration)\</IntermediateOutputPath>
   </PropertyGroup>
   <ItemGroup>
-    <Compile Include="Product.wxs" />
+    <Compile Include="Installer.wxs" />
+    <Compile Include="ScoopServiceHarvest.wxs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Scoop.Service\Scoop.Service.csproj">
@@ -33,12 +34,18 @@
       <RefTargetDir>INSTALLFOLDER</RefTargetDir>
     </ProjectReference>
   </ItemGroup>
+  <ItemGroup>
+    <Content Include="ExcludeServiceExe.xsl" />
+  </ItemGroup>
   <Import Project="$(WixTargetsPath)" />
+  <Target Name="BeforeBuild">
+    <Message Text="..\Scoop.Service\bin\$(Configuration)" Importance="high" />
+    <!-- Heat Harvest: http://geoffwebbercross.blogspot.se/2013/06/using-wix-heat-to-harvest-files-for-wix.html -->
+    <!-- RunAsSeparateProcess: http://stackoverflow.com/a/10026236 -->
+    <HeatDirectory RunAsSeparateProcess="true" NoLogo="$(HarvestDirectoryNoLogo)" SuppressAllWarnings="$(HarvestDirectorySuppressAllWarnings)" SuppressSpecificWarnings="$(HarvestDirectorySuppressSpecificWarnings)" ToolPath="$(WixToolPath)" TreatWarningsAsErrors="$(HarvestDirectoryTreatWarningsAsErrors)" TreatSpecificWarningsAsErrors="$(HarvestDirectoryTreatSpecificWarningsAsErrors)" VerboseOutput="$(HarvestDirectoryVerboseOutput)" AutogenerateGuids="$(HarvestDirectoryAutogenerateGuids)" GenerateGuidsNow="$(HarvestDirectoryGenerateGuidsNow)" OutputFile="ScoopServiceHarvest.wxs" SuppressFragments="$(HarvestDirectorySuppressFragments)" SuppressUniqueIds="$(HarvestDirectorySuppressUniqueIds)" Transforms="ExcludeServiceExe.xsl" Directory="..\Scoop.Service\bin\$(Configuration)" ComponentGroupName="Scoop.Service.Harvest" DirectoryRefId="INSTALLFOLDER" KeepEmptyDirectories="false" PreprocessorVariable="var.Scoop.Service.TargetDir" SuppressCom="%(HarvestDirectory.SuppressCom)" SuppressRootDirectory="true" SuppressRegistry="%(HarvestDirectory.SuppressRegistry)">
+    </HeatDirectory>
+  </Target>
   <!--
-	To modify your build process, add your task inside one of the targets below and uncomment it.
-	Other similar extension points exist, see Wix.targets.
-	<Target Name="BeforeBuild">
-	</Target>
 	<Target Name="AfterBuild">
 	</Target>
 	-->

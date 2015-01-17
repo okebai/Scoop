@@ -16,7 +16,7 @@ namespace Scoop.Service
 
         protected override void OnBeforeInstall(IDictionary savedState)
         {
-            Context.Parameters["assemblypath"] = string.Format(@"""{0}"" ""{1}"" ""{2}""", Context.Parameters["assemblypath"], ScoopService.Name, ScoopService.LogName);
+            Context.Parameters["assemblypath"] = string.Format(@"""{0}"" ""{1}""", Context.Parameters["assemblypath"], ScoopService.Name);
 
             base.OnBeforeInstall(savedState);
         }
