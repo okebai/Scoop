@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Wix xmlns="http://schemas.microsoft.com/wix/2006/wi">
+  <Product Id="*" Name="Scoop.Service.Installer" Language="1033" Version="1.0.0.0" Manufacturer="Jan Welander" UpgradeCode="7ee88a4f-358f-4b01-bb97-d78b04c409a7">
+    <Package InstallerVersion="200" Compressed="yes" InstallScope="perMachine" />
+
+    <MajorUpgrade DowngradeErrorMessage="A newer version of [ProductName] is already installed." />
+    <MediaTemplate EmbedCab="yes" />
+
+    <Feature Id="ProductFeature" Title="Scoop.Service.Installer" Level="1">
+      <ComponentGroupRef Id="ProductComponents" />
+    </Feature>
+  </Product>
+
+  <Fragment>
+    <Directory Id="TARGETDIR" Name="SourceDir">
+      <Directory Id="ProgramFilesFolder">
+        <Directory Id="INSTALLFOLDER" Name="Scoop Service" />
+      </Directory>
+    </Directory>
+  </Fragment>
+
+  <Fragment>
+    <ComponentGroup Id="ProductComponents" Directory="INSTALLFOLDER">
+      <Component Id="ProductComponent" Guid="2091f999-8861-4767-985e-e42b538823ea">
+        <File Id="ScoopServiceFile" Name="Scoop.Service.exe" DiskId="1" Source="$(var.Scoop.Service.TargetPath)" KeyPath="yes" />
+        <ServiceInstall Vital="yes" ErrorControl="ignore" Type="ownProcess" DisplayName="Scoop Service" Name="Scoop.Service" Start="auto" />
+        <ServiceControl Id="ScoopServiceControl" Remove="both" Name="Scoop.Service" Start="install" Stop="both" Wait="yes" />
+      </Component>
+    </ComponentGroup>
+  </Fragment>
+</Wix>
