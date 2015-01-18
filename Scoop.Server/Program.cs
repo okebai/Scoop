@@ -11,7 +11,7 @@ namespace Scoop.Server
     {
         static void Main(string[] args)
         {
-            const string url = "http://localhost:9300";
+            const string url = "http://*:9400";
             using (WebApp.Start<Startup>(url))
             {
                 Console.WriteLine("Server running on {0}", url);
