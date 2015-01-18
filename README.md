@@ -15,8 +15,11 @@ Also included in the server component is a SignalR host, which is responsible fo
 The 
 
 ### Web client
-The Web clients main responsibility is assisting visitor with connecting to any servers and presenting the data sent by the** servers.**
+The Web clients main responsibility is assisting visitor with connecting to any servers and presenting the data sent by the servers.
 The Web client is built upon MVC.
+
+## Setup
+_Coming soon._
 
 ## Why?
 This project aims to satisfy 2 things:
@@ -24,4 +27,5 @@ This project aims to satisfy 2 things:
 2. A craving for better knowledge of the technologies and environments that this type of software can make good use of
 
 ## Caveats
-This is still a very experimental project, and is not yet intended to be used for any production scenarios.
+This is still a very experimental project and still under early development.
+It is, in it's current form, **not** intended to be used in any production scenarios.
