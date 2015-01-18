@@ -10,9 +10,14 @@ Scoop is a tool for monitoring and relaying various server properties and funnel
 There are 2 main components; the **server** and the **web client**.
 
 ### Server
-A copy of the **server** is deployed in each environment that you wish to monitor. It contains a bunch of different _Tasks_ which monitor different parts of the environment.
+A copy of the **server** is deployed in each environment that you wish to monitor. It contains a bunch of different automated _Tasks_ which constantly monitor different parts of the environment.
 Also included in the **server** component is a SignalR host, which is responsible for relaying the data collected from the different _Tasks_ to any connected clients.
 
 ### Web client
 The **Web client**s main responsibility is assisting visitor with connecting to any **servers** and presenting the data sent by the **servers**.
-The **Web client** is built upon MVC and SignalR client side scripts.
+The **Web client** is built upon MVC.
+
+## Why?
+This project aims to fulfill 2 things:
+1. A need for custom server monitoring software
+2. A craving for better knowledge of the technologies and environments that this project can make good use of
