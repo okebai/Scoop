@@ -20,4 +20,7 @@ The **Web client** is built upon MVC.
 ## Why?
 This project aims to fulfill 2 things:
 1. A need for custom server monitoring software
-2. A craving for better knowledge of the technologies and environments that this project can make good use of
+2. A craving for better knowledge of the technologies and environments that this type of software can make good use of
+
+## Caveats
+This is still a very experimental project, and is not yet intended to be used for any production scenarios.
