@@ -16,6 +16,7 @@ namespace Scoop.Server
 {
     public class Startup
     {
+        public const string Url = "http://*:60080";
         public List<ITask> Tasks { get; set; }
 
         public void Configuration(IAppBuilder app)

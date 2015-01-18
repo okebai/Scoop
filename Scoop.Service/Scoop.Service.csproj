@@ -80,11 +80,11 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="ProjectInstaller.cs">
+    <Compile Include="InstallUtilInstaller.cs">
       <SubType>Component</SubType>
     </Compile>
-    <Compile Include="ProjectInstaller.Designer.cs">
-      <DependentUpon>ProjectInstaller.cs</DependentUpon>
+    <Compile Include="InstallUtilInstaller.Designer.cs">
+      <DependentUpon>InstallUtilInstaller.cs</DependentUpon>
     </Compile>
     <Compile Include="ScoopService.cs">
       <SubType>Component</SubType>
@@ -100,8 +100,8 @@
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="ProjectInstaller.resx">
-      <DependentUpon>ProjectInstaller.cs</DependentUpon>
+    <EmbeddedResource Include="InstallUtilInstaller.resx">
+      <DependentUpon>InstallUtilInstaller.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="ScoopService.resx">
       <DependentUpon>ScoopService.cs</DependentUpon>

@@ -10,15 +10,11 @@ namespace Scoop.Core.Caching
     public class CacheHandler
     {
         private static readonly Lazy<CacheHandler> _instance = new Lazy<CacheHandler>(() => new CacheHandler());
-
-        public static CacheHandler Instance
-        {
-            get { return _instance.Value; }
-        }
+        public static CacheHandler Instance { get { return _instance.Value; } }
 
         public ConcurrentDictionary<string, bool> CacheKeys { get; private set; }
 
-        public CacheHandler()
+        private CacheHandler()
         {
             CacheKeys = new ConcurrentDictionary<string, bool>();
         }
@@ -33,7 +29,8 @@ namespace Scoop.Core.Caching
             var newCacheItem = new CacheItem(item.CacheKey, item);
             var cacheItemPolicy = new CacheItemPolicy
             {
-                Priority = CacheItemPriority.NotRemovable
+                Priority = CacheItemPriority.NotRemovable,
+                SlidingExpiration = TimeSpan.FromHours(24)
             };
 
             MemoryCache.Default.Set(newCacheItem, cacheItemPolicy);

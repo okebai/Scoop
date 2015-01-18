@@ -37,6 +37,12 @@
   <ItemGroup>
     <Content Include="ExcludeServiceExe.xsl" />
   </ItemGroup>
+  <ItemGroup>
+    <WixExtension Include="WixFirewallExtension">
+      <HintPath>$(WixExtDir)\WixFirewallExtension.dll</HintPath>
+      <Name>WixFirewallExtension</Name>
+    </WixExtension>
+  </ItemGroup>
   <Import Project="$(WixTargetsPath)" />
   <Target Name="BeforeBuild">
     <Message Text="..\Scoop.Service\bin\$(Configuration)" Importance="high" />

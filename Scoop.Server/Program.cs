@@ -7,14 +7,14 @@ using Microsoft.Owin.Hosting;
 
 namespace Scoop.Server
 {
-    class Program
+    public class Program
     {
         static void Main(string[] args)
         {
-            const string url = "http://*:9400";
-            using (WebApp.Start<Startup>(url))
+            using (WebApp.Start<Startup>(Startup.Url))
             {
-                Console.WriteLine("Server running on {0}", url);
+                Console.WriteLine("Server running on {0}", Startup.Url);
+                Console.WriteLine("Type 'exit' to shut down server.");
                 Console.ReadLine();
             }
         }

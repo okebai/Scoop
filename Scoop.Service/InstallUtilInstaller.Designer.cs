@@ -1,6 +1,6 @@
 ﻿namespace Scoop.Service
 {
-    partial class ProjectInstaller
+    partial class InstallUtilInstaller
     {
         /// <summary>
         /// Required designer variable.

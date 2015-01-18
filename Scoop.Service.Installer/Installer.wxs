@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<Wix xmlns="http://schemas.microsoft.com/wix/2006/wi">
-  <Product Id="*" Name="Scoop Service Installer" Language="1033" Version="1.0.0.0" Manufacturer="Jan Welander" UpgradeCode="7ee88a4f-358f-4b01-bb97-d78b04c409a7">
+<Wix xmlns="http://schemas.microsoft.com/wix/2006/wi"
+     xmlns:fire="http://schemas.microsoft.com/wix/FirewallExtension">
+  <Product Id="*" Name="Scoop Service" Language="1033" Version="1.0.0.0" Manufacturer="Jan Welander" UpgradeCode="7ee88a4f-358f-4b01-bb97-d78b04c409a7">
     <Package InstallerVersion="200" Compressed="yes" InstallScope="perMachine" />
 
     <MajorUpgrade DowngradeErrorMessage="A newer version of [ProductName] is already installed." />
@@ -27,6 +28,7 @@
         <File Id="Scoop.Service.exe.config" Name="Scoop.Service.exe.config"  DiskId="1" Source="$(var.Scoop.Service.TargetPath).config" Vital="yes" KeyPath="no" />
         <ServiceInstall Vital="yes" ErrorControl="ignore" Type="ownProcess" DisplayName="Scoop Service" Name="Scoop.Service" Start="auto" />
         <ServiceControl Id="ScoopServiceControl" Remove="both" Name="Scoop.Service" Start="install" Stop="both" Wait="yes" />
+        <fire:FirewallException Id="ScoopServiceFirewallException" Name="Scoop Service port 60080" Port="60080" Protocol="tcp" Scope="any" Program="System" />
       </Component>
     </ComponentGroup>
   </Fragment>

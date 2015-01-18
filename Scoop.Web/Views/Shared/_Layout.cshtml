@@ -15,7 +15,7 @@
 
     <script src="@Url.Content("~/Scripts/jquery-2.1.3.min.js")"></script>
     <script src="@Url.Content("~/Scripts/jquery.signalR-2.2.0.min.js")"></script>
-    <script src="http://localhost:9300/signalr/hubs"></script>
+    <script src="http://localhost:60080/signalr/hubs"></script>
     <script type="text/javascript">
         $.ajaxPrefilter(function (options, originalOptions, jqXHR) {
             options.xhrFields = { withCredentials: true };
@@ -23,7 +23,7 @@
 
         $(function () {
             //Set the hubs URL for the connection
-            $.connection.hub.url = "http://localhost:9300/signalr";
+            $.connection.hub.url = "http://localhost:60080/signalr";
 
             // Declare a proxy to reference the hub.
             var chat = $.connection.performanceHub;

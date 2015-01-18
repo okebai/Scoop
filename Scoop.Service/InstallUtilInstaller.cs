@@ -7,9 +7,9 @@ using System.Configuration.Install;
 namespace Scoop.Service
 {
     [RunInstaller(true)]
-    public partial class ProjectInstaller : Installer
+    public partial class InstallUtilInstaller : Installer
     {
-        public ProjectInstaller()
+        public InstallUtilInstaller()
         {
             InitializeComponent();
         }
