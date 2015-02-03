@@ -1,0 +1,182 @@
+﻿@import "/bootstrap/bootstrap.less";
+@import "/bootswatch/darkly/variables.less";
+@import "/bootswatch/darkly/bootswatch.less";
+
+@graph1: #ffff00;
+@graph2: #5d9cff;
+@graph3: #f84dff;
+
+/* Bootstrap overrides */
+@font-size-base: 14px;
+@font-family-sans-serif: 'Open Sans', sans-serif;
+@headings-font-weight: 600;
+
+.tab-pane .row {
+    margin-left: @grid-gutter-width / 2;
+    margin-right: @grid-gutter-width / 2;
+}
+
+.nav-tabs {
+    margin-bottom: @grid-gutter-width / 2;
+}
+
+/* FontAwesome overrides */
+.fa-li {
+    top: .2em;
+}
+
+/* Common */
+.template {
+    display: none;
+}
+
+/* Menu */
+.dashboard-menu {
+    position: absolute;
+    top: 0;
+    right: 0;
+    z-index: 100;
+}
+
+/* Connect modal */
+.connect-server-list > li {
+    margin: @grid-gutter-width / 2 0;
+}
+
+.connect-name,
+.connect-uri {
+    vertical-align: bottom;
+}
+
+.disconnect-button {
+    display: none;
+}
+
+.connected-icon {
+    display: none;
+    color: @brand-success;
+}
+
+.disconnected-icon {
+    display: inline;
+}
+
+.connected {
+    .disconnected-icon {
+        display: none;
+    }
+
+    .connected-icon {
+        display: inline;
+    }
+
+    .disconnect-button {
+        display: inline;
+    }
+
+    .connect-button {
+        display: none;
+    }
+}
+
+.connect-button,
+.disconnect-button {
+    float: right;
+
+    i.fa {
+        margin-right: 3px;
+    }
+}
+
+/* Dashboard */
+
+.tile {
+    height: 500px;
+}
+
+/* Performance */
+.performance-legend {
+    margin-bottom: -@grid-gutter-width / 2;
+    text-align: center;
+}
+
+/* MetricsGraphics */
+.mg-line1-color,
+.mg-hover-line1-color {
+    stroke: @graph1;
+}
+
+.mg-area1-color {
+    fill: @graph1;
+}
+
+.mg-line1-legend-color {
+    color: @graph1;
+}
+
+.mg-line2-color,
+.mg-hover-line2-color {
+    stroke: @graph2;
+}
+
+.mg-area2-color {
+    fill: @graph2;
+}
+
+.mg-line2-legend-color {
+    color: @graph2;
+}
+
+.mg-line3-color,
+.mg-hover-line3-color {
+    stroke: @graph3;
+}
+
+.mg-area3-color {
+    fill: @graph3;
+}
+
+.mg-line3-legend-color {
+    color: @graph3;
+}
+
+.mg-x-axis line,
+.mg-y-axis line,
+.mg-year-marker line {
+    stroke: @text-color;
+    stroke-width: 1;
+}
+
+.mg-x-axis line {
+    display: none;
+}
+
+.mg-x-axis text,
+.mg-y-axis text,
+.mg-histogram .axis text,
+.mg-year-marker text,
+.mg-active-datapoint {
+    fill: @text-color;
+    opacity: 1;
+}
+
+.mg-active-datapoint {
+    font-size: 1.5rem;
+}
+
+
+/* Small devices (tablets, 768px and up) */
+@media (min-width: @screen-sm-min) {
+}
+
+/* Medium devices (desktops, 992px and up) */
+@media (min-width: @screen-md-min) {
+    /* Login */
+    .row.login {
+        margin-top: @grid-gutter-width * 3;
+    }
+}
+
+/* Large devices (large desktops, 1200px and up) */
+@media (min-width: @screen-lg-min) {
+}
