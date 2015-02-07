@@ -1,58 +1,40 @@
-﻿<!DOCTYPE html>
+﻿@model PageModel
+
+<!DOCTYPE html>
 <html>
 <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>@ViewBag.Title - My ASP.NET Application</title>
+    <title>@Model.Title</title>
+    <link rel="stylesheet" type="text/css" href="http://fonts.googleapis.com/css?family=Open+Sans:300italic,400italic,600italic,700italic,800italic,400,700,600,800,300" />
+    <link rel="stylesheet" type="text/css" href="@Url.Content("~/Content/font-awesome.min.css")" />
+    <link rel="stylesheet" type="text/css" href="@Url.Content("~/Content/metricsgraphics.min.css")" />
+    <link rel="stylesheet" type="text/css" href="@Url.Content("~/Content/Site.min.css")" />
+    @RenderSection("Styles", required: false)
 </head>
 <body>
 
-    <div class="container">
+    <div class="container-fluid">
         @RenderBody()
     </div>
 
-    @RenderSection("scripts", required: false)
-
-    <script src="@Url.Content("~/Scripts/jquery-2.1.3.min.js")"></script>
-    <script src="@Url.Content("~/Scripts/jquery.signalR-2.2.0.min.js")"></script>
-    <script src="http://localhost:60080/signalr/hubs"></script>
+    <script type="text/javascript" src="@Url.Content("~/Scripts/jquery-2.1.3.min.js")"></script>
+    <script type="text/javascript" src="@Url.Content("~/Scripts/jquery.signalR-2.2.0.min.js")"></script>
+    <script type="text/javascript" src="@Url.Content("~/Scripts/moment-with-locales.min.js")"></script>
     <script type="text/javascript">
-        $.ajaxPrefilter(function (options, originalOptions, jqXHR) {
-            options.xhrFields = { withCredentials: true };
-        });
-
+        moment.locale('sv');
+    </script>
+    <script type="text/javascript" src="@Url.Content("~/Scripts/bootstrap.min.js")"></script>
+    <script type="text/javascript" src="@Url.Content("~/Scripts/Chart.min.js")"></script>
+    <script type="text/javascript" src="@Url.Content("~/Scripts/d3/d3.min.js")"></script>
+    <script type="text/javascript" src="@Url.Content("~/Scripts/metricsgraphics.min.js")"></script>
+    <script type="text/javascript" src="@Url.Content("~/Scripts/Site.min.js")"></script>
+    <script type="text/javascript">
         $(function () {
-            //Set the hubs URL for the connection
-            $.connection.hub.url = "http://localhost:60080/signalr";
-
-            // Declare a proxy to reference the hub.
-            var chat = $.connection.performanceHub;
-
-            // Create a function that the hub can call to broadcast messages.
-            chat.client.updatePerformance = function (taskName, values, timestamp) {
-                $('ul').append('<li><em>' + timestamp + '</em> <strong>' + values[0] + '</li><strong>');
-                //// Html encode display name and message.
-                //var encodedName = $('<div />').text(name).html();
-                //var encodedMsg = $('<div />').text(message).html();
-                //// Add the message to the page.
-                //$('#discussion').append('<li><strong>' + encodedName
-                //    + '</strong>:&nbsp;&nbsp;' + encodedMsg + '</li>');
-            };
-            // Get the user name and store it to prepend to messages.
-            //$('#displayname').val(prompt('Enter your name:', ''));
-            // Set initial focus to message input box.
-            //$('#message').focus();
-            // Start the connection.
-            $.connection.hub.start().done(function () {
-                //$('#sendmessage').click(function () {
-                //    // Call the Send method on the hub.
-                //    chat.server.send($('#displayname').val(), $('#message').val());
-                //    // Clear text box and reset focus for next comment.
-                //    $('#message').val('').focus();
-                //});
-            });
+            updateCurrentConnections(@Html.Raw(Model.ConnectionStorageJson));
         });
     </script>
-    <ul></ul>
+
+    @RenderSection("Scripts", required: false)
 </body>
 </html>
