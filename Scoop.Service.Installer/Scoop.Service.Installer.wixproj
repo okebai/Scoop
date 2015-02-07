@@ -6,8 +6,8 @@
     <ProductVersion>3.9</ProductVersion>
     <ProjectGuid>4d92efd1-3d9f-4a0a-b610-3f19c3431025</ProjectGuid>
     <SchemaVersion>2.0</SchemaVersion>
-    <OutputName>Scoop Service Installer</OutputName>
     <OutputType>Package</OutputType>
+    <OutputName>Scoop.Service.Installer</OutputName>
     <WixTargetsPath Condition=" '$(WixTargetsPath)' == '' AND '$(MSBuildExtensionsPath32)' != '' ">$(MSBuildExtensionsPath32)\Microsoft\WiX\v3.x\Wix.targets</WixTargetsPath>
     <WixTargetsPath Condition=" '$(WixTargetsPath)' == '' ">$(MSBuildExtensionsPath)\Microsoft\WiX\v3.x\Wix.targets</WixTargetsPath>
   </PropertyGroup>
@@ -58,6 +58,15 @@
     <!-- Store the assembly version number in ProductVersion preprocessor variable -->
     <CreateProperty Value="$(DefineConstants);ProductVersion=%(AssemblyInfo.Version)">
       <Output TaskParameter="Value" PropertyName="DefineConstants" />
+    </CreateProperty>
+    <!-- http://www.talksharp.com/wix-toolset-append-product-version -->
+    <!-- Rename the .msi file -->
+    <CreateProperty Value="$(OutputName)-%(AssemblyInfo.Version)">
+      <Output TaskParameter="Value" PropertyName="TargetName" />
+    </CreateProperty>
+    <!-- Rename the .wixpdb file -->
+    <CreateProperty Value="$(TargetName)$(TargetPdbExt)">
+      <Output TaskParameter="Value" PropertyName="TargetPdbName" />
     </CreateProperty>
     <Message Text="..\Scoop.Service\bin\$(Configuration)" Importance="high" />
     <!-- Heat Harvest: http://geoffwebbercross.blogspot.se/2013/06/using-wix-heat-to-harvest-files-for-wix.html -->
