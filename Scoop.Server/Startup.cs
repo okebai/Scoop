@@ -23,14 +23,14 @@ namespace Scoop.Server
         {
             app.UseCors(CorsOptions.AllowAll);
 
-            // At the time (2015-01-18) Chrome has issues with NTLM authentication and WebSockets. SignalR can handle this though, and falls back to other protocols. (https://code.google.com/p/chromium/issues/detail?id=123862)
+            // At the time (2015-01-18) Chrome has issues with NTLM authentication and WebSockets. SignalR can handle this though, by falling back on other protocols. (https://code.google.com/p/chromium/issues/detail?id=123862)
             // http://stackoverflow.com/questions/17485046/signalr-cross-domain-connections-with-self-hosting-and-authentication
             // http://stackoverflow.com/questions/17457382/windows-authentication-with-signalr-and-owin-self-hosting
-            var listener = (HttpListener)app.Properties[typeof(HttpListener).FullName];
-            listener.AuthenticationSchemeSelectorDelegate += request =>
-                request.Headers.Get("Access-Control-Request-Method") != null
-                    ? AuthenticationSchemes.Anonymous
-                    : AuthenticationSchemes.Ntlm;
+            //var listener = (HttpListener)app.Properties[typeof(HttpListener).FullName];
+            //listener.AuthenticationSchemeSelectorDelegate += request =>
+            //    request.Headers.Get("Access-Control-Request-Method") != null
+            //        ? AuthenticationSchemes.Anonymous
+            //        : AuthenticationSchemes.Ntlm;
 
             app.MapSignalR(new HubConfiguration
             {
@@ -44,7 +44,7 @@ namespace Scoop.Server
         {
             Tasks = new List<ITask>
             {
-                CpuPerformanceTask.Instance.Start(PerformanceTaskListener.Instance)
+                PerformanceTask.Instance.Start(PerformanceTaskListener.Instance),
             };
         }
     }
