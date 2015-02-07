@@ -5,6 +5,7 @@ using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 using System.Web.Hosting;
+using Scoop.Core.Caching;
 using Scoop.Core.Tasks.Interfaces;
 
 namespace Scoop.Core.Tasks
@@ -28,7 +29,7 @@ namespace Scoop.Core.Tasks
         {
             TaskListener = taskListener;
 
-            var interval = TimeSpan.FromSeconds(5);
+            var interval = TimeSpan.FromSeconds(2);
             Timer.Change(TimeSpan.Zero, interval);
 
             return this;
@@ -48,5 +49,20 @@ namespace Scoop.Core.Tasks
 
             HostingEnvironment.UnregisterObject(this);
         }
+
+        public TaskResultHistory<T> GetHistory<T>() where T : class, ITask
+        {
+            return CacheHandler.Instance.Get<TaskResultHistory<T>>();
+        }
+
+        public TaskResultHistory<T> SaveHistory<T>(ITaskResult taskResult) where T : class, ITask
+        {
+            var taskResultHistory = GetHistory<T>();
+            taskResultHistory.TaskResults.Add(taskResult);
+            CacheHandler.Instance.Set(taskResultHistory);
+
+            return taskResultHistory;
+        }
+
     }
 }

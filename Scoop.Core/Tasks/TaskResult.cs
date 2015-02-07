@@ -8,14 +8,12 @@ using Scoop.Core.Tasks.Interfaces;
 
 namespace Scoop.Core.Tasks
 {
-    public abstract class TaskResult : ITaskResult, ICacheHandlerItem
+    public abstract class TaskResult : ITaskResult
     {
         public Dictionary<string, double> Values { get; private set; }
         public Dictionary<string, string> Messages { get; private set; }
         public DateTime Timestamp { get; private set; }
         public string TaskName { get; private set; }
-
-        public abstract string CacheKey { get; }
 
         protected TaskResult(ITask task)
         {
