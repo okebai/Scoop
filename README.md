@@ -1,3 +1,6 @@
+[![Build status - Master](https://ci.appveyor.com/api/projects/status/eb5ey1vp5ldaoybp/branch/master?svg=true)](https://ci.appveyor.com/project/okebai/scoop/branch/master)
+[![Build status - Dev](https://ci.appveyor.com/api/projects/status/eb5ey1vp5ldaoybp/branch/dev?svg=true)](https://ci.appveyor.com/project/okebai/scoop/branch/dev)
+
 # Scoop
 > **skuːp**
 1. _To pick up (someone or something) in a swift, fluid movement._
