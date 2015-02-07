@@ -30,7 +30,7 @@ namespace Scoop.Core.Caching
             var cacheItemPolicy = new CacheItemPolicy
             {
                 Priority = CacheItemPriority.NotRemovable,
-                SlidingExpiration = TimeSpan.FromHours(24)
+                SlidingExpiration = TimeSpan.FromMinutes(3)
             };
 
             MemoryCache.Default.Set(newCacheItem, cacheItemPolicy);
@@ -42,6 +42,12 @@ namespace Scoop.Core.Caching
         public T Get<T>(string key) where T : class, ICacheHandlerItem
         {
             return MemoryCache.Default.Get(key) as T;
+        }
+
+        public T Get<T>() where T : class, ICacheHandlerItem, new()
+        {
+            var t = new T();
+            return MemoryCache.Default.Get(t.CacheKey) as T ?? t;
         }
 
         public DateTime? LastUpdate<T>() where T : IRegisteredObject
