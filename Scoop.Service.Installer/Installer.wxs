@@ -1,12 +1,13 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <Wix xmlns="http://schemas.microsoft.com/wix/2006/wi"
      xmlns:fire="http://schemas.microsoft.com/wix/FirewallExtension">
-  <Product Id="*" Name="Scoop Service" Language="1033" Version="1.0.0.0" Manufacturer="Jan Welander" UpgradeCode="7ee88a4f-358f-4b01-bb97-d78b04c409a7">
+  <Product Id="*" Name="Scoop Service" Language="1033" Version="$(var.ProductVersion)" Manufacturer="Jan Welander" UpgradeCode="7ee88a4f-358f-4b01-bb97-d78b04c409a7">
     <Package InstallerVersion="200" Compressed="yes" InstallScope="perMachine" />
 
-    <MajorUpgrade DowngradeErrorMessage="A newer version of [ProductName] is already installed." />
+    <MajorUpgrade AllowSameVersionUpgrades="yes" DowngradeErrorMessage="A newer version of [ProductName] is already installed." />
     <MediaTemplate EmbedCab="yes" />
-
+    <UIRef Id="WixUI_Scoop" />
+    
     <Feature Id="ProductFeature" Title="Scoop Service Installer" Level="1">
       <ComponentGroupRef Id="ProductComponents" />
       <ComponentGroupRef Id="Scoop.Service.Harvest" />
@@ -16,13 +17,16 @@
   <Fragment>
     <Directory Id="TARGETDIR" Name="SourceDir">
       <Directory Id="ProgramFilesFolder">
-        <Directory Id="INSTALLFOLDER" Name="Scoop Service" />
+        <Directory Id="APPLICATIONFOLDER" Name="Scoop Service" />
       </Directory>
     </Directory>
+    <Property Id="ApplicationFolderName" Value="Scoop Service" />
+    <Property Id="WixAppFolder" Value="WixPerMachineFolder" />
+    <WixVariable Id="WixUISupportPerUser" Value="0" />
   </Fragment>
-
+  
   <Fragment>
-    <ComponentGroup Id="ProductComponents" Directory="INSTALLFOLDER">
+    <ComponentGroup Id="ProductComponents" Directory="APPLICATIONFOLDER">
       <Component Id="ProductComponent" Guid="2091f999-8861-4767-985e-e42b538823ea">
         <File Id="Scoop.Service.exe" Name="Scoop.Service.exe" DiskId="1" Source="$(var.Scoop.Service.TargetPath)" KeyPath="yes" />
         <File Id="Scoop.Service.exe.config" Name="Scoop.Service.exe.config"  DiskId="1" Source="$(var.Scoop.Service.TargetPath).config" Vital="yes" KeyPath="no" />
@@ -31,5 +35,19 @@
         <fire:FirewallException Id="ScoopServiceFirewallException" Name="Scoop Service port 60080" Port="60080" Protocol="tcp" Scope="any" Program="System" />
       </Component>
     </ComponentGroup>
+  </Fragment>
+
+  <Fragment>
+    <UI Id="WixUI_Scoop">
+      <UIRef Id="WixUI_Mondo" />
+
+      <DialogRef Id="ConfigurationDlg" />
+
+      <!--<Publish Dialog="AdvancedWelcomeEulaDlg" Control="Install" Event="NewDialog" Value="ConfigurationDlg" Order="3">LicenseAccepted = "1"</Publish>
+      <Publish Dialog="AdvancedWelcomeEulaDlg" Control="InstallNoShield" Event="NewDialog" Value="ConfigurationDlg" Order="3">LicenseAccepted = "1"</Publish>
+      <Publish Dialog="SetupTypeDlg" Control="Back" Event="NewDialog" Value="ConfigurationDlg">1</Publish>-->
+    </UI>
+    <Property Id="PIDTemplate"><![CDATA[12345<### ###>@@@@@]]></Property>
+    <!--<UIRef Id="WixUI_ErrorProgressText" />-->
   </Fragment>
 </Wix>

@@ -21,6 +21,7 @@
     <IntermediateOutputPath>obj\$(Configuration)\</IntermediateOutputPath>
   </PropertyGroup>
   <ItemGroup>
+    <Compile Include="ConfigurationDlg.wxs" />
     <Compile Include="Installer.wxs" />
     <Compile Include="ScoopServiceHarvest.wxs" />
   </ItemGroup>
@@ -38,6 +39,10 @@
     <Content Include="ExcludeServiceExe.xsl" />
   </ItemGroup>
   <ItemGroup>
+    <WixExtension Include="WixUIExtension">
+      <HintPath>$(WixExtDir)\WixUIExtension.dll</HintPath>
+      <Name>WixUIExtension</Name>
+    </WixExtension>
     <WixExtension Include="WixFirewallExtension">
       <HintPath>$(WixExtDir)\WixFirewallExtension.dll</HintPath>
       <Name>WixFirewallExtension</Name>
@@ -45,10 +50,19 @@
   </ItemGroup>
   <Import Project="$(WixTargetsPath)" />
   <Target Name="BeforeBuild">
+    <!-- From: http://www.talksharp.com/wix-toolset-sync-exe-version -->
+    <!-- Get the programs assembly version from the .exe file -->
+    <GetAssemblyIdentity AssemblyFiles="..\Scoop.Service\bin\$(Configuration)\Scoop.Service.exe">
+      <Output TaskParameter="Assemblies" ItemName="AssemblyInfo" />
+    </GetAssemblyIdentity>
+    <!-- Store the assembly version number in ProductVersion preprocessor variable -->
+    <CreateProperty Value="$(DefineConstants);ProductVersion=%(AssemblyInfo.Version)">
+      <Output TaskParameter="Value" PropertyName="DefineConstants" />
+    </CreateProperty>
     <Message Text="..\Scoop.Service\bin\$(Configuration)" Importance="high" />
     <!-- Heat Harvest: http://geoffwebbercross.blogspot.se/2013/06/using-wix-heat-to-harvest-files-for-wix.html -->
     <!-- RunAsSeparateProcess: http://stackoverflow.com/a/10026236 -->
-    <HeatDirectory RunAsSeparateProcess="true" NoLogo="$(HarvestDirectoryNoLogo)" SuppressAllWarnings="$(HarvestDirectorySuppressAllWarnings)" SuppressSpecificWarnings="$(HarvestDirectorySuppressSpecificWarnings)" ToolPath="$(WixToolPath)" TreatWarningsAsErrors="$(HarvestDirectoryTreatWarningsAsErrors)" TreatSpecificWarningsAsErrors="$(HarvestDirectoryTreatSpecificWarningsAsErrors)" VerboseOutput="$(HarvestDirectoryVerboseOutput)" AutogenerateGuids="$(HarvestDirectoryAutogenerateGuids)" GenerateGuidsNow="$(HarvestDirectoryGenerateGuidsNow)" OutputFile="ScoopServiceHarvest.wxs" SuppressFragments="$(HarvestDirectorySuppressFragments)" SuppressUniqueIds="$(HarvestDirectorySuppressUniqueIds)" Transforms="ExcludeServiceExe.xsl" Directory="..\Scoop.Service\bin\$(Configuration)" ComponentGroupName="Scoop.Service.Harvest" DirectoryRefId="INSTALLFOLDER" KeepEmptyDirectories="false" PreprocessorVariable="var.Scoop.Service.TargetDir" SuppressCom="%(HarvestDirectory.SuppressCom)" SuppressRootDirectory="true" SuppressRegistry="%(HarvestDirectory.SuppressRegistry)">
+    <HeatDirectory RunAsSeparateProcess="true" NoLogo="$(HarvestDirectoryNoLogo)" SuppressAllWarnings="$(HarvestDirectorySuppressAllWarnings)" SuppressSpecificWarnings="$(HarvestDirectorySuppressSpecificWarnings)" ToolPath="$(WixToolPath)" TreatWarningsAsErrors="$(HarvestDirectoryTreatWarningsAsErrors)" TreatSpecificWarningsAsErrors="$(HarvestDirectoryTreatSpecificWarningsAsErrors)" VerboseOutput="$(HarvestDirectoryVerboseOutput)" AutogenerateGuids="$(HarvestDirectoryAutogenerateGuids)" GenerateGuidsNow="$(HarvestDirectoryGenerateGuidsNow)" OutputFile="ScoopServiceHarvest.wxs" SuppressFragments="$(HarvestDirectorySuppressFragments)" SuppressUniqueIds="$(HarvestDirectorySuppressUniqueIds)" Transforms="ExcludeServiceExe.xsl" Directory="..\Scoop.Service\bin\$(Configuration)" ComponentGroupName="Scoop.Service.Harvest" DirectoryRefId="APPLICATIONFOLDER" KeepEmptyDirectories="false" PreprocessorVariable="var.Scoop.Service.TargetDir" SuppressCom="%(HarvestDirectory.SuppressCom)" SuppressRootDirectory="true" SuppressRegistry="%(HarvestDirectory.SuppressRegistry)">
     </HeatDirectory>
   </Target>
   <!--

@@ -1,115 +1,115 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Wix xmlns="http://schemas.microsoft.com/wix/2006/wi">
     <Fragment>
-        <DirectoryRef Id="INSTALLFOLDER">
-            <Component Id="cmp9B10D9A3903AED262A1864BBCAE9A992" Guid="*">
-                <File Id="fil53D624A5A5C2304AD59A740DEB3C53B3" KeyPath="yes" Source="$(var.Scoop.Service.TargetDir)\Microsoft.AspNet.SignalR.Core.dll" />
+        <DirectoryRef Id="APPLICATIONFOLDER">
+            <Component Id="cmp5ED48016E97D36877F3D38926FA36EDC" Guid="*">
+                <File Id="fil8566D48A3F96425D3D666A5DCB5C6828" KeyPath="yes" Source="$(var.Scoop.Service.TargetDir)\Microsoft.AspNet.SignalR.Core.dll" />
             </Component>
-            <Component Id="cmp60C5323DEFB9D4DEBCDDB455DEFF3B0F" Guid="*">
-                <File Id="filF8944ECA74F41BE84DE2D3CCDBB36696" KeyPath="yes" Source="$(var.Scoop.Service.TargetDir)\Microsoft.AspNet.SignalR.Core.xml" />
+            <Component Id="cmp677CBCA9CA54E2F8A9D73B42AC272022" Guid="*">
+                <File Id="fil2B842A70563CB607DDC14BE8BE2AEB6B" KeyPath="yes" Source="$(var.Scoop.Service.TargetDir)\Microsoft.AspNet.SignalR.Core.xml" />
             </Component>
-            <Component Id="cmpEEB9D04BC454F8E37ABC61F8441EAE67" Guid="*">
-                <File Id="fil0186FA4DCA792E43B9ABB34B6C0D7278" KeyPath="yes" Source="$(var.Scoop.Service.TargetDir)\Microsoft.Owin.Cors.dll" />
+            <Component Id="cmpB525624EDA55588DD20031F0EF1B26DA" Guid="*">
+                <File Id="filD5508D0F374264F78C54A3296848C383" KeyPath="yes" Source="$(var.Scoop.Service.TargetDir)\Microsoft.Owin.Cors.dll" />
             </Component>
-            <Component Id="cmp0B2F01B83EB5E64F008C7EA160748CB5" Guid="*">
-                <File Id="fil6DC1786DEBFA51BA24C6F5B153E47511" KeyPath="yes" Source="$(var.Scoop.Service.TargetDir)\Microsoft.Owin.Cors.xml" />
+            <Component Id="cmpFE4A600FBC283581D8965F9C617A8EEF" Guid="*">
+                <File Id="filC2C6BF5285786F678A8587A74A7AACB7" KeyPath="yes" Source="$(var.Scoop.Service.TargetDir)\Microsoft.Owin.Cors.xml" />
             </Component>
-            <Component Id="cmpB7693CA6495073D2A1CF80536E07DE05" Guid="*">
-                <File Id="filF1EA7AB4165E7D7D8F053BF1818D3052" KeyPath="yes" Source="$(var.Scoop.Service.TargetDir)\Microsoft.Owin.Diagnostics.dll" />
+            <Component Id="cmpB8730F95A9ADFDC2D1793D975355EFD8" Guid="*">
+                <File Id="fil413C8EFD11ADDDEEE523AA5E0083992E" KeyPath="yes" Source="$(var.Scoop.Service.TargetDir)\Microsoft.Owin.Diagnostics.dll" />
             </Component>
-            <Component Id="cmp5EC0936F19A4D9C692DFA58AEB8BB495" Guid="*">
-                <File Id="fil52375DD76B86E46BCFBD66833A7901C7" KeyPath="yes" Source="$(var.Scoop.Service.TargetDir)\Microsoft.Owin.Diagnostics.xml" />
+            <Component Id="cmp0C686B2CB0F675A654778CA9C8972ECA" Guid="*">
+                <File Id="fil372C7BDB3DDDA89BF8E5C859AD5081D1" KeyPath="yes" Source="$(var.Scoop.Service.TargetDir)\Microsoft.Owin.Diagnostics.xml" />
             </Component>
-            <Component Id="cmp01AA85052885F814DD68CCEEC4BF6D28" Guid="*">
-                <File Id="fil2DABFCAF651FA2B530D7940929963FBD" KeyPath="yes" Source="$(var.Scoop.Service.TargetDir)\Microsoft.Owin.dll" />
+            <Component Id="cmp0009D2008D70C35D77BF4321D67AC4E6" Guid="*">
+                <File Id="fil2361E5717E70BB0BB568DE3F35EF329F" KeyPath="yes" Source="$(var.Scoop.Service.TargetDir)\Microsoft.Owin.dll" />
             </Component>
-            <Component Id="cmp2E6B41DBA3E69AC005273653DF0A2ADA" Guid="*">
-                <File Id="fil51431476551B576E0DE40837C96DAF03" KeyPath="yes" Source="$(var.Scoop.Service.TargetDir)\Microsoft.Owin.Host.HttpListener.dll" />
+            <Component Id="cmp110F77C98B7588FF40F28EF447582686" Guid="*">
+                <File Id="fil49AA3B77D1FF98D9213C3412796FC328" KeyPath="yes" Source="$(var.Scoop.Service.TargetDir)\Microsoft.Owin.Host.HttpListener.dll" />
             </Component>
-            <Component Id="cmp8AD1138A6535E2030DDB8BF2F6959BF5" Guid="*">
-                <File Id="filF7D89B06AB1046B5EF6BEBDA949D23F4" KeyPath="yes" Source="$(var.Scoop.Service.TargetDir)\Microsoft.Owin.Host.HttpListener.xml" />
+            <Component Id="cmpB58811AABE0BEFC80C0123C26864514F" Guid="*">
+                <File Id="fil765C3C707D14171CCFAFDA0147E6BD60" KeyPath="yes" Source="$(var.Scoop.Service.TargetDir)\Microsoft.Owin.Host.HttpListener.xml" />
             </Component>
-            <Component Id="cmp9C5447F2399454B10B9F0FC887DF9ADB" Guid="*">
-                <File Id="fil3AB98243EA65101433F69CE219A2DB63" KeyPath="yes" Source="$(var.Scoop.Service.TargetDir)\Microsoft.Owin.Hosting.dll" />
+            <Component Id="cmpE62D716F7D00741F49F533AB227F80A7" Guid="*">
+                <File Id="fil910B2A52AD33B41C47A1531A6DFE53EB" KeyPath="yes" Source="$(var.Scoop.Service.TargetDir)\Microsoft.Owin.Hosting.dll" />
             </Component>
-            <Component Id="cmp00364872D0BC2B790B11864FDE45628A" Guid="*">
-                <File Id="filC78AD7286EBDE65520D8AA273521AFA1" KeyPath="yes" Source="$(var.Scoop.Service.TargetDir)\Microsoft.Owin.Hosting.xml" />
+            <Component Id="cmpF11F9BC3728420006480BD068C7C2CE9" Guid="*">
+                <File Id="fil4524FC3E688DFA1F816B22A337EA5AF5" KeyPath="yes" Source="$(var.Scoop.Service.TargetDir)\Microsoft.Owin.Hosting.xml" />
             </Component>
-            <Component Id="cmp03A8D4C3485EFEFE6E7A2672AD59A78C" Guid="*">
-                <File Id="fil84E96E5B532DEB4ECC9D28E7383A75F6" KeyPath="yes" Source="$(var.Scoop.Service.TargetDir)\Microsoft.Owin.Security.dll" />
+            <Component Id="cmpCA8743A9927ECA60B7931AC68BE5AEFC" Guid="*">
+                <File Id="filDD370A167E0B25D7C2DF47731CAB5EE2" KeyPath="yes" Source="$(var.Scoop.Service.TargetDir)\Microsoft.Owin.Security.dll" />
             </Component>
-            <Component Id="cmp4BC5849D451ABA43E557A4883759FE22" Guid="*">
-                <File Id="filBAE68F6C19B6E0EAEDD4E2754F4E3263" KeyPath="yes" Source="$(var.Scoop.Service.TargetDir)\Microsoft.Owin.Security.xml" />
+            <Component Id="cmpAE60A2C87A644A8F76B7A4DF7FD2111C" Guid="*">
+                <File Id="filB01CC361481618C69523D0AADB41EE74" KeyPath="yes" Source="$(var.Scoop.Service.TargetDir)\Microsoft.Owin.Security.xml" />
             </Component>
-            <Component Id="cmpB67C988B41CF6589537DF395BD541C70" Guid="*">
-                <File Id="fil55B3646256BE80E6EA514C06528BBF41" KeyPath="yes" Source="$(var.Scoop.Service.TargetDir)\Microsoft.Owin.xml" />
+            <Component Id="cmpED2509792185971713D4CF5E375D9301" Guid="*">
+                <File Id="fil702C0605C2F7F379C00FABBE598DE767" KeyPath="yes" Source="$(var.Scoop.Service.TargetDir)\Microsoft.Owin.xml" />
             </Component>
-            <Component Id="cmpBC4FC00A26E7D32479D42D3411317FC5" Guid="*">
-                <File Id="fil90A8AAD9FC612906D405476D61CEA3F4" KeyPath="yes" Source="$(var.Scoop.Service.TargetDir)\Newtonsoft.Json.dll" />
+            <Component Id="cmp4CDF7DFD2D0E95016925C6786A10C503" Guid="*">
+                <File Id="fil58078AD85E0073F162CFFABD8ECDFD92" KeyPath="yes" Source="$(var.Scoop.Service.TargetDir)\Newtonsoft.Json.dll" />
             </Component>
-            <Component Id="cmp125C379E185231EFADA4CB4301BD0A9E" Guid="*">
-                <File Id="fil3A2F44A7730E98D18E0948B3261DFABD" KeyPath="yes" Source="$(var.Scoop.Service.TargetDir)\Newtonsoft.Json.xml" />
+            <Component Id="cmpEC5CA923F382FAC50F6D948F86E329B2" Guid="*">
+                <File Id="fil59800B0773DA93236D44CAFE982940CE" KeyPath="yes" Source="$(var.Scoop.Service.TargetDir)\Newtonsoft.Json.xml" />
             </Component>
-            <Component Id="cmpEFC6E6DF45D8BCCD8833915E59A68DD4" Guid="*">
-                <File Id="fil3498A6F260EBF4B5230ED05F72D3C390" KeyPath="yes" Source="$(var.Scoop.Service.TargetDir)\Owin.dll" />
+            <Component Id="cmpEE5AB48BFCABC47AE33AE13DDD88CAB9" Guid="*">
+                <File Id="fil242E5C00765E62335C706E4EBD11E1B9" KeyPath="yes" Source="$(var.Scoop.Service.TargetDir)\Owin.dll" />
             </Component>
-            <Component Id="cmp924F365E609FE0FCD9E593EC11F45812" Guid="*">
-                <File Id="fil39EBFA6D0A415C62B109D28FDA960026" KeyPath="yes" Source="$(var.Scoop.Service.TargetDir)\Scoop.Core.dll" />
+            <Component Id="cmp7CAF9BA2B427DA70F26FECE88A974F26" Guid="*">
+                <File Id="filECA211CD89790D42AD92BEBFB6629B88" KeyPath="yes" Source="$(var.Scoop.Service.TargetDir)\Scoop.Core.dll" />
             </Component>
-            <Component Id="cmp043CF451E306333AC5EA8ECB8D1BD11E" Guid="*">
-                <File Id="filFF64645257CFC04A38562D3F6C4E6537" KeyPath="yes" Source="$(var.Scoop.Service.TargetDir)\Scoop.Core.pdb" />
+            <Component Id="cmpEE6CE23B84A6AFA221C88AC7C2CDCA42" Guid="*">
+                <File Id="fil1D81C607CE6EF712536B2F2DDF33E203" KeyPath="yes" Source="$(var.Scoop.Service.TargetDir)\Scoop.Core.pdb" />
             </Component>
-            <Component Id="cmpAC5D2E2D2DF777DD42B0BBC4592276E0" Guid="*">
-                <File Id="fil02991AD0A4C35EDE9A20C8F25E1D14F7" KeyPath="yes" Source="$(var.Scoop.Service.TargetDir)\Scoop.Server.exe" />
+            <Component Id="cmpF5E930C57C16CD56AE76D2BF74CEEA60" Guid="*">
+                <File Id="fil19A871D728326413754A3D108E28024F" KeyPath="yes" Source="$(var.Scoop.Service.TargetDir)\Scoop.Server.exe" />
             </Component>
-            <Component Id="cmp55CF54883314816661BCDBAB3DBCA948" Guid="*">
-                <File Id="fil4769D75F06D387BC91AA12A488AB67BE" KeyPath="yes" Source="$(var.Scoop.Service.TargetDir)\Scoop.Server.pdb" />
+            <Component Id="cmp70DFB797364CE04FC70573E3BA03883D" Guid="*">
+                <File Id="fil28F97511C46683AB1CDD5968E4BF003D" KeyPath="yes" Source="$(var.Scoop.Service.TargetDir)\Scoop.Server.pdb" />
             </Component>
-            <Component Id="cmpA4F0EDC8E9B7B83C0678F4D68489BAF1" Guid="*">
-                <File Id="fil8A5E17F9DDDB68B8B4C60668E68708FC" KeyPath="yes" Source="$(var.Scoop.Service.TargetDir)\Scoop.Service.pdb" />
+            <Component Id="cmp57BB176D4E11DC870D5FDC3024E8D23F" Guid="*">
+                <File Id="fil0C4D6073D73BE62AA67636FA599A0D2B" KeyPath="yes" Source="$(var.Scoop.Service.TargetDir)\Scoop.Service.pdb" />
             </Component>
-            <Component Id="cmp3B8D83A6A95B8E31C88BA26A03BBFA81" Guid="*">
-                <File Id="fil5787A613424F0C132BEE2594FF48FA9D" KeyPath="yes" Source="$(var.Scoop.Service.TargetDir)\Scoop.Service.vshost.exe" />
+            <Component Id="cmpCFFE6D512234392EABED5E35B0EB1DAA" Guid="*">
+                <File Id="fil834A9CEFE137660E74BE6796E27181CE" KeyPath="yes" Source="$(var.Scoop.Service.TargetDir)\Scoop.Service.vshost.exe" />
             </Component>
-            <Component Id="cmp3223C25BC9C55654ACC726661D3DCC5E" Guid="*">
-                <File Id="filB7403F95A10F5E00963B90B8A8AA9240" KeyPath="yes" Source="$(var.Scoop.Service.TargetDir)\Scoop.Service.vshost.exe.config" />
+            <Component Id="cmp0499668F8FAED5469408261C8B0CFB99" Guid="*">
+                <File Id="fil5B72070A1F3D7E62DF0F4DBAD1052C52" KeyPath="yes" Source="$(var.Scoop.Service.TargetDir)\Scoop.Service.vshost.exe.config" />
             </Component>
-            <Component Id="cmpF00DBD867C1D52FCD4BD920F6B54B95C" Guid="*">
-                <File Id="fil2742565E3ADF35CF247C5E0CFC8F61C8" KeyPath="yes" Source="$(var.Scoop.Service.TargetDir)\Scoop.Service.vshost.exe.manifest" />
+            <Component Id="cmpB40707CECBF0B9DE2DFF6FDC668C898B" Guid="*">
+                <File Id="filC7ED49DC67A483915130A58AE2E1AAE1" KeyPath="yes" Source="$(var.Scoop.Service.TargetDir)\Scoop.Service.vshost.exe.manifest" />
             </Component>
-            <Component Id="cmpFB681CCE3A69379D12C6F0AE4D93F3F6" Guid="*">
-                <File Id="filA1D2A96B8EEEDD0F4224B9862791C67B" KeyPath="yes" Source="$(var.Scoop.Service.TargetDir)\System.Web.Cors.dll" />
+            <Component Id="cmp0B20E548A046FC580EE304C39A187459" Guid="*">
+                <File Id="fil594A1C7380F159FA71DB83C4DDCD5708" KeyPath="yes" Source="$(var.Scoop.Service.TargetDir)\System.Web.Cors.dll" />
             </Component>
         </DirectoryRef>
     </Fragment>
     <Fragment>
         <ComponentGroup Id="Scoop.Service.Harvest">
-            <ComponentRef Id="cmp9B10D9A3903AED262A1864BBCAE9A992" />
-            <ComponentRef Id="cmp60C5323DEFB9D4DEBCDDB455DEFF3B0F" />
-            <ComponentRef Id="cmpEEB9D04BC454F8E37ABC61F8441EAE67" />
-            <ComponentRef Id="cmp0B2F01B83EB5E64F008C7EA160748CB5" />
-            <ComponentRef Id="cmpB7693CA6495073D2A1CF80536E07DE05" />
-            <ComponentRef Id="cmp5EC0936F19A4D9C692DFA58AEB8BB495" />
-            <ComponentRef Id="cmp01AA85052885F814DD68CCEEC4BF6D28" />
-            <ComponentRef Id="cmp2E6B41DBA3E69AC005273653DF0A2ADA" />
-            <ComponentRef Id="cmp8AD1138A6535E2030DDB8BF2F6959BF5" />
-            <ComponentRef Id="cmp9C5447F2399454B10B9F0FC887DF9ADB" />
-            <ComponentRef Id="cmp00364872D0BC2B790B11864FDE45628A" />
-            <ComponentRef Id="cmp03A8D4C3485EFEFE6E7A2672AD59A78C" />
-            <ComponentRef Id="cmp4BC5849D451ABA43E557A4883759FE22" />
-            <ComponentRef Id="cmpB67C988B41CF6589537DF395BD541C70" />
-            <ComponentRef Id="cmpBC4FC00A26E7D32479D42D3411317FC5" />
-            <ComponentRef Id="cmp125C379E185231EFADA4CB4301BD0A9E" />
-            <ComponentRef Id="cmpEFC6E6DF45D8BCCD8833915E59A68DD4" />
-            <ComponentRef Id="cmp924F365E609FE0FCD9E593EC11F45812" />
-            <ComponentRef Id="cmp043CF451E306333AC5EA8ECB8D1BD11E" />
-            <ComponentRef Id="cmpAC5D2E2D2DF777DD42B0BBC4592276E0" />
-            <ComponentRef Id="cmp55CF54883314816661BCDBAB3DBCA948" />
-            <ComponentRef Id="cmpA4F0EDC8E9B7B83C0678F4D68489BAF1" />
-            <ComponentRef Id="cmp3B8D83A6A95B8E31C88BA26A03BBFA81" />
-            <ComponentRef Id="cmp3223C25BC9C55654ACC726661D3DCC5E" />
-            <ComponentRef Id="cmpF00DBD867C1D52FCD4BD920F6B54B95C" />
-            <ComponentRef Id="cmpFB681CCE3A69379D12C6F0AE4D93F3F6" />
+            <ComponentRef Id="cmp5ED48016E97D36877F3D38926FA36EDC" />
+            <ComponentRef Id="cmp677CBCA9CA54E2F8A9D73B42AC272022" />
+            <ComponentRef Id="cmpB525624EDA55588DD20031F0EF1B26DA" />
+            <ComponentRef Id="cmpFE4A600FBC283581D8965F9C617A8EEF" />
+            <ComponentRef Id="cmpB8730F95A9ADFDC2D1793D975355EFD8" />
+            <ComponentRef Id="cmp0C686B2CB0F675A654778CA9C8972ECA" />
+            <ComponentRef Id="cmp0009D2008D70C35D77BF4321D67AC4E6" />
+            <ComponentRef Id="cmp110F77C98B7588FF40F28EF447582686" />
+            <ComponentRef Id="cmpB58811AABE0BEFC80C0123C26864514F" />
+            <ComponentRef Id="cmpE62D716F7D00741F49F533AB227F80A7" />
+            <ComponentRef Id="cmpF11F9BC3728420006480BD068C7C2CE9" />
+            <ComponentRef Id="cmpCA8743A9927ECA60B7931AC68BE5AEFC" />
+            <ComponentRef Id="cmpAE60A2C87A644A8F76B7A4DF7FD2111C" />
+            <ComponentRef Id="cmpED2509792185971713D4CF5E375D9301" />
+            <ComponentRef Id="cmp4CDF7DFD2D0E95016925C6786A10C503" />
+            <ComponentRef Id="cmpEC5CA923F382FAC50F6D948F86E329B2" />
+            <ComponentRef Id="cmpEE5AB48BFCABC47AE33AE13DDD88CAB9" />
+            <ComponentRef Id="cmp7CAF9BA2B427DA70F26FECE88A974F26" />
+            <ComponentRef Id="cmpEE6CE23B84A6AFA221C88AC7C2CDCA42" />
+            <ComponentRef Id="cmpF5E930C57C16CD56AE76D2BF74CEEA60" />
+            <ComponentRef Id="cmp70DFB797364CE04FC70573E3BA03883D" />
+            <ComponentRef Id="cmp57BB176D4E11DC870D5FDC3024E8D23F" />
+            <ComponentRef Id="cmpCFFE6D512234392EABED5E35B0EB1DAA" />
+            <ComponentRef Id="cmp0499668F8FAED5469408261C8B0CFB99" />
+            <ComponentRef Id="cmpB40707CECBF0B9DE2DFF6FDC668C898B" />
+            <ComponentRef Id="cmp0B20E548A046FC580EE304C39A187459" />
         </ComponentGroup>
     </Fragment>
 </Wix>
