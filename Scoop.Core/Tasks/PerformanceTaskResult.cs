@@ -18,10 +18,5 @@ namespace Scoop.Core.Tasks
                 Values.Add(i.ToString(), values[i]);
             }
         }
-
-        public override string CacheKey
-        {
-            get { return string.Format("{0}_{1}_{2}", TaskName, "PerformanceTaskResult", Timestamp.ToString("O")); }
-        }
     }
 }
