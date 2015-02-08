@@ -6,12 +6,32 @@
 
     <MajorUpgrade AllowSameVersionUpgrades="yes" DowngradeErrorMessage="A newer version of [ProductName] is already installed." />
     <MediaTemplate EmbedCab="yes" />
-    <UIRef Id="WixUI_Scoop" />
     
     <Feature Id="ProductFeature" Title="Scoop Service Installer" Level="1">
       <ComponentGroupRef Id="ProductComponents" />
       <ComponentGroupRef Id="Scoop.Service.Harvest" />
     </Feature>
+
+    <UI Id="UserInterface">
+      <Property Id="WIXUI_INSTALLDIR" Value="TARGETDIR" />
+      <Property Id="WixUI_Mode" Value="Custom" />
+
+      <TextStyle Id="WixUI_Font_Normal" FaceName="Tahoma" Size="8" />
+      <TextStyle Id="WixUI_Font_Bigger" FaceName="Tahoma" Size="9" Bold="yes" />
+      <TextStyle Id="WixUI_Font_Title"  FaceName="Tahoma" Size="9" Bold="yes" />
+
+      <Property Id="DefaultUIFont" Value="WixUI_Font_Normal" />
+
+      <DialogRef Id="ProgressDlg" />
+      <DialogRef Id="ErrorDlg" />
+      <DialogRef Id="FilesInUse" />
+      <DialogRef Id="FatalError" />
+      <DialogRef Id="UserExit" />
+
+      <Publish Dialog="ExitDialog" Control="Finish" Event="EndDialog" Value="Return" Order="999">1</Publish>
+      <Publish Dialog="WelcomeDlg" Control="Next" Event="EndDialog" Value="Return" Order="2"></Publish>
+    </UI>
+    <UIRef Id="WixUI_Common" />
   </Product>
 
   <Fragment>
@@ -35,19 +55,5 @@
         <fire:FirewallException Id="ScoopServiceFirewallException" Name="Scoop Service port 60080" Port="60080" Protocol="tcp" Scope="any" Program="System" />
       </Component>
     </ComponentGroup>
-  </Fragment>
-
-  <Fragment>
-    <UI Id="WixUI_Scoop">
-      <UIRef Id="WixUI_Mondo" />
-
-      <DialogRef Id="ConfigurationDlg" />
-
-      <!--<Publish Dialog="AdvancedWelcomeEulaDlg" Control="Install" Event="NewDialog" Value="ConfigurationDlg" Order="3">LicenseAccepted = "1"</Publish>
-      <Publish Dialog="AdvancedWelcomeEulaDlg" Control="InstallNoShield" Event="NewDialog" Value="ConfigurationDlg" Order="3">LicenseAccepted = "1"</Publish>
-      <Publish Dialog="SetupTypeDlg" Control="Back" Event="NewDialog" Value="ConfigurationDlg">1</Publish>-->
-    </UI>
-    <Property Id="PIDTemplate"><![CDATA[12345<### ###>@@@@@]]></Property>
-    <!--<UIRef Id="WixUI_ErrorProgressText" />-->
   </Fragment>
 </Wix>

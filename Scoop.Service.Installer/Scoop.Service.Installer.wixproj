@@ -21,7 +21,6 @@
     <IntermediateOutputPath>obj\$(Configuration)\</IntermediateOutputPath>
   </PropertyGroup>
   <ItemGroup>
-    <Compile Include="ConfigurationDlg.wxs" />
     <Compile Include="Installer.wxs" />
     <Compile Include="ScoopServiceHarvest.wxs" />
   </ItemGroup>
