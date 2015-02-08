@@ -58,7 +58,7 @@ namespace Scoop.Core.BackgroundTasks
         private void StartInstallProcess(string updateInstallerPath, SemVersion currentversion, SemVersion latestVersion)
         {
             var logFileName = string.Format("scoop.service-autoupdate-{0}-v{1}to{2}.log", DateTime.Now.ToString("yyyyMMddTHHmmss"), currentversion, latestVersion);
-            var logDirectory = Path.Combine(Environment.CurrentDirectory, @"updates\logs\");
+            var logDirectory = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, @"updates\logs\");
             if (!Directory.Exists(logDirectory))
                 Directory.CreateDirectory(logDirectory);
 
@@ -108,7 +108,7 @@ namespace Scoop.Core.BackgroundTasks
 
         private async Task<string> DownloadAsset(ReleaseAsset asset)
         {
-            var updateDownloadDirectory = Path.Combine(Environment.CurrentDirectory, "updates");
+            var updateDownloadDirectory = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "updates");
             if (!Directory.Exists(updateDownloadDirectory))
                 Directory.CreateDirectory(updateDownloadDirectory);
 
