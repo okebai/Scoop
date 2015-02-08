@@ -5,23 +5,45 @@
 2. _A piece of news published by a newspaper or broadcast by a television or radio station in advance of its rivals._
 
 ## What is it?
-Scoop is a tool for monitoring and relaying various server properties and funneling that data back to a centralized dashboard accessible from the web.
+Scoop is a tool for monitoring various machine properties and funneling that data back to a centralized dashboard for display. It currently only runs on Windows machines.
 
-## How does it work?
-There are 2 main components; the **server** and the **web client**.
+The project is divided into two logical parts; **server** and **client**.
 
-### Server
-A copy of the server is deployed in each environment that you wish to monitor. It contains a bunch of different automated _Tasks_ which constantly monitor different parts of the environment.
+## Server
+A copy of the server is installed in each environment that you wish to monitor. 
 
-Also included in the server component is a SignalR host, which is responsible for relaying the data collected from the different _Tasks_ to any connected clients.
+The server is composed of a few things:
+#### SignalR Host
+SignalR provides the means for allowing real-ime two-way communication between the server and any connected clients.
 
-### Web client
-The Web clients main responsibility is assisting visitor with connecting to any servers and presenting the data sent by the servers.
+By default, it runs a self-hosted HTTP server listening on port 60080.
 
-The Web client is built upon MVC.
+#### Background Tasks
+The server collects data via a set of _Tasks_ that runs in the background on the server.
+These background tasks run on a schedule specific to each task and reports data back to the clients via SignalR.
 
-## Setup
-_Coming soon._
+## Client
+The data gathered by the server is just that, data. To be able to make use of it, we need to process it and display it in some way.
+
+This is what the client does.
+
+The client is in essence a web client backed by MVC, but acts mostly like a singe page application.
+For now it's main duties are connection handling and data display.
+
+## Installation
+
+#### Server
+Download the latest release and install it on a windows machine you wish to monitor.
+Doing this will result in the following:
+
+- A service named "Scoop Service" will be installed. This service controls wether the server is running or not. It is set to autostart and is started as soon as the installation completes.
+
+- Port 60080 is opened in Windows Firewall. This is the only port the service communicates through.
+
+The server will also try to update itself automatically if a new release is detected.
+
+#### Client
+_Coming soon_
 
 ## Why?
 This project aims to satisfy 2 things:
@@ -30,6 +52,6 @@ This project aims to satisfy 2 things:
 2. A craving for better knowledge of the technologies and environments that this type of software can make good use of
 
 ## Caveats
-This is still a very experimental project and still under early development.
+This is a very experimental project and still under early development.
 
 It is, in it's current form, **not** intended to be used in any production scenarios.
