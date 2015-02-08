@@ -48,11 +48,22 @@ namespace Scoop.Core.BackgroundTasks
                 {
                     var updateInstallerPath = await DownloadAsset(asset);
 
-                    Process.Start(updateInstallerPath);
+                    StartInstallProcess(updateInstallerPath, currentversion, latestVersion);
                 }
             }
 
             return this;
+        }
+
+        private void StartInstallProcess(string updateInstallerPath, SemVersion currentversion, SemVersion latestVersion)
+        {
+            var logFileName = string.Format("scoop.service-update-v{0}_to_v{1}-{2}.log", currentversion, latestVersion, DateTime.Now.ToString("s"));
+            var logPath = Path.Combine(Environment.CurrentDirectory, "updates/logs/", logFileName);
+
+            var msiExecPath = Path.Combine(Environment.SystemDirectory, "msiexec.exe");
+            var msiExecArguments = string.Format(@"/i ""{0}"" /pasive /l* ""{1}""", updateInstallerPath, logPath);
+
+            Process.Start(new ProcessStartInfo(msiExecPath, msiExecArguments));
         }
 
         private async Task<Release> GetLatestRelease()
