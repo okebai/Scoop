@@ -4,13 +4,13 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Web.UI.WebControls.WebParts;
-using Scoop.Core.Tasks.Interfaces;
+using Scoop.Core.BackgroundTasks.Interfaces;
 
-namespace Scoop.Core.Tasks
+namespace Scoop.Core.BackgroundTasks
 {
-    public class PerformanceTaskResult : TaskResult
+    public class PerformanceTaskResult : BackgroundTaskResult
     {
-        public PerformanceTaskResult(ITask task, params double[] values)
+        public PerformanceTaskResult(IBackgroundTask task, params double[] values)
             : base(task)
         {
             for (var i = 0; i < values.Length; i++)

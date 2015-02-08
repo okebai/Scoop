@@ -1,9 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
 
-namespace Scoop.Core.Tasks.Interfaces
+namespace Scoop.Core.BackgroundTasks.Interfaces
 {
-    public interface ITaskResult
+    public interface IBackgroundTaskResult
     {
         string TaskName { get; }
 

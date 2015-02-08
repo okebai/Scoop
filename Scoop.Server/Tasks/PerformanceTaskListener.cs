@@ -4,13 +4,13 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Microsoft.AspNet.SignalR;
-using Scoop.Core.Tasks;
-using Scoop.Core.Tasks.Interfaces;
+using Scoop.Core.BackgroundTasks;
+using Scoop.Core.BackgroundTasks.Interfaces;
 using Scoop.Server.Hubs;
 
 namespace Scoop.Server.Tasks
 {
-    public class PerformanceTaskListener : ITaskListener
+    public class PerformanceTaskListener : IBackgroundTaskListener
     {
         private static readonly Lazy<PerformanceTaskListener> _instance = new Lazy<PerformanceTaskListener>(() => new PerformanceTaskListener());
         public static PerformanceTaskListener Instance { get { return _instance.Value; } }
@@ -22,7 +22,7 @@ namespace Scoop.Server.Tasks
             _hubContext = GlobalHost.ConnectionManager.GetHubContext<PerformanceHub>();
         }
 
-        public void HandleResult(ITaskResult taskResult)
+        public void HandleResult(IBackgroundTaskResult taskResult)
         {
             _hubContext.Clients.All.updatePerformance(taskResult.TaskName, taskResult.Values, taskResult.Timestamp);
         }

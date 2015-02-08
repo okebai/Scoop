@@ -36,11 +36,18 @@
     <Reference Include="Newtonsoft.Json">
       <HintPath>..\packages\Newtonsoft.Json.6.0.8\lib\net45\Newtonsoft.Json.dll</HintPath>
     </Reference>
+    <Reference Include="Octokit">
+      <HintPath>..\packages\Octokit.0.6.2\lib\net45\Octokit.dll</HintPath>
+    </Reference>
     <Reference Include="Owin">
       <HintPath>..\packages\Owin.1.0\lib\net40\Owin.dll</HintPath>
     </Reference>
+    <Reference Include="Semver">
+      <HintPath>..\packages\semver.1.1.2\lib\net451\Semver.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
+    <Reference Include="System.Net.Http" />
     <Reference Include="System.Runtime.Caching" />
     <Reference Include="System.Web" />
     <Reference Include="System.Xml.Linq" />
@@ -59,22 +66,25 @@
     <Compile Include="ConnectionStorage\CookieConnectionStorage.cs" />
     <Compile Include="ConnectionStorage\IConnectionModel.cs" />
     <Compile Include="ConnectionStorage\IConnectionStorage.cs" />
-    <Compile Include="Tasks\Interfaces\ITask.cs" />
-    <Compile Include="Tasks\Interfaces\ITaskListener.cs" />
-    <Compile Include="Tasks\Interfaces\ITaskResult.cs" />
+    <Compile Include="BackgroundTasks\AutoUpdateTask.cs" />
+    <Compile Include="BackgroundTasks\Interfaces\IBackgroundTask.cs" />
+    <Compile Include="BackgroundTasks\Interfaces\IBackgroundTaskListener.cs" />
+    <Compile Include="BackgroundTasks\Interfaces\IBackgroundTaskResult.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Tasks\PerformanceTask.cs" />
-    <Compile Include="Tasks\Task.cs" />
-    <Compile Include="Tasks\TaskResult.cs" />
-    <Compile Include="Tasks\PerformanceTaskResult.cs" />
-    <Compile Include="Tasks\TaskResultHistory.cs" />
-    <Compile Include="Tasks\VoidTaskListener.cs" />
+    <Compile Include="BackgroundTasks\PerformanceTask.cs" />
+    <Compile Include="BackgroundTasks\BackgroundTask.cs" />
+    <Compile Include="BackgroundTasks\BackgroundTaskResult.cs" />
+    <Compile Include="BackgroundTasks\PerformanceTaskResult.cs" />
+    <Compile Include="BackgroundTasks\BackgroundTaskResultHistory.cs" />
+    <Compile Include="BackgroundTasks\VoidTaskListener.cs" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Authentication\" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="packages.config" />
+    <None Include="packages.config">
+      <SubType>Designer</SubType>
+    </None>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

@@ -6,31 +6,39 @@ using System.Threading;
 using System.Threading.Tasks;
 using System.Web.Hosting;
 using Scoop.Core.Caching;
-using Scoop.Core.Tasks.Interfaces;
+using Scoop.Core.BackgroundTasks.Interfaces;
 
-namespace Scoop.Core.Tasks
+namespace Scoop.Core.BackgroundTasks
 {
-    public abstract class Task : ITask, IRegisteredObject
+    public abstract class BackgroundTask : IBackgroundTask, IRegisteredObject
     {
         public abstract string Name { get; }
         public int Iteration { get; private set; }
 
         protected Timer Timer { get; private set; }
-        protected ITaskListener TaskListener { get; set; }
+        protected IBackgroundTaskListener TaskListener { get; set; }
+        protected TimeSpan Interval;
 
-        protected Task()
+        protected BackgroundTask()
+            : this(TimeSpan.FromSeconds(2))
         {
+        }
+
+        protected BackgroundTask(TimeSpan interval)
+        {
+            Interval = interval;
+
             Timer = new Timer(TimerTrigger, null, TimeSpan.FromMilliseconds(-1), TimeSpan.FromMilliseconds(-1));
 
             HostingEnvironment.RegisterObject(this);
         }
 
-        public ITask Start(ITaskListener taskListener)
+        public IBackgroundTask Start(IBackgroundTaskListener taskListener = null)
         {
-            TaskListener = taskListener;
+            if (taskListener != null)
+                TaskListener = taskListener;
 
-            var interval = TimeSpan.FromSeconds(2);
-            Timer.Change(TimeSpan.Zero, interval);
+            Timer.Change(TimeSpan.Zero, Interval);
 
             return this;
         }
@@ -41,7 +49,7 @@ namespace Scoop.Core.Tasks
             Execute(state);
         }
 
-        public abstract ITask Execute(object state);
+        public abstract Task<IBackgroundTask> Execute(object state);
 
         public void Stop(bool immediate)
         {
@@ -50,12 +58,12 @@ namespace Scoop.Core.Tasks
             HostingEnvironment.UnregisterObject(this);
         }
 
-        public TaskResultHistory<T> GetHistory<T>() where T : class, ITask
+        public BackgroundTaskResultHistory<T> GetHistory<T>() where T : class, IBackgroundTask
         {
-            return CacheHandler.Instance.Get<TaskResultHistory<T>>();
+            return CacheHandler.Instance.Get<BackgroundTaskResultHistory<T>>();
         }
 
-        public TaskResultHistory<T> SaveHistory<T>(ITaskResult taskResult) where T : class, ITask
+        public BackgroundTaskResultHistory<T> SaveHistory<T>(IBackgroundTaskResult taskResult) where T : class, IBackgroundTask
         {
             var taskResultHistory = GetHistory<T>();
             taskResultHistory.TaskResults.Add(taskResult);

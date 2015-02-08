@@ -6,8 +6,8 @@ using Microsoft.Owin;
 using Owin;
 using Scoop.Server;
 using Microsoft.Owin.Cors;
-using Scoop.Core.Tasks;
-using Scoop.Core.Tasks.Interfaces;
+using Scoop.Core.BackgroundTasks;
+using Scoop.Core.BackgroundTasks.Interfaces;
 using Scoop.Server.Tasks;
 
 [assembly: OwinStartup(typeof(Startup))]
@@ -17,7 +17,7 @@ namespace Scoop.Server
     public class Startup
     {
         public const string Url = "http://*:60080";
-        public List<ITask> Tasks { get; set; }
+        public List<IBackgroundTask> Tasks { get; set; }
 
         public void Configuration(IAppBuilder app)
         {
@@ -42,9 +42,10 @@ namespace Scoop.Server
 
         public void InitializeTasks()
         {
-            Tasks = new List<ITask>
+            Tasks = new List<IBackgroundTask>
             {
-                PerformanceTask.Instance.Start(PerformanceTaskListener.Instance),
+                //PerformanceTask.Instance.Start(PerformanceTaskListener.Instance),
+                AutoUpdateTask.Instance.Start(),
             };
         }
     }

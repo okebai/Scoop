@@ -8,14 +8,15 @@ using System.Threading.Tasks;
 using System.Web.Hosting;
 using Scoop.Core.Caching;
 using Scoop.Core.Common;
-using Scoop.Core.Tasks.Interfaces;
+using Scoop.Core.BackgroundTasks.Interfaces;
 
-namespace Scoop.Core.Tasks
+namespace Scoop.Core.BackgroundTasks
 {
-    public class PerformanceTask : Task
+    public class PerformanceTask : BackgroundTask
     {
         private static readonly Lazy<PerformanceTask> _instance = new Lazy<PerformanceTask>(() => new PerformanceTask());
         public static PerformanceTask Instance { get { return _instance.Value; } }
+        private PerformanceTask() { }
 
         public override string Name
         {
@@ -52,16 +53,15 @@ namespace Scoop.Core.Tasks
             }
         }
 
-        private PerformanceTask() { }
 
-        public override ITask Execute(object state)
+        public override async Task<IBackgroundTask> Execute(object state)
         {
-            ReadPerformance();
+            await ReadPerformance();
 
             return this;
         }
 
-        private void ReadPerformance()
+        private async Task ReadPerformance()
         {
             var cpuValue = CpuPerformanceCounter.NextValue();
 
