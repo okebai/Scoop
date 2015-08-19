@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Configuration;
 using System.Diagnostics;
 using System.IO;
 using System.Linq;
@@ -10,6 +11,7 @@ using System.Threading.Tasks;
 using System.Xml.Schema;
 using Octokit;
 using Scoop.Core.BackgroundTasks.Interfaces;
+using Scoop.Core.Configuration;
 using Semver;
 
 namespace Scoop.Core.BackgroundTasks
@@ -18,21 +20,28 @@ namespace Scoop.Core.BackgroundTasks
     {
         private static readonly Lazy<AutoUpdateTask> _instance = new Lazy<AutoUpdateTask>(() => new AutoUpdateTask());
         public static AutoUpdateTask Instance { get { return _instance.Value; } }
-        private readonly GitHubClient _gitHubClient;
 
-        private const string _repositoryOwner = "okebai";
-        private const string _repostoryName = "Scoop";
+        protected override int HistoryMaxItemCount() { return BackgroundTaskConfiguration.Instance.AutoUpdateHistoryMaxItemCount; }
+        protected override TimeSpan Interval() { return BackgroundTaskConfiguration.Instance.AutoUpdateInterval; }
+
+        private readonly GitHubClient _gitHubClient;
+        private readonly Guid _guid;
 
         private AutoUpdateTask()
-            : base(TimeSpan.FromMinutes(5))
         {
             _gitHubClient = new GitHubClient(new ProductHeaderValue("Scoop.Service-UpdateCheck"));
+            _guid = Guid.ParseExact("c5036654798b4437b7d4ef3ded26fe12", "N");
         }
 
         public override string Name
         {
             get { return "AutoUpdateTask"; }
         }
+        public override string FriendlyName
+        {
+            get { return "Auto update"; }
+        }
+        public override Guid Guid { get { return _guid; } }
 
         public override async Task<IBackgroundTask> Execute(object state)
         {
@@ -41,7 +50,7 @@ namespace Scoop.Core.BackgroundTasks
             var latestVersion = ParseVersionFromRelease(latestRelease);
             var currentversion = ParseVersionFromAssembly(GetType().Assembly);
 
-            if (latestVersion > currentversion)
+            if (latestVersion.Major > 0 && latestVersion > currentversion)
             {
                 var asset = await GetUpdateAsset(latestRelease);
                 if (asset != null)
@@ -58,7 +67,7 @@ namespace Scoop.Core.BackgroundTasks
         private void StartInstallProcess(string updateInstallerPath, SemVersion currentversion, SemVersion latestVersion)
         {
             var logFileName = string.Format("scoop.service-autoupdate-{0}-v{1}to{2}.log", DateTime.Now.ToString("yyyyMMddTHHmmss"), currentversion, latestVersion);
-            var logDirectory = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, @"updates\logs\");
+            var logDirectory = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, ConfigurationManager.AppSettings.Get("BackgroundTask.AutoUpdate.LogDirectory"));
             if (!Directory.Exists(logDirectory))
                 Directory.CreateDirectory(logDirectory);
 
@@ -72,7 +81,9 @@ namespace Scoop.Core.BackgroundTasks
 
         private async Task<Release> GetLatestRelease()
         {
-            var releases = await _gitHubClient.Release.GetAll(_repositoryOwner, _repostoryName);
+            var releases = await _gitHubClient.Release.GetAll(
+                ConfigurationManager.AppSettings.Get("BackgroundTask.AutoUpdate.GitHubRepositoryOwner"),
+                ConfigurationManager.AppSettings.Get("BackgroundTask.AutoUpdate.GitHubRepositoryName"));
 
             return releases.OrderByDescending(ParseVersionFromRelease).FirstOrDefault();
         }
@@ -101,7 +112,10 @@ namespace Scoop.Core.BackgroundTasks
 
         private async Task<ReleaseAsset> GetUpdateAsset(Release release)
         {
-            var assets = await _gitHubClient.Release.GetAssets(_repositoryOwner, _repostoryName, release.Id);
+            var assets = await _gitHubClient.Release.GetAllAssets(
+                ConfigurationManager.AppSettings.Get("BackgroundTask.AutoUpdate.GitHubRepositoryOwner"),
+                ConfigurationManager.AppSettings.Get("BackgroundTask.AutoUpdate.GitHubRepositoryName"),
+                release.Id);
 
             return assets.FirstOrDefault(a => a.Name.StartsWith("Scoop.Service.Installer"));
         }

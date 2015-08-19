@@ -1,23 +1,20 @@
 ﻿@using Scoop.Core.ConnectionStorage
 @model DashboardPageModel
 
-@section Scripts
-{
-}
+@section Scripts {}
 
-<div class="dashboard-menu">
+<div class="dashboard-menu dashboard-menu-left">
+    <button type="button" class="btn btn-link" data-toggle="modal" data-target="#connectModal">
+        <i class="fa fa-plus"></i>
+    </button>
+</div>
+<div class="dashboard-menu dashboard-menu-right">
     <button type="button" class="btn btn-link" data-toggle="modal" data-target="#connectModal">
         <i class="fa fa-plus"></i>
     </button>
 </div>
 
-<div class="row dashboard">
-    <div class="template template-mg-container col-xs-6 tile">
-        <p class="template template-mg-legend performance-legend"></p>
-        <div class="template template-mg"></div>
-    </div>
-</div>
+<div class="row dashboard-container"></div>
 
-@*<canvas class="template line-chart-template"></canvas>*@
-
-@{ Html.RenderPartial("_ConnectionModal", new ConnectionModel()); }
+@{ Html.RenderPartial("_PerformanceTask"); }
+@{ Html.RenderPartial("_ConnectionModal"); }

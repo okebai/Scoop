@@ -50,6 +50,15 @@
             <Component Id="cmpEC5CA923F382FAC50F6D948F86E329B2" Guid="*">
                 <File Id="fil59800B0773DA93236D44CAFE982940CE" KeyPath="yes" Source="$(var.Scoop.Service.TargetDir)\Newtonsoft.Json.xml" />
             </Component>
+            <Component Id="cmp25A4A59EB5867CF45012B053438CF91F" Guid="*">
+                <File Id="filF077758410F5A18E85203D26CB4B4F43" KeyPath="yes" Source="$(var.Scoop.Service.TargetDir)\Octokit.dll" />
+            </Component>
+            <Component Id="cmp3F4F015089E37357C4CE34BE281F4826" Guid="*">
+                <File Id="filBFA266940768938DA51459E28B2BD322" KeyPath="yes" Source="$(var.Scoop.Service.TargetDir)\Octokit.pdb" />
+            </Component>
+            <Component Id="cmp34208B576CA8BB55C8B4464DB7747890" Guid="*">
+                <File Id="filEBC7FF43F2E0BE49599822A22F7F79D6" KeyPath="yes" Source="$(var.Scoop.Service.TargetDir)\Octokit.xml" />
+            </Component>
             <Component Id="cmpEE5AB48BFCABC47AE33AE13DDD88CAB9" Guid="*">
                 <File Id="fil242E5C00765E62335C706E4EBD11E1B9" KeyPath="yes" Source="$(var.Scoop.Service.TargetDir)\Owin.dll" />
             </Component>
@@ -77,8 +86,17 @@
             <Component Id="cmpB40707CECBF0B9DE2DFF6FDC668C898B" Guid="*">
                 <File Id="filC7ED49DC67A483915130A58AE2E1AAE1" KeyPath="yes" Source="$(var.Scoop.Service.TargetDir)\Scoop.Service.vshost.exe.manifest" />
             </Component>
+            <Component Id="cmp49CD81232411BE906EB4919C9E0D0C08" Guid="*">
+                <File Id="filEA720AE615929C37034C1962188021D1" KeyPath="yes" Source="$(var.Scoop.Service.TargetDir)\Semver.dll" />
+            </Component>
             <Component Id="cmp0B20E548A046FC580EE304C39A187459" Guid="*">
                 <File Id="fil594A1C7380F159FA71DB83C4DDCD5708" KeyPath="yes" Source="$(var.Scoop.Service.TargetDir)\System.Web.Cors.dll" />
+            </Component>
+            <Component Id="cmpFD1AF86160AC838EF00F67D60CDD4CF7" Guid="*">
+                <File Id="fil577B98E12ECA32B19B7758BEE6F4CDF0" KeyPath="yes" Source="$(var.Scoop.Service.TargetDir)\Westwind.Utilities.Configuration.dll" />
+            </Component>
+            <Component Id="cmp2F51C44A140668D3E74B2ADBC5ED57BB" Guid="*">
+                <File Id="fil44E3F11262584DBE4A499EE059552AF5" KeyPath="yes" Source="$(var.Scoop.Service.TargetDir)\Westwind.Utilities.Configuration.xml" />
             </Component>
         </DirectoryRef>
     </Fragment>
@@ -100,6 +118,9 @@
             <ComponentRef Id="cmpED2509792185971713D4CF5E375D9301" />
             <ComponentRef Id="cmp4CDF7DFD2D0E95016925C6786A10C503" />
             <ComponentRef Id="cmpEC5CA923F382FAC50F6D948F86E329B2" />
+            <ComponentRef Id="cmp25A4A59EB5867CF45012B053438CF91F" />
+            <ComponentRef Id="cmp3F4F015089E37357C4CE34BE281F4826" />
+            <ComponentRef Id="cmp34208B576CA8BB55C8B4464DB7747890" />
             <ComponentRef Id="cmpEE5AB48BFCABC47AE33AE13DDD88CAB9" />
             <ComponentRef Id="cmp7CAF9BA2B427DA70F26FECE88A974F26" />
             <ComponentRef Id="cmpEE6CE23B84A6AFA221C88AC7C2CDCA42" />
@@ -109,7 +130,10 @@
             <ComponentRef Id="cmpCFFE6D512234392EABED5E35B0EB1DAA" />
             <ComponentRef Id="cmp0499668F8FAED5469408261C8B0CFB99" />
             <ComponentRef Id="cmpB40707CECBF0B9DE2DFF6FDC668C898B" />
+            <ComponentRef Id="cmp49CD81232411BE906EB4919C9E0D0C08" />
             <ComponentRef Id="cmp0B20E548A046FC580EE304C39A187459" />
+            <ComponentRef Id="cmpFD1AF86160AC838EF00F67D60CDD4CF7" />
+            <ComponentRef Id="cmp2F51C44A140668D3E74B2ADBC5ED57BB" />
         </ComponentGroup>
     </Fragment>
 </Wix>

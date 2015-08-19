@@ -1,6 +1,5 @@
-﻿@model Scoop.Core.ConnectionStorage.ConnectionModel
-<div class="modal" id="connectModal" tabindex="-1" role="dialog" aria-labelledby="connectModalTitle" aria-hidden="true">
-    <div class="modal-dialog">
+﻿<div class="modal fade" id="connectModal" tabindex="-1" role="dialog" aria-labelledby="connectModalTitle">
+    <div class="modal-dialog" role="document">
         <div class="modal-content">
             <div class="modal-header">
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
@@ -15,43 +14,51 @@
 
                 <div class="tab-content">
                     <div role="tabpanel" class="tab-pane active" id="connectModalTabMyServers">
-                        <ul class="connect-server-list fa fa-ul">
-                            <li class="connect-template template">
-                                <i class="fa-li fa fa-check-square connected-icon"></i>
-                                <i class="fa-li fa fa-square-o disconnected-icon"></i>
-                                <span class="connect-name"></span>
-                                <small class="connect-uri"></small>
-                                <button class="btn btn-xs btn-success connect-button"><i class="fa fa-plug"></i>Connect</button>
-                                <button class="btn btn-xs btn-danger disconnect-button"><i class="fa fa-times"></i>Disconnect</button>
+                        <ul class="connect-server-list fa fa-ul" data-bind="foreach: connections">
+                            <li class="connect">
+                                <div class="row">
+                                    <div class="col-xs-3">
+                                        <h5>
+                                            <i class="fa-li fa fa-toggle-on connected-icon" data-bind="visible: isConnected, click: $root.disconnect"></i>
+                                            <i class="fa-li fa fa-toggle-off disconnected-icon" data-bind="visible: !isConnected(), click: $root.connect"></i>
+                                            <span class="connect-name" data-bind="text: name"></span>
+                                        </h5>
+                                    </div>
+                                    <div class="col-xs-9">
+                                        <small class="connect-uri" data-bind="text: uri"></small>
+                                    </div>
+                                    @*<div class="col-xs-3">
+                                        <button class="btn btn-xs btn-success connect-button" data-bind="visible: !isConnected(), click: $root.connect"><i class="fa fa-toggle-on"></i>Connect</button>
+                                        <button class="btn btn-xs btn-danger disconnect-button" data-bind="visible: isConnected, click: $root.disconnect"><i class="fa fa-toggle-"></i>Disconnect</button>
+                                    </div>*@
+                                </div>
                             </li>
                         </ul>
                     </div>
                     <div role="tabpanel" class="tab-pane" id="connectModalTabAddNewServer">
                         <div class="row">
                             <div class="col-x-12">
-                                @using (Html.BeginForm("ConnectPost", "Connection", FormMethod.Post, new { @id = "connectModalForm" }))
-                                {
+                                <form id="connectModalForm" data-bind="submit: addConnection">
                                     @Html.AntiForgeryToken()
                                     <div class="form-group">
-                                        <label for="@Html.IdFor(model => model.Name)">Name</label>
-                                        @Html.TextBoxFor(model => model.Name, new { @placeholder = "Name", @class = "form-control" })
+                                        <label for="connectionName">Name</label>
+                                        <input type="text" class="form-control" id="connectionName" data-bind="textInput: newConnection.name, uniqueName: true" />
                                     </div>
                                     <div class="form-group">
-                                        <label for="@Html.IdFor(model => model.Uri)">Uri</label>
-                                        @Html.TextBoxFor(model => model.Uri, new { @placeholder = "Uri", @class = "form-control" })
+                                        <label for="connectionUri">Uri</label>
+                                        <input type="url" class="form-control" id="connectionUri" data-bind="textInput: newConnection.uri, uniqueName: true" />
                                     </div>
                                     <div class="checkbox">
                                         <label>
-                                            @Html.CheckBoxFor(model => model.AutoConnect) Auto connect
+                                            <input type="checkbox" data-bind="checked: newConnection.autoConnect" /> Auto connect
                                         </label>
                                     </div>
                                     <button type="submit" class="btn btn-primary">Add</button>
-                                }
+                                </form>
                             </div>
                         </div>
                     </div>
                 </div>
-
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>

@@ -4,12 +4,13 @@
 <html>
 <head>
     <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
     <title>@Model.Title</title>
     <link rel="stylesheet" type="text/css" href="http://fonts.googleapis.com/css?family=Open+Sans:300italic,400italic,600italic,700italic,800italic,400,700,600,800,300" />
     <link rel="stylesheet" type="text/css" href="@Url.Content("~/Content/font-awesome.min.css")" />
-    <link rel="stylesheet" type="text/css" href="@Url.Content("~/Content/metricsgraphics.min.css")" />
-    <link rel="stylesheet" type="text/css" href="@Url.Content("~/Content/Site.min.css")" />
+    <link rel="stylesheet" type="text/css" href="@Url.Content("~/Content/chartist/chartist.min.css")" />
+    <link rel="stylesheet" type="text/css" href="@Url.Content("~/Content/select2/select2.min.css")" />
+    <link rel="stylesheet" type="text/css" href="@Url.Content("~/Content/Site.css")" />
     @RenderSection("Styles", required: false)
 </head>
 <body>
@@ -17,23 +18,29 @@
     <div class="container-fluid">
         @RenderBody()
     </div>
+    @RenderSection("OutsideContainer", required: false)
 
-    <script type="text/javascript" src="@Url.Content("~/Scripts/jquery-2.1.3.min.js")"></script>
-    <script type="text/javascript" src="@Url.Content("~/Scripts/jquery.signalR-2.2.0.min.js")"></script>
+    <script type="text/javascript" src="@Url.Content("~/Scripts/jquery-2.1.4.js")"></script>
+    <script type="text/javascript" src="@Url.Content("~/Scripts/jquery.signalR-2.2.0.js")"></script>
     <script type="text/javascript" src="@Url.Content("~/Scripts/moment-with-locales.min.js")"></script>
     <script type="text/javascript">
         moment.locale('sv');
     </script>
+    <script type="text/javascript" src="@Url.Content("~/Scripts/knockout-3.3.0.js")"></script>
+    <script type="text/javascript" src="@Url.Content("~/Scripts/knockout.viewmodel.2.0.3.js")"></script>
     <script type="text/javascript" src="@Url.Content("~/Scripts/bootstrap.min.js")"></script>
-    <script type="text/javascript" src="@Url.Content("~/Scripts/Chart.min.js")"></script>
-    <script type="text/javascript" src="@Url.Content("~/Scripts/d3/d3.min.js")"></script>
-    <script type="text/javascript" src="@Url.Content("~/Scripts/metricsgraphics.min.js")"></script>
-    <script type="text/javascript" src="@Url.Content("~/Scripts/Site.min.js")"></script>
-    <script type="text/javascript">
+    <script type="text/javascript" src="@Url.Content("~/Scripts/chartist/chartist.js")"></script>
+    <script type="text/javascript" src="@Url.Content("~/Scripts/select2/select2.js")"></script>
+    <script type="text/javascript" src="@Url.Content("~/Scripts/site/ConnectionService.js")"></script>
+    <script type="text/javascript" src="@Url.Content("~/Scripts/site/PerformanceTask.js")"></script>
+    <script type="text/javascript" src="@Url.Content("~/Scripts/site/AutoUpdateTask.js")"></script>
+    <script type="text/javascript" src="@Url.Content("~/Scripts/site/ConnectionViewModel.js")"></script>
+    <script type="text/javascript" src="@Url.Content("~/Scripts/site/Site.js")"></script>
+    @*<script type="text/javascript">
         $(function () {
             updateCurrentConnections(@Html.Raw(Model.ConnectionStorageJson));
         });
-    </script>
+    </script>*@
 
     @RenderSection("Scripts", required: false)
 </body>

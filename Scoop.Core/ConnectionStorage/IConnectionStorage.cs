@@ -8,7 +8,7 @@ namespace Scoop.Core.ConnectionStorage
 {
     public interface IConnectionStorage
     {
-        IDictionary<Guid, IConnectionModel> Connections { get; }
+        List<IConnectionModel> Connections { get; }
         void AddOrUpdateConnection(IConnectionModel connection);
         void RemoveConnection(IConnectionModel connection);
     }

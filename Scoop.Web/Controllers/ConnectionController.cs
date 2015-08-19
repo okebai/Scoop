@@ -10,18 +10,26 @@ using Scoop.Web.Models;
 namespace Scoop.Web.Controllers
 {
     [RoutePrefix("Connection")]
-    public class ConnectionController : Controller
+    public class ConnectionController : BaseController
     {
         [HttpPost]
         [ValidateAntiForgeryToken]
-        [Route("Connect")]
-        public ContentResult ConnectPost(ConnectionModel connection)
+        [Route("Add")]
+        public ContentResult AddConnection(ConnectionModel connection)
         {
             var connectionStorage = new CookieConnectionStorage(HttpContext);
 
             connectionStorage.AddOrUpdateConnection(connection);
 
-            return Content(JsonConvert.SerializeObject(connectionStorage.Connections), "application/json");
+            return JsonContent(connectionStorage.Connections);
+        }
+        [HttpGet]
+        [Route("List")]
+        public ContentResult GetConnections()
+        {
+            var connectionStorage = new CookieConnectionStorage(HttpContext);
+
+            return JsonContent(connectionStorage.Connections);
         }
     }
 }

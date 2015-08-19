@@ -9,6 +9,7 @@ using System.Web.Hosting;
 using Scoop.Core.Caching;
 using Scoop.Core.Common;
 using Scoop.Core.BackgroundTasks.Interfaces;
+using Scoop.Core.Configuration;
 
 namespace Scoop.Core.BackgroundTasks
 {
@@ -16,12 +17,26 @@ namespace Scoop.Core.BackgroundTasks
     {
         private static readonly Lazy<PerformanceTask> _instance = new Lazy<PerformanceTask>(() => new PerformanceTask());
         public static PerformanceTask Instance { get { return _instance.Value; } }
-        private PerformanceTask() { }
+
+        protected override int HistoryMaxItemCount() { return BackgroundTaskConfiguration.Instance.PerformanceHistoryMaxItemCount; }
+        protected override TimeSpan Interval() { return BackgroundTaskConfiguration.Instance.PerformanceInterval; }
+
+        private readonly Guid _guid;
+
+        private PerformanceTask()
+        {
+            _guid = Guid.ParseExact("af388b090a5249659fb9b41e5542718a", "N");
+        }
 
         public override string Name
         {
             get { return "PerformanceTask"; }
         }
+        public override string FriendlyName
+        {
+            get { return "Performance"; }
+        }
+        public override Guid Guid { get { return _guid; } }
 
         private PerformanceCounter _cpuPerformanceCounter;
         private PerformanceCounter CpuPerformanceCounter
@@ -56,17 +71,17 @@ namespace Scoop.Core.BackgroundTasks
 
         public override async Task<IBackgroundTask> Execute(object state)
         {
-            await ReadPerformance();
+            ReadPerformance();
 
             return this;
         }
 
-        private async Task ReadPerformance()
+        private void ReadPerformance()
         {
             var cpuValue = CpuPerformanceCounter.NextValue();
 
             var diskValue = DiskPerformanceCounter.NextValue();
-            
+
             var performanceInfo = PerformanceInfo.Instance.GetPerformanceInfo();
             var memoryUsedPercent = 1.0 - (performanceInfo.PhysicalAvailableBytes / (double)performanceInfo.PhysicalTotalBytes);
 

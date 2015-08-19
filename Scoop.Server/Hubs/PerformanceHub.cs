@@ -8,12 +8,13 @@ using Scoop.Core.BackgroundTasks;
 
 namespace Scoop.Server.Hubs
 {
-    public class PerformanceHub : Hub
+    public class PerformanceHub : BaseHub
     {
         public void GetPerformanceHistory()
         {
             var taskResultHistory = PerformanceTask.Instance.GetHistory<PerformanceTask>();
 
-            Clients.All.updatePerformanceHistory(taskResultHistory.TaskResults);
-        }    }
+            Clients.Caller.updatePerformanceHistory(taskResultHistory.TaskResults);
+        }
+    }
 }

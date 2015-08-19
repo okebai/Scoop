@@ -1,11 +1,14 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Net;
 using Microsoft.AspNet.SignalR;
 using Microsoft.Owin;
 using Owin;
 using Scoop.Server;
 using Microsoft.Owin.Cors;
+using Newtonsoft.Json;
+using Newtonsoft.Json.Serialization;
 using Scoop.Core.BackgroundTasks;
 using Scoop.Core.BackgroundTasks.Interfaces;
 using Scoop.Server.Tasks;
@@ -17,7 +20,8 @@ namespace Scoop.Server
     public class Startup
     {
         public const string Url = "http://*:60080";
-        public List<IBackgroundTask> Tasks { get; set; }
+        public static List<IBackgroundTask> Tasks { get; set; }
+        private readonly JsonSerializerSettings _jsonSerializerSettings = new JsonSerializerSettings { ContractResolver = new CamelCasePropertyNamesContractResolver() };
 
         public void Configuration(IAppBuilder app)
         {
@@ -32,6 +36,21 @@ namespace Scoop.Server
             //        ? AuthenticationSchemes.Anonymous
             //        : AuthenticationSchemes.Ntlm;
 
+            app.Map("/AvailableTasks", builder =>
+            {
+                builder.Use((context, next) =>
+                {
+                    var availableTasksJson = JsonConvert.SerializeObject(Tasks, _jsonSerializerSettings);
+
+                    var response = context.Response;
+                    response.StatusCode = 200;
+                    response.ContentType = "application/json";
+                    response.Write(availableTasksJson);
+
+                    return next();
+                });
+            });
+
             app.MapSignalR(new HubConfiguration
             {
                 EnableDetailedErrors = true
@@ -44,8 +63,8 @@ namespace Scoop.Server
         {
             Tasks = new List<IBackgroundTask>
             {
-                //PerformanceTask.Instance.Start(PerformanceTaskListener.Instance),
-                AutoUpdateTask.Instance.Start(),
+                PerformanceTask.Instance.Start(PerformanceTaskListener.Instance),
+                //AutoUpdateTask.Instance.Start(),
             };
         }
     }

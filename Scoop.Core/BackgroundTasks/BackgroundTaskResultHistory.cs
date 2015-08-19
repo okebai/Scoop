@@ -10,11 +10,7 @@ namespace Scoop.Core.BackgroundTasks
 {
     public class BackgroundTaskResultHistory<T> : ICacheHandlerItem where T : class, IBackgroundTask
     {
-        private List<IBackgroundTaskResult> _taskResults;
-        public List<IBackgroundTaskResult> TaskResults
-        {
-            get { return _taskResults ?? (_taskResults = new List<IBackgroundTaskResult>()); }
-        }
+        public List<IBackgroundTaskResult> TaskResults { get; set; }
 
         public string CacheKey
         {

@@ -25,6 +25,26 @@
     top: .2em;
 }
 
+ul.fa-ul {
+    width: 100%;
+
+    h5 {
+        line-height: 1.4;
+        margin-top: 0;
+        margin-bottom: 0;
+    }
+
+    small {
+        line-height: 1.5;
+        font-family: "Helvetica Neue",Helvetica,Arial,sans-serif;
+        font-size: 14px;
+    }
+
+    .btn-xs {
+        font-size: 10px;
+        font-family: "Helvetica Neue",Helvetica,Arial,sans-serif;
+    }
+}
 /* Common */
 .template {
     display: none;
@@ -34,8 +54,26 @@
 .dashboard-menu {
     position: absolute;
     top: 0;
-    right: 0;
     z-index: 100;
+    width: 60px;
+
+    &.dashboard-menu-left {
+        left: 0;
+        text-align: left;
+
+        button {
+            padding: 1px 20px 20px 6px;
+        }
+    }
+
+    &.dashboard-menu-right {
+        right: 0;
+        text-align: right;
+
+        button {
+            padding: 1px 6px 20px 20px;
+        }
+    }
 }
 
 /* Connect modal */
@@ -48,35 +86,15 @@
     vertical-align: bottom;
 }
 
-.disconnect-button {
-    display: none;
-}
 
 .connected-icon {
-    display: none;
     color: @brand-success;
+    cursor: pointer;
 }
 
 .disconnected-icon {
-    display: inline;
-}
-
-.connected {
-    .disconnected-icon {
-        display: none;
-    }
-
-    .connected-icon {
-        display: inline;
-    }
-
-    .disconnect-button {
-        display: inline;
-    }
-
-    .connect-button {
-        display: none;
-    }
+    color: @gray-light;
+    cursor: pointer;
 }
 
 .connect-button,
@@ -94,76 +112,44 @@
     height: 500px;
 }
 
-/* Performance */
-.performance-legend {
-    margin-bottom: -@grid-gutter-width / 2;
-    text-align: center;
+/* Chartist */
+.ct-line {
+    stroke-width: 1px;
 }
 
-/* MetricsGraphics */
-.mg-line1-color,
-.mg-hover-line1-color {
-    stroke: @graph1;
+.ct-label {
+    color: @text-color;
 }
 
-.mg-area1-color {
-    fill: @graph1;
+.ct-grid {
+    stroke: rgba(255, 255, 255, 0.2);
+    stroke-width: 1px;
+    stroke-dasharray: 1px;
 }
 
-.mg-line1-legend-color {
-    color: @graph1;
+.ct-series-a .ct-area {
+    fill: @brand-info;
 }
 
-.mg-line2-color,
-.mg-hover-line2-color {
-    stroke: @graph2;
+.ct-series-a .ct-line {
+    stroke: @brand-info;
 }
 
-.mg-area2-color {
-    fill: @graph2;
+.ct-series-b .ct-area {
+    fill: #803980;
 }
 
-.mg-line2-legend-color {
-    color: @graph2;
+.ct-series-b .ct-line {
+    stroke: #803980;
 }
 
-.mg-line3-color,
-.mg-hover-line3-color {
-    stroke: @graph3;
+.ct-series-c .ct-area {
+    fill: @brand-success;
 }
 
-.mg-area3-color {
-    fill: @graph3;
+.ct-series-c .ct-line {
+    stroke: @brand-success;
 }
-
-.mg-line3-legend-color {
-    color: @graph3;
-}
-
-.mg-x-axis line,
-.mg-y-axis line,
-.mg-year-marker line {
-    stroke: @text-color;
-    stroke-width: 1;
-}
-
-.mg-x-axis line {
-    display: none;
-}
-
-.mg-x-axis text,
-.mg-y-axis text,
-.mg-histogram .axis text,
-.mg-year-marker text,
-.mg-active-datapoint {
-    fill: @text-color;
-    opacity: 1;
-}
-
-.mg-active-datapoint {
-    font-size: 1.5rem;
-}
-
 
 /* Small devices (tablets, 768px and up) */
 @media (min-width: @screen-sm-min) {
@@ -179,4 +165,47 @@
 
 /* Large devices (large desktops, 1200px and up) */
 @media (min-width: @screen-lg-min) {
+}
+
+.chart-title {
+    float: left;
+    margin: 4px 0 0 49px;
+}
+
+.chart-legend {
+    list-style: none;
+    float: right;
+    margin: 0 6px 0 0;
+
+    > li {
+        float: left;
+        margin-right: 10px;
+    }
+
+    .legend-item-bullet {
+        border: 1px solid #ccc;
+        float: left;
+        width: 10px;
+        height: 10px;
+        margin: 6px 2px 2px 2px;
+    }
+
+    .legend-item-text {
+        font-size: 10px;
+    }
+}
+
+/* Performance */
+.chart-legend > li {
+    &.performance-legend-cpu > .legend-item-bullet {
+        background-color: @brand-info;
+    }
+
+    &.performance-legend-mem > .legend-item-bullet {
+        background-color: #803980;
+    }
+
+    &.performance-legend-disk > .legend-item-bullet {
+        background-color: @brand-success;
+    }
 }
