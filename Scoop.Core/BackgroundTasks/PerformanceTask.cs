@@ -16,67 +16,42 @@ namespace Scoop.Core.BackgroundTasks
     public class PerformanceTask : BackgroundTask
     {
         private static readonly Lazy<PerformanceTask> _instance = new Lazy<PerformanceTask>(() => new PerformanceTask());
-        public static PerformanceTask Instance { get { return _instance.Value; } }
+        public static PerformanceTask Instance => _instance.Value;
+        private PerformanceTask() { }
 
         protected override int HistoryMaxItemCount() { return BackgroundTaskConfiguration.Instance.PerformanceHistoryMaxItemCount; }
         protected override TimeSpan Interval() { return BackgroundTaskConfiguration.Instance.PerformanceInterval; }
 
-        private readonly Guid _guid;
+        public override string Name => "PerformanceTask";
+        public override string FriendlyName => "Performance";
+        public override Guid Guid { get; } = Guid.ParseExact("af388b090a5249659fb9b41e5542718a", "N");
 
-        private PerformanceTask()
+        private PerformanceCounter CpuPerformanceCounter { get; } = new PerformanceCounter
         {
-            _guid = Guid.ParseExact("af388b090a5249659fb9b41e5542718a", "N");
-        }
+            CategoryName = "Processor",
+            CounterName = "% Processor Time",
+            InstanceName = "_Total"
+        };
 
-        public override string Name
+        private PerformanceCounter DiskPerformanceCounter { get; } = new PerformanceCounter
         {
-            get { return "PerformanceTask"; }
-        }
-        public override string FriendlyName
-        {
-            get { return "Performance"; }
-        }
-        public override Guid Guid { get { return _guid; } }
-
-        private PerformanceCounter _cpuPerformanceCounter;
-        private PerformanceCounter CpuPerformanceCounter
-        {
-            get
-            {
-                return _cpuPerformanceCounter ?? (_cpuPerformanceCounter =
-                    new PerformanceCounter
-                    {
-                        CategoryName = "Processor",
-                        CounterName = "% Processor Time",
-                        InstanceName = "_Total"
-                    });
-            }
-        }
-
-        private PerformanceCounter _diskPerformanceCounter;
-        private PerformanceCounter DiskPerformanceCounter
-        {
-            get
-            {
-                return _diskPerformanceCounter ?? (_diskPerformanceCounter =
-                    new PerformanceCounter
-                    {
-                        CategoryName = "LogicalDisk",
-                        CounterName = "Avg. Disk sec/Transfer",
-                        InstanceName = "_Total"
-                    });
-            }
-        }
-
+            CategoryName = "LogicalDisk",
+            CounterName = "Avg. Disk sec/Transfer",
+            InstanceName = "_Total"
+        };
 
         public override async Task<IBackgroundTask> Execute(object state)
         {
-            ReadPerformance();
+            var taskResult = await ReadPerformance();
+
+            SaveHistory<PerformanceTask>(taskResult);
+
+            TaskListener.HandleResult(taskResult);
 
             return this;
         }
 
-        private void ReadPerformance()
+        private async Task<PerformanceTaskResult> ReadPerformance()
         {
             var cpuValue = CpuPerformanceCounter.NextValue();
 
@@ -85,11 +60,7 @@ namespace Scoop.Core.BackgroundTasks
             var performanceInfo = PerformanceInfo.Instance.GetPerformanceInfo();
             var memoryUsedPercent = 1.0 - (performanceInfo.PhysicalAvailableBytes / (double)performanceInfo.PhysicalTotalBytes);
 
-            var taskResult = new PerformanceTaskResult(this, cpuValue, memoryUsedPercent, diskValue);
-
-            SaveHistory<PerformanceTask>(taskResult);
-
-            TaskListener.HandleResult(taskResult);
+            return new PerformanceTaskResult(this, cpuValue, memoryUsedPercent, diskValue);
         }
     }
 }

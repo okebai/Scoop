@@ -19,29 +19,19 @@ namespace Scoop.Core.BackgroundTasks
     public class AutoUpdateTask : BackgroundTask
     {
         private static readonly Lazy<AutoUpdateTask> _instance = new Lazy<AutoUpdateTask>(() => new AutoUpdateTask());
-        public static AutoUpdateTask Instance { get { return _instance.Value; } }
+        public static AutoUpdateTask Instance => _instance.Value;
 
         protected override int HistoryMaxItemCount() { return BackgroundTaskConfiguration.Instance.AutoUpdateHistoryMaxItemCount; }
         protected override TimeSpan Interval() { return BackgroundTaskConfiguration.Instance.AutoUpdateInterval; }
-
         private readonly GitHubClient _gitHubClient;
-        private readonly Guid _guid;
+        public override string Name => "AutoUpdateTask";
+        public override string FriendlyName => "Auto update";
+        public override Guid Guid { get; } = Guid.ParseExact("c5036654798b4437b7d4ef3ded26fe12", "N");
 
         private AutoUpdateTask()
         {
             _gitHubClient = new GitHubClient(new ProductHeaderValue("Scoop.Service-UpdateCheck"));
-            _guid = Guid.ParseExact("c5036654798b4437b7d4ef3ded26fe12", "N");
         }
-
-        public override string Name
-        {
-            get { return "AutoUpdateTask"; }
-        }
-        public override string FriendlyName
-        {
-            get { return "Auto update"; }
-        }
-        public override Guid Guid { get { return _guid; } }
 
         public override async Task<IBackgroundTask> Execute(object state)
         {
@@ -66,7 +56,7 @@ namespace Scoop.Core.BackgroundTasks
 
         private void StartInstallProcess(string updateInstallerPath, SemVersion currentversion, SemVersion latestVersion)
         {
-            var logFileName = string.Format("scoop.service-autoupdate-{0}-v{1}to{2}.log", DateTime.Now.ToString("yyyyMMddTHHmmss"), currentversion, latestVersion);
+            var logFileName = $"scoop.service-autoupdate-{DateTime.Now.ToString("yyyyMMddTHHmmss")}-v{currentversion}to{latestVersion}.log";
             var logDirectory = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, ConfigurationManager.AppSettings.Get("BackgroundTask.AutoUpdate.LogDirectory"));
             if (!Directory.Exists(logDirectory))
                 Directory.CreateDirectory(logDirectory);
@@ -74,7 +64,7 @@ namespace Scoop.Core.BackgroundTasks
             var logPath = Path.Combine(logDirectory, logFileName);
 
             var msiExecPath = Path.Combine(Environment.SystemDirectory, "msiexec.exe");
-            var msiExecArguments = string.Format(@"/i ""{0}"" /passive /l* ""{1}""", updateInstallerPath, logPath);
+            var msiExecArguments = $@"/i ""{updateInstallerPath}"" /passive /l* ""{logPath}""";
 
             Process.Start(new ProcessStartInfo(msiExecPath, msiExecArguments));
         }

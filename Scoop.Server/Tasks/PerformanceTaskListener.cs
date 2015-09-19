@@ -13,7 +13,7 @@ namespace Scoop.Server.Tasks
     public class PerformanceTaskListener : IBackgroundTaskListener
     {
         private static readonly Lazy<PerformanceTaskListener> _instance = new Lazy<PerformanceTaskListener>(() => new PerformanceTaskListener());
-        public static PerformanceTaskListener Instance { get { return _instance.Value; } }
+        public static PerformanceTaskListener Instance => _instance.Value;
 
         private readonly IHubContext _hubContext;
 

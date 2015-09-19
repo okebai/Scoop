@@ -22,10 +22,11 @@ $(function () {
             ko.utils.domNodeDisposal.addDisposeCallback(element, function () {
                 el.select2('destroy');
             });
-        }, this.update = function (element, valueAccessor, allBindings, viewModel, bindingContext) {
-            allBindings().selectedOptions();
-            $(element).trigger('change');
-        };
+        },
+            this.update = function (element, valueAccessor, allBindings, viewModel, bindingContext) {
+                allBindings().selectedOptions();
+                $(element).trigger('change');
+            };
     };
     var connectionService = new Scoop.ConnectionService();
     var connectionViewModel = new Scoop.ConnectionViewModel(connectionService);

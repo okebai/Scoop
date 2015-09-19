@@ -23,18 +23,24 @@ namespace Scoop.Core.BackgroundTasks
         protected virtual TimeSpan Interval() { return BackgroundTaskConfiguration.Instance.DefaultInterval; }
 
         protected Timer Timer { get; private set; }
+        private readonly object _timerLock;
         protected IBackgroundTaskListener TaskListener { get; set; }
 
         protected BackgroundTask()
         {
+            _timerLock = new object();
             Timer = new Timer(TimerTrigger, null, TimeSpan.FromMilliseconds(-1), TimeSpan.FromMilliseconds(-1));
 
             HostingEnvironment.RegisterObject(this);
         }
 
-        public void ReloadTimer()
+        public void RestartTimer()
         {
             Timer.Change(TimeSpan.Zero, Interval());
+        }
+        public void PauseTimer()
+        {
+            Timer.Change(TimeSpan.FromMilliseconds(-1), Interval());
         }
 
         public IBackgroundTask Start(IBackgroundTaskListener taskListener = null)
@@ -42,15 +48,32 @@ namespace Scoop.Core.BackgroundTasks
             if (taskListener != null)
                 TaskListener = taskListener;
 
-            ReloadTimer();
+            RestartTimer();
+
+            return this;
+        }
+        public IBackgroundTask Stop()
+        {
+            TaskListener = null;
+            PauseTimer();
 
             return this;
         }
 
         private void TimerTrigger(object state)
         {
-            Iteration++;
-            Execute(state);
+            if (Monitor.TryEnter(_timerLock))
+            {
+                try
+                {
+                    Iteration++;
+                    Execute(state);
+                }
+                finally
+                {
+                    Monitor.Exit(_timerLock);
+                }
+            }
         }
 
         public abstract Task<IBackgroundTask> Execute(object state);

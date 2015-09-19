@@ -72,6 +72,7 @@ namespace Scoop.Core.ConnectionStorage
 
             var connectionsJson = JsonConvert.SerializeObject(Connections, new JsonSerializerSettings { ContractResolver = new CamelCasePropertyNamesContractResolver() });
             var connectionCookie = new HttpCookie(_cookieName, connectionsJson);
+            connectionCookie.Expires = DateTime.Now.AddYears(1);
 
             HttpContext.Response.Cookies.Add(connectionCookie);
         }

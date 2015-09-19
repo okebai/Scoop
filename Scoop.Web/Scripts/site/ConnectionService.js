@@ -40,9 +40,7 @@ var Scoop;
                 var hubProxy = null;
                 if (task.hubName != null) {
                     hubProxy = hubConnection.createHubProxy(task.hubName);
-                    onConnectionStart.done(function () {
-                        task.onConnect(hubProxy);
-                    });
+                    onConnectionStart.done(function () { task.onConnect(hubProxy); });
                 }
                 task.init(hubProxy, connection);
             });

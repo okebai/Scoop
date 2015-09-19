@@ -6,12 +6,12 @@ using Microsoft.AspNet.SignalR;
 using Microsoft.Owin;
 using Owin;
 using Scoop.Server;
-using Microsoft.Owin.Cors;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Serialization;
 using Scoop.Core.BackgroundTasks;
 using Scoop.Core.BackgroundTasks.Interfaces;
 using Scoop.Server.Tasks;
+using Microsoft.Owin.Cors;
 
 [assembly: OwinStartup(typeof(Startup))]
 
@@ -64,6 +64,7 @@ namespace Scoop.Server
             Tasks = new List<IBackgroundTask>
             {
                 PerformanceTask.Instance.Start(PerformanceTaskListener.Instance),
+                //ServerStatusTask.Instance.Start(ServerStatusTaskListener.Instance),
                 //AutoUpdateTask.Instance.Start(),
             };
         }

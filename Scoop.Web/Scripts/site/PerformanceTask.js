@@ -40,7 +40,9 @@ var Scoop;
             }
             var threeMinuesAgo = moment().add(-3, 'minutes');
             for (var i = 0; i < this.performanceData[connectionGuid].length; i++) {
-                this.performanceData[connectionGuid][i] = $.grep(this.performanceData[connectionGuid][i], function (item, n) { return moment(item.x).isAfter(threeMinuesAgo); });
+                this.performanceData[connectionGuid][i] = $.grep(this.performanceData[connectionGuid][i], function (item, n) {
+                    return moment(item.x).isAfter(threeMinuesAgo);
+                });
             }
             this.performanceData[connectionGuid][0].push({ x: moment(timestamp).toDate(), y: values['0'] / 100.0 });
             this.performanceData[connectionGuid][1].push({ x: moment(timestamp).toDate(), y: values['1'] });

@@ -17,10 +17,7 @@ namespace Scoop.Core.Configuration
             return instance;
         });
 
-        public static BackgroundTaskConfiguration Instance
-        {
-            get { return _instance.Value; }
-        }
+        public static BackgroundTaskConfiguration Instance => _instance.Value;
 
         public TimeSpan DefaultInterval { get; set; }
         public int DefaultHistoryMaxItemCount { get; set; }
@@ -31,16 +28,22 @@ namespace Scoop.Core.Configuration
         public TimeSpan AutoUpdateInterval { get; set; }
         public int AutoUpdateHistoryMaxItemCount { get; set; }
 
+        public TimeSpan ServerStatusInterval { get; set; }
+        public int ServerStatusHistoryMaxItemCount { get; set; }
+
         public BackgroundTaskConfiguration()
         {
             DefaultInterval = TimeSpan.FromSeconds(10);
             DefaultHistoryMaxItemCount = 10;
 
-            PerformanceInterval = TimeSpan.FromSeconds(2);
+            PerformanceInterval = TimeSpan.FromSeconds(3);
             PerformanceHistoryMaxItemCount = 100;
 
             AutoUpdateInterval = TimeSpan.FromHours(2);
             AutoUpdateHistoryMaxItemCount = 5;
+
+            ServerStatusInterval = TimeSpan.FromMinutes(5);
+            ServerStatusHistoryMaxItemCount = 2;
         }
     }
 }

@@ -13,8 +13,11 @@ namespace Scoop.Core.BackgroundTasks.Interfaces
         [JsonIgnore]
         int Iteration { get; }
 
-        void ReloadTimer();
+        void RestartTimer();
+        void PauseTimer();
         IBackgroundTask Start(IBackgroundTaskListener taskListener);
+        IBackgroundTask Stop();
+
         Task<IBackgroundTask> Execute(object state);
         void Stop(bool immediate);
 
