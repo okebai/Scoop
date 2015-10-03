@@ -12,19 +12,16 @@ namespace Scoop.Server.Tasks
 {
     public class PerformanceTaskListener : IBackgroundTaskListener
     {
-        private static readonly Lazy<PerformanceTaskListener> _instance = new Lazy<PerformanceTaskListener>(() => new PerformanceTaskListener());
-        public static PerformanceTaskListener Instance => _instance.Value;
+        private readonly IHubContext<PerformanceHub> _hubContext;
 
-        private readonly IHubContext _hubContext;
-
-        private PerformanceTaskListener()
+        public PerformanceTaskListener(IHubContext<PerformanceHub> hubContext)
         {
-            _hubContext = GlobalHost.ConnectionManager.GetHubContext<PerformanceHub>();
+            _hubContext = hubContext;
         }
 
-        public void HandleResult(IBackgroundTaskResult taskResult)
+        public async Task HandleResult(IBackgroundTaskResult taskResult)
         {
-            _hubContext.Clients.All.updatePerformance(taskResult.TaskName, taskResult.Values, taskResult.Timestamp);
+            await _hubContext.Clients.All.updatePerformance(taskResult.TaskName, taskResult.Values, taskResult.Timestamp);
         }
     }
 }

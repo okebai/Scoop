@@ -8,9 +8,9 @@ using System.Net.Http;
 using System.Reflection;
 using System.Text;
 using System.Threading.Tasks;
-using System.Xml.Schema;
 using Octokit;
 using Scoop.Core.BackgroundTasks.Interfaces;
+using Scoop.Core.Caching;
 using Scoop.Core.Configuration;
 using Semver;
 
@@ -18,9 +18,6 @@ namespace Scoop.Core.BackgroundTasks
 {
     public class AutoUpdateTask : BackgroundTask
     {
-        private static readonly Lazy<AutoUpdateTask> _instance = new Lazy<AutoUpdateTask>(() => new AutoUpdateTask());
-        public static AutoUpdateTask Instance => _instance.Value;
-
         protected override int HistoryMaxItemCount() { return BackgroundTaskConfiguration.Instance.AutoUpdateHistoryMaxItemCount; }
         protected override TimeSpan Interval() { return BackgroundTaskConfiguration.Instance.AutoUpdateInterval; }
         private readonly GitHubClient _gitHubClient;
@@ -28,7 +25,7 @@ namespace Scoop.Core.BackgroundTasks
         public override string FriendlyName => "Auto update";
         public override Guid Guid { get; } = Guid.ParseExact("c5036654798b4437b7d4ef3ded26fe12", "N");
 
-        private AutoUpdateTask()
+        public AutoUpdateTask(CacheHandler cacheHandler) : base(cacheHandler)
         {
             _gitHubClient = new GitHubClient(new ProductHeaderValue("Scoop.Service-UpdateCheck"));
         }

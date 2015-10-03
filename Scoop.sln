@@ -6,19 +6,34 @@ MinimumVisualStudioVersion = 14.0.23107.0
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{4A62B555-CED8-4419-9052-0DD8A7D5C55B}"
 	ProjectSection(SolutionItems) = preProject
 		.gitignore = .gitignore
+		global.json = global.json
 		README.md = README.md
 		WebEssentials-Settings.json = WebEssentials-Settings.json
 	EndProjectSection
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Scoop.Core", "Scoop.Core\Scoop.Core.csproj", "{E22C474C-F278-448E-85DA-440B6E656F2F}"
-EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Scoop.Server", "Scoop.Server\Scoop.Server.csproj", "{73E630C4-01B3-4FDC-A68B-DCCD6E84BE1E}"
+Project("{8BB2217D-0F2D-49D1-97BC-3654ED321F3B}") = "Scoop.Core", "Scoop.Core\Scoop.Core.xproj", "{E22C474C-F278-448E-85DA-440B6E656F2F}"
+	ProjectSection(ProjectDependencies) = postProject
+		{B9717F9E-853F-45E8-B5D8-88BB41EA0908} = {B9717F9E-853F-45E8-B5D8-88BB41EA0908}
+	EndProjectSection
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Scoop.Service", "Scoop.Service\Scoop.Service.csproj", "{87FD3CEA-BD17-4193-96C2-D2C1FA3985C1}"
 EndProject
 Project("{930C7802-8A8C-48F9-8165-68863BCCD9DD}") = "Scoop.Service.Installer", "Scoop.Service.Installer\Scoop.Service.Installer.wixproj", "{4D92EFD1-3D9F-4A0A-B610-3F19C3431025}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Scoop.Web", "Scoop.Web\Scoop.Web.csproj", "{B85568C4-DEA7-470A-9C33-9C59D14F2E83}"
+EndProject
+Project("{8BB2217D-0F2D-49D1-97BC-3654ED321F3B}") = "Scoop.Web.vNext", "Scoop.Web.vNext\Scoop.Web.vNext.xproj", "{873F4E5A-72B5-4065-B590-314F90304805}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Scoop.Lib", "Scoop.Lib\Scoop.Lib.csproj", "{B9717F9E-853F-45E8-B5D8-88BB41EA0908}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "wrap", "wrap", "{05175514-93B2-4909-887B-BC90606EF109}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Interop.WUApiLib", "Interop.WUApiLib", "{67315499-8676-4103-84C8-C23CE332FCD6}"
+	ProjectSection(SolutionItems) = preProject
+		wrap\Interop.WUApiLib\project.json = wrap\Interop.WUApiLib\project.json
+	EndProjectSection
+EndProject
+Project("{8BB2217D-0F2D-49D1-97BC-3654ED321F3B}") = "Scoop.Server", "Scoop.Server\Scoop.Server.xproj", "{AAB52BD8-0E64-46C8-9DA2-A56EE5D21FAF}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -30,10 +45,6 @@ Global
 		{E22C474C-F278-448E-85DA-440B6E656F2F}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{E22C474C-F278-448E-85DA-440B6E656F2F}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{E22C474C-F278-448E-85DA-440B6E656F2F}.Release|Any CPU.Build.0 = Release|Any CPU
-		{73E630C4-01B3-4FDC-A68B-DCCD6E84BE1E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{73E630C4-01B3-4FDC-A68B-DCCD6E84BE1E}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{73E630C4-01B3-4FDC-A68B-DCCD6E84BE1E}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{73E630C4-01B3-4FDC-A68B-DCCD6E84BE1E}.Release|Any CPU.Build.0 = Release|Any CPU
 		{87FD3CEA-BD17-4193-96C2-D2C1FA3985C1}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{87FD3CEA-BD17-4193-96C2-D2C1FA3985C1}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{87FD3CEA-BD17-4193-96C2-D2C1FA3985C1}.Release|Any CPU.ActiveCfg = Release|Any CPU
@@ -44,8 +55,24 @@ Global
 		{B85568C4-DEA7-470A-9C33-9C59D14F2E83}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{B85568C4-DEA7-470A-9C33-9C59D14F2E83}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{B85568C4-DEA7-470A-9C33-9C59D14F2E83}.Release|Any CPU.Build.0 = Release|Any CPU
+		{873F4E5A-72B5-4065-B590-314F90304805}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{873F4E5A-72B5-4065-B590-314F90304805}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{873F4E5A-72B5-4065-B590-314F90304805}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{873F4E5A-72B5-4065-B590-314F90304805}.Release|Any CPU.Build.0 = Release|Any CPU
+		{B9717F9E-853F-45E8-B5D8-88BB41EA0908}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{B9717F9E-853F-45E8-B5D8-88BB41EA0908}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{B9717F9E-853F-45E8-B5D8-88BB41EA0908}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{B9717F9E-853F-45E8-B5D8-88BB41EA0908}.Release|Any CPU.Build.0 = Release|Any CPU
+		{AAB52BD8-0E64-46C8-9DA2-A56EE5D21FAF}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{AAB52BD8-0E64-46C8-9DA2-A56EE5D21FAF}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{AAB52BD8-0E64-46C8-9DA2-A56EE5D21FAF}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{AAB52BD8-0E64-46C8-9DA2-A56EE5D21FAF}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{05175514-93B2-4909-887B-BC90606EF109} = {4A62B555-CED8-4419-9052-0DD8A7D5C55B}
+		{67315499-8676-4103-84C8-C23CE332FCD6} = {05175514-93B2-4909-887B-BC90606EF109}
 	EndGlobalSection
 EndGlobal

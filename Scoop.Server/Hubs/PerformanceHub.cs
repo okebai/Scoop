@@ -10,9 +10,15 @@ namespace Scoop.Server.Hubs
 {
     public class PerformanceHub : BaseHub
     {
+        private readonly PerformanceTask _performanceTask;
+        public PerformanceHub(PerformanceTask performanceTask)
+        {
+            _performanceTask = performanceTask;
+        }
+
         public void GetPerformanceHistory()
         {
-            var taskResultHistory = PerformanceTask.Instance.GetHistory<PerformanceTask>();
+            var taskResultHistory = _performanceTask.GetHistory<PerformanceTask>();
 
             Clients.Caller.updatePerformanceHistory(taskResultHistory.TaskResults);
         }

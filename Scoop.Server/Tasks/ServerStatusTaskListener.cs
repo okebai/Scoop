@@ -11,19 +11,16 @@ namespace Scoop.Server.Tasks
 {
     public class ServerStatusTaskListener : IBackgroundTaskListener
     {
-        private static readonly Lazy<ServerStatusTaskListener> _instance = new Lazy<ServerStatusTaskListener>(() => new ServerStatusTaskListener());
-        public static ServerStatusTaskListener Instance => _instance.Value;
+        private readonly IHubContext<ServerStatusHub> _hubContext;
 
-        private readonly IHubContext _hubContext;
-
-        private ServerStatusTaskListener()
+        public ServerStatusTaskListener(IHubContext<ServerStatusHub> hubContext)
         {
-            _hubContext = GlobalHost.ConnectionManager.GetHubContext<ServerStatusHub>();
+            _hubContext = hubContext;
         }
 
-        public void HandleResult(IBackgroundTaskResult taskResult)
+        public async Task HandleResult(IBackgroundTaskResult taskResult)
         {
-            _hubContext.Clients.All.updateServerStatus(taskResult.TaskName, taskResult.Values, taskResult.Timestamp);
+            await _hubContext.Clients.All.updateServerStatus(taskResult.TaskName, taskResult.Values, taskResult.Timestamp);
         }
     }
 }

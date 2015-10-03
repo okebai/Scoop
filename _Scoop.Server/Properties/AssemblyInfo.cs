@@ -5,11 +5,11 @@ using System.Runtime.InteropServices;
 // General Information about an assembly is controlled through the following 
 // set of attributes. Change these attribute values to modify the information
 // associated with an assembly.
-[assembly: AssemblyTitle("Scoop.Core")]
+[assembly: AssemblyTitle("Scoop.Server")]
 [assembly: AssemblyDescription("")]
 [assembly: AssemblyConfiguration("")]
 [assembly: AssemblyCompany("")]
-[assembly: AssemblyProduct("Scoop.Core")]
+[assembly: AssemblyProduct("Scoop.Server")]
 [assembly: AssemblyCopyright("Copyright ©  2015")]
 [assembly: AssemblyTrademark("")]
 [assembly: AssemblyCulture("")]
@@ -20,7 +20,7 @@ using System.Runtime.InteropServices;
 [assembly: ComVisible(false)]
 
 // The following GUID is for the ID of the typelib if this project is exposed to COM
-[assembly: Guid("bd63b6f6-d0f5-4525-9940-8fc2bf952344")]
+[assembly: Guid("3c11e38e-49fe-4cb3-871d-3b8820ef5d7b")]
 
 // Version information for an assembly consists of the following four values:
 //

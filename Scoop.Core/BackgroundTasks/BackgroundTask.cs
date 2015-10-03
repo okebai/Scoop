@@ -5,15 +5,17 @@ using System.Linq;
 using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
-using System.Web.Hosting;
 using Scoop.Core.Caching;
 using Scoop.Core.BackgroundTasks.Interfaces;
 using Scoop.Core.Configuration;
+using Microsoft.AspNet.Hosting;
 
 namespace Scoop.Core.BackgroundTasks
 {
-    public abstract class BackgroundTask : IBackgroundTask, IRegisteredObject
+    public abstract class BackgroundTask : IBackgroundTask
     {
+        private readonly CacheHandler _cacheHandler;
+
         public abstract string Name { get; }
         public abstract string FriendlyName { get; }
         public abstract Guid Guid { get; }
@@ -26,12 +28,14 @@ namespace Scoop.Core.BackgroundTasks
         private readonly object _timerLock;
         protected IBackgroundTaskListener TaskListener { get; set; }
 
-        protected BackgroundTask()
+        protected BackgroundTask(CacheHandler cacheHandler)
         {
+            _cacheHandler = cacheHandler;
             _timerLock = new object();
             Timer = new Timer(TimerTrigger, null, TimeSpan.FromMilliseconds(-1), TimeSpan.FromMilliseconds(-1));
 
-            HostingEnvironment.RegisterObject(this);
+            //TODO Trigger Start() from Startup
+            //HostingEnvironment.RegisterObject(this);
         }
 
         public void RestartTimer()
@@ -82,12 +86,13 @@ namespace Scoop.Core.BackgroundTasks
         {
             Timer.Dispose();
 
-            HostingEnvironment.UnregisterObject(this);
+            // TODO Add dispose logic, maybe look here http://stackoverflow.com/a/27714453
+            //HostingEnvironment.UnregisterObject(this);
         }
 
         public BackgroundTaskResultHistory<T> GetHistory<T>() where T : class, IBackgroundTask
         {
-            return CacheHandler.Instance.Get<BackgroundTaskResultHistory<T>>();
+            return _cacheHandler.Get<BackgroundTaskResultHistory<T>>();
         }
 
         public BackgroundTaskResultHistory<T> SaveHistory<T>(IBackgroundTaskResult taskResult) where T : class, IBackgroundTask
@@ -103,7 +108,7 @@ namespace Scoop.Core.BackgroundTasks
 
             taskResultHistory.TaskResults.Add(taskResult);
 
-            CacheHandler.Instance.Set(taskResultHistory);
+            _cacheHandler.Set(taskResultHistory);
 
             return taskResultHistory;
         }

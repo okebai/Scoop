@@ -1,69 +1,73 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Net;
-using Microsoft.AspNet.SignalR;
-using Microsoft.Owin;
-using Owin;
-using Scoop.Server;
+using System.Threading.Tasks;
+using Microsoft.AspNet.Builder;
+using Microsoft.AspNet.Cors.Core;
+using Microsoft.AspNet.Http;
+using Microsoft.Framework.Caching.Memory;
+using Microsoft.Framework.DependencyInjection;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Serialization;
 using Scoop.Core.BackgroundTasks;
 using Scoop.Core.BackgroundTasks.Interfaces;
+using Scoop.Core.Caching;
 using Scoop.Server.Tasks;
-using Microsoft.Owin.Cors;
-
-[assembly: OwinStartup(typeof(Startup))]
 
 namespace Scoop.Server
 {
     public class Startup
     {
-        public const string Url = "http://*:60080";
         public static List<IBackgroundTask> Tasks { get; set; }
         private readonly JsonSerializerSettings _jsonSerializerSettings = new JsonSerializerSettings { ContractResolver = new CamelCasePropertyNamesContractResolver() };
 
-        public void Configuration(IAppBuilder app)
+        // For more information on how to configure your application, visit http://go.microsoft.com/fwlink/?LinkID=398940
+        public void ConfigureServices(IServiceCollection services)
         {
-            app.UseCors(CorsOptions.AllowAll);
+            services.AddSingleton<IMemoryCache, MemoryCache>();
+            services.AddSingleton<CacheHandler>();
+            services.AddSingleton<PerformanceTask>();
+            services.AddSingleton<PerformanceTaskListener>();
 
-            // At the time (2015-01-18) Chrome has issues with NTLM authentication and WebSockets. SignalR can handle this though, by falling back on other protocols. (https://code.google.com/p/chromium/issues/detail?id=123862)
-            // http://stackoverflow.com/questions/17485046/signalr-cross-domain-connections-with-self-hosting-and-authentication
-            // http://stackoverflow.com/questions/17457382/windows-authentication-with-signalr-and-owin-self-hosting
-            //var listener = (HttpListener)app.Properties[typeof(HttpListener).FullName];
-            //listener.AuthenticationSchemeSelectorDelegate += request =>
-            //    request.Headers.Get("Access-Control-Request-Method") != null
-            //        ? AuthenticationSchemes.Anonymous
-            //        : AuthenticationSchemes.Ntlm;
+            services.AddCors();
+            //services.AddCaching();
+            services.AddSignalR(options =>
+            {
+                options.Hubs.EnableDetailedErrors = true;
+            });
+        }
+
+        public void Configure(IApplicationBuilder app)
+        {
+            app.UseCors(policy => policy.AllowAnyOrigin());
 
             app.Map("/AvailableTasks", builder =>
             {
-                builder.Use((context, next) =>
+                builder.Use(async (context, next) =>
                 {
                     var availableTasksJson = JsonConvert.SerializeObject(Tasks, _jsonSerializerSettings);
 
                     var response = context.Response;
                     response.StatusCode = 200;
                     response.ContentType = "application/json";
-                    response.Write(availableTasksJson);
+                    await response.WriteAsync(availableTasksJson);
 
-                    return next();
+                    await next();
                 });
             });
 
-            app.MapSignalR(new HubConfiguration
-            {
-                EnableDetailedErrors = true
-            });
+            app.UseSignalR();
 
-            InitializeTasks();
+            InitializeTasks(app);
         }
-
-        public void InitializeTasks()
+        public void InitializeTasks(IApplicationBuilder app)
         {
+            var performanceTask = app.ApplicationServices.GetService<PerformanceTask>();
+            var performanceTaskListener = app.ApplicationServices.GetService<PerformanceTaskListener>();
+
             Tasks = new List<IBackgroundTask>
             {
-                PerformanceTask.Instance.Start(PerformanceTaskListener.Instance),
+                performanceTask.Start(performanceTaskListener),
                 //ServerStatusTask.Instance.Start(ServerStatusTaskListener.Instance),
                 //AutoUpdateTask.Instance.Start(),
             };

@@ -9,9 +9,9 @@ namespace Scoop.Core.BackgroundTasks
 {
     public class VoidTaskListener : IBackgroundTaskListener
     {
-        public void HandleResult(IBackgroundTaskResult taskResult)
+        public async Task HandleResult(IBackgroundTaskResult taskResult)
         {
-            // Do nothing
+            await Task.Delay(0);
         }
     }
 }

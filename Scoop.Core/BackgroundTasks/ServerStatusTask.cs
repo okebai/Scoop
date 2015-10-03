@@ -5,6 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using Scoop.Core.BackgroundTasks.Interfaces;
 using Scoop.Core.BackgroundTasks.ServerStatus;
+using Scoop.Core.Caching;
 using Scoop.Core.Configuration;
 using WUApiLib;
 
@@ -12,10 +13,7 @@ namespace Scoop.Core.BackgroundTasks
 {
     public class ServerStatusTask : BackgroundTask
     {
-        private static readonly Lazy<ServerStatusTask> _instance = new Lazy<ServerStatusTask>(() => new ServerStatusTask());
-        public static ServerStatusTask Instance => _instance.Value;
-
-        private ServerStatusTask() { }
+        public ServerStatusTask(CacheHandler cacheHandler) : base(cacheHandler) { }
 
         protected override int HistoryMaxItemCount() { return BackgroundTaskConfiguration.Instance.PerformanceHistoryMaxItemCount; }
         protected override TimeSpan Interval() { return BackgroundTaskConfiguration.Instance.PerformanceInterval; }
@@ -34,7 +32,7 @@ namespace Scoop.Core.BackgroundTasks
 
             SaveHistory<ServerStatusTask>(serverStatusTaskResult);
 
-            TaskListener.HandleResult(serverStatusTaskResult);
+            await TaskListener.HandleResult(serverStatusTaskResult);
 
             return this;
         }
