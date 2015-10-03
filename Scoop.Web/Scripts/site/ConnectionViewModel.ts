@@ -15,7 +15,7 @@
                 autoConnect: false,
             });
 
-            this.connections = ko.observableArray([]);
+            this.connections = ko.observableArray<IConnection>([]);
             this.tasksCache = {};
 
             this.updateConnections();
@@ -30,7 +30,7 @@
                             '{root}[i]': (item: IConnection) => {
                                 item.isConnected = ko.observable(false);
                                 item.currentHubConnection = null;
-                                item.chosenTasks = ko.observableArray([]);
+                                item.chosenTasks = ko.observableArray<ITask>([]);
                             }
                         }
                     }
