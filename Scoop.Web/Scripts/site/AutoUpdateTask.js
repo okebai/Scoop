@@ -10,4 +10,3 @@ var Scoop;
     })();
     Scoop.AutoUpdateTask = AutoUpdateTask;
 })(Scoop || (Scoop = {}));
-//# sourceMappingURL=AutoUpdateTask.js.map

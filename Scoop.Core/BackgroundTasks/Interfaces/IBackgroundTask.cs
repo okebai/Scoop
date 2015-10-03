@@ -15,7 +15,7 @@ namespace Scoop.Core.BackgroundTasks.Interfaces
 
         void RestartTimer();
         void PauseTimer();
-        IBackgroundTask Start(IBackgroundTaskListener taskListener);
+        IBackgroundTask Start();
         IBackgroundTask Stop();
 
         Task<IBackgroundTask> Execute(object state);

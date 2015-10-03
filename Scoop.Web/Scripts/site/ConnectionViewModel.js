@@ -92,4 +92,3 @@ var Scoop;
     })();
     Scoop.ConnectionViewModel = ConnectionViewModel;
 })(Scoop || (Scoop = {}));
-//# sourceMappingURL=ConnectionViewModel.js.map

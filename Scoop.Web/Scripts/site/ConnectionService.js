@@ -64,4 +64,3 @@ var Scoop;
     })();
     Scoop.ConnectionService = ConnectionService;
 })(Scoop || (Scoop = {}));
-//# sourceMappingURL=ConnectionService.js.map

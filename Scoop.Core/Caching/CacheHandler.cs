@@ -9,12 +9,8 @@ namespace Scoop.Core.Caching
 {
     public class CacheHandler
     {
-        private static readonly Lazy<CacheHandler> _instance = new Lazy<CacheHandler>(() => new CacheHandler());
-        public static CacheHandler Instance { get { return _instance.Value; } }
-
         public ConcurrentDictionary<string, bool> CacheKeys { get; private set; }
-
-        private CacheHandler()
+        public CacheHandler()
         {
             CacheKeys = new ConcurrentDictionary<string, bool>();
         }

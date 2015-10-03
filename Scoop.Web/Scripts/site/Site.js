@@ -32,4 +32,3 @@ $(function () {
     var connectionViewModel = new Scoop.ConnectionViewModel(connectionService);
     ko.applyBindings(connectionViewModel);
 });
-//# sourceMappingURL=Site.js.map

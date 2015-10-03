@@ -9,16 +9,6 @@ namespace Scoop.Core.Configuration
 {
     public class BackgroundTaskConfiguration : AppConfiguration
     {
-        private static readonly Lazy<BackgroundTaskConfiguration> _instance = new Lazy<BackgroundTaskConfiguration>(() =>
-        {
-            var instance = new BackgroundTaskConfiguration();
-            instance.Initialize();
-
-            return instance;
-        });
-
-        public static BackgroundTaskConfiguration Instance => _instance.Value;
-
         public TimeSpan DefaultInterval { get; set; }
         public int DefaultHistoryMaxItemCount { get; set; }
 
@@ -44,6 +34,8 @@ namespace Scoop.Core.Configuration
 
             ServerStatusInterval = TimeSpan.FromMinutes(5);
             ServerStatusHistoryMaxItemCount = 2;
+
+            Initialize();
         }
     }
 }

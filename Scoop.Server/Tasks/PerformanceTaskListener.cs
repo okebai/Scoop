@@ -10,21 +10,18 @@ using Scoop.Server.Hubs;
 
 namespace Scoop.Server.Tasks
 {
-    public class PerformanceTaskListener : IBackgroundTaskListener
+    public class PerformanceTaskListener : IBackgroundTaskListener<PerformanceTask>
     {
-        private static readonly Lazy<PerformanceTaskListener> _instance = new Lazy<PerformanceTaskListener>(() => new PerformanceTaskListener());
-        public static PerformanceTaskListener Instance => _instance.Value;
-
         private readonly IHubContext _hubContext;
 
-        private PerformanceTaskListener()
+        public PerformanceTaskListener()
         {
             _hubContext = GlobalHost.ConnectionManager.GetHubContext<PerformanceHub>();
         }
 
-        public void HandleResult(IBackgroundTaskResult taskResult)
+        public async Task HandleResult(IBackgroundTaskResult taskResult)
         {
-            _hubContext.Clients.All.updatePerformance(taskResult.TaskName, taskResult.Values, taskResult.Timestamp);
+            await _hubContext.Clients.All.updatePerformance(taskResult.TaskName, taskResult.Values, taskResult.Timestamp);
         }
     }
 }

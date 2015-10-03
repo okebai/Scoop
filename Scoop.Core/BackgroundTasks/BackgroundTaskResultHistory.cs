@@ -11,10 +11,6 @@ namespace Scoop.Core.BackgroundTasks
     public class BackgroundTaskResultHistory<T> : ICacheHandlerItem where T : class, IBackgroundTask
     {
         public List<IBackgroundTaskResult> TaskResults { get; set; }
-
-        public string CacheKey
-        {
-            get { return "BackgroundTaskResultHistory_" + typeof(T).FullName; }
-        }
+        public string CacheKey => "BackgroundTaskResultHistory_" + typeof(T).FullName;
     }
 }

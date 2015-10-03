@@ -9,9 +9,15 @@ namespace Scoop.Server.Hubs
 {
     public class ServerStatusHub : BaseHub
     {
+        private readonly ServerStatusTask _serverStatusTask;
+        public ServerStatusHub(ServerStatusTask serverStatusTask)
+        {
+            _serverStatusTask = serverStatusTask;
+        }
+
         public void GetServerStatusHistory()
         {
-            var taskResultHistory = ServerStatusTask.Instance.GetHistory<ServerStatusTask>();
+            var taskResultHistory = _serverStatusTask.GetHistory<ServerStatusTask>();
 
             Clients.Caller.updatePerformanceHistory(taskResultHistory.TaskResults);
         }

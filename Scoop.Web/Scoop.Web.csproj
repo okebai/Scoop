@@ -197,6 +197,7 @@
     <Content Include="Content\bootstrap\bootstrap.less" />
     <Content Include="Content\bootstrap\badges.less" />
     <Content Include="Content\bootstrap\alerts.less" />
+    <None Include="bundleconfig.json" />
     <None Include="Content\chartist\chartist.scss" />
     <Content Include="Content\chartist\chartist.css">
       <DependentUpon>chartist.scss</DependentUpon>
@@ -267,32 +268,21 @@
     <Content Include="Scripts\site\AutoUpdateTask.js">
       <DependentUpon>AutoUpdateTask.ts</DependentUpon>
     </Content>
-    <Content Include="Scripts\site\AutoUpdateTask.min.js">
-      <DependentUpon>AutoUpdateTask.js</DependentUpon>
-    </Content>
     <Content Include="Scripts\site\ConnectionService.js">
       <DependentUpon>ConnectionService.ts</DependentUpon>
-    </Content>
-    <Content Include="Scripts\site\ConnectionService.min.js">
-      <DependentUpon>ConnectionService.js</DependentUpon>
     </Content>
     <Content Include="Scripts\site\ConnectionViewModel.js">
       <DependentUpon>ConnectionViewModel.ts</DependentUpon>
     </Content>
-    <Content Include="Scripts\site\ConnectionViewModel.min.js">
-      <DependentUpon>ConnectionViewModel.js</DependentUpon>
-    </Content>
     <Content Include="Scripts\site\PerformanceTask.js">
       <DependentUpon>PerformanceTask.ts</DependentUpon>
     </Content>
-    <Content Include="Scripts\site\PerformanceTask.min.js">
-      <DependentUpon>PerformanceTask.js</DependentUpon>
+    <Content Include="Scripts\site\script.js" />
+    <Content Include="Scripts\site\script.min.js">
+      <DependentUpon>script.js</DependentUpon>
     </Content>
     <Content Include="Scripts\site\Site.js">
       <DependentUpon>Site.ts</DependentUpon>
-    </Content>
-    <Content Include="Scripts\site\Site.min.js">
-      <DependentUpon>Site.js</DependentUpon>
     </Content>
     <Content Include="Scripts\_references.js" />
     <Content Include="Web.config">
@@ -316,22 +306,7 @@
     <Content Include="Scripts\jquery-2.1.4.min.map">
       <DependentUpon>jquery-2.1.4.js</DependentUpon>
     </Content>
-    <Content Include="Scripts\site\Site.js.map">
-      <DependentUpon>Site.js</DependentUpon>
-    </Content>
     <Content Include="Views\Dashboard\_PerformanceTask.cshtml" />
-    <Content Include="Scripts\site\ConnectionService.js.map">
-      <DependentUpon>ConnectionService.js</DependentUpon>
-    </Content>
-    <Content Include="Scripts\site\ConnectionViewModel.js.map">
-      <DependentUpon>ConnectionViewModel.js</DependentUpon>
-    </Content>
-    <Content Include="Scripts\site\PerformanceTask.js.map">
-      <DependentUpon>PerformanceTask.js</DependentUpon>
-    </Content>
-    <Content Include="Scripts\site\AutoUpdateTask.js.map">
-      <DependentUpon>AutoUpdateTask.js</DependentUpon>
-    </Content>
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
@@ -367,6 +342,36 @@
     <VSToolsPath Condition="'$(VSToolsPath)' == ''">$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)</VSToolsPath>
   </PropertyGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Debug|AnyCPU'">
+    <TypeScriptTarget>ES5</TypeScriptTarget>
+    <TypeScriptJSXEmit>None</TypeScriptJSXEmit>
+    <TypeScriptCompileOnSaveEnabled>True</TypeScriptCompileOnSaveEnabled>
+    <TypeScriptNoImplicitAny>False</TypeScriptNoImplicitAny>
+    <TypeScriptModuleKind>None</TypeScriptModuleKind>
+    <TypeScriptRemoveComments>True</TypeScriptRemoveComments>
+    <TypeScriptOutFile />
+    <TypeScriptOutDir />
+    <TypeScriptGeneratesDeclarations>False</TypeScriptGeneratesDeclarations>
+    <TypeScriptNoEmitOnError>True</TypeScriptNoEmitOnError>
+    <TypeScriptSourceMap>False</TypeScriptSourceMap>
+    <TypeScriptMapRoot />
+    <TypeScriptSourceRoot />
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Release|AnyCPU'">
+    <TypeScriptTarget>ES5</TypeScriptTarget>
+    <TypeScriptJSXEmit>None</TypeScriptJSXEmit>
+    <TypeScriptCompileOnSaveEnabled>True</TypeScriptCompileOnSaveEnabled>
+    <TypeScriptNoImplicitAny>False</TypeScriptNoImplicitAny>
+    <TypeScriptModuleKind>None</TypeScriptModuleKind>
+    <TypeScriptRemoveComments>True</TypeScriptRemoveComments>
+    <TypeScriptOutFile />
+    <TypeScriptOutDir />
+    <TypeScriptGeneratesDeclarations>False</TypeScriptGeneratesDeclarations>
+    <TypeScriptNoEmitOnError>True</TypeScriptNoEmitOnError>
+    <TypeScriptSourceMap>False</TypeScriptSourceMap>
+    <TypeScriptMapRoot />
+    <TypeScriptSourceRoot />
+  </PropertyGroup>
   <Import Project="$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)\TypeScript\Microsoft.TypeScript.targets" Condition="Exists('$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)\TypeScript\Microsoft.TypeScript.targets')" />
   <Import Project="$(VSToolsPath)\WebApplications\Microsoft.WebApplication.targets" Condition="'$(VSToolsPath)' != ''" />
   <Import Project="$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v10.0\WebApplications\Microsoft.WebApplication.targets" Condition="false" />

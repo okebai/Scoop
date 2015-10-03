@@ -5,7 +5,6 @@ using System.Diagnostics;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using System.Web.Hosting;
 using Scoop.Core.Caching;
 using Scoop.Core.Common;
 using Scoop.Core.BackgroundTasks.Interfaces;
@@ -13,14 +12,14 @@ using Scoop.Core.Configuration;
 
 namespace Scoop.Core.BackgroundTasks
 {
-    public class PerformanceTask : BackgroundTask
+    public class PerformanceTask : BackgroundTask<PerformanceTask>
     {
-        private static readonly Lazy<PerformanceTask> _instance = new Lazy<PerformanceTask>(() => new PerformanceTask());
-        public static PerformanceTask Instance => _instance.Value;
-        private PerformanceTask() { }
+        public PerformanceTask(CacheHandler cacheHandler, IBackgroundTaskListener<PerformanceTask> taskListener, BackgroundTaskConfiguration backgroundTaskConfiguration)
+            : base(cacheHandler, taskListener, backgroundTaskConfiguration)
+        { }
 
-        protected override int HistoryMaxItemCount() { return BackgroundTaskConfiguration.Instance.PerformanceHistoryMaxItemCount; }
-        protected override TimeSpan Interval() { return BackgroundTaskConfiguration.Instance.PerformanceInterval; }
+        protected override int HistoryMaxItemCount() { return BackgroundTaskConfiguration.PerformanceHistoryMaxItemCount; }
+        protected override TimeSpan Interval() { return BackgroundTaskConfiguration.PerformanceInterval; }
 
         public override string Name => "PerformanceTask";
         public override string FriendlyName => "Performance";
@@ -42,16 +41,16 @@ namespace Scoop.Core.BackgroundTasks
 
         public override async Task<IBackgroundTask> Execute(object state)
         {
-            var taskResult = await ReadPerformance();
+            var taskResult = ReadPerformance();
 
             SaveHistory<PerformanceTask>(taskResult);
 
-            TaskListener.HandleResult(taskResult);
+            await TaskListener.HandleResult(taskResult);
 
             return this;
         }
 
-        private async Task<PerformanceTaskResult> ReadPerformance()
+        private PerformanceTaskResult ReadPerformance()
         {
             var cpuValue = CpuPerformanceCounter.NextValue();
 

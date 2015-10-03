@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Net;
 using Microsoft.AspNet.SignalR;
+using Microsoft.AspNet.SignalR.Hubs;
 using Microsoft.Owin;
 using Owin;
 using Scoop.Server;
@@ -12,6 +13,9 @@ using Scoop.Core.BackgroundTasks;
 using Scoop.Core.BackgroundTasks.Interfaces;
 using Scoop.Server.Tasks;
 using Microsoft.Owin.Cors;
+using Scoop.Core.Caching;
+using Scoop.Core.Configuration;
+using SimpleInjector;
 
 [assembly: OwinStartup(typeof(Startup))]
 
@@ -23,7 +27,16 @@ namespace Scoop.Server
         public static List<IBackgroundTask> Tasks { get; set; }
         private readonly JsonSerializerSettings _jsonSerializerSettings = new JsonSerializerSettings { ContractResolver = new CamelCasePropertyNamesContractResolver() };
 
-        public void Configuration(IAppBuilder app)
+        private static readonly Lazy<Container> _container = new Lazy<Container>(() =>
+        {
+            var container = new Container();
+
+            RegisterTypes(container);
+
+            return container;
+        });
+
+        public static Container IocContainer => _container.Value; public void Configuration(IAppBuilder app)
         {
             app.UseCors(CorsOptions.AllowAll);
 
@@ -63,10 +76,30 @@ namespace Scoop.Server
         {
             Tasks = new List<IBackgroundTask>
             {
-                PerformanceTask.Instance.Start(PerformanceTaskListener.Instance),
+                IocContainer.GetInstance<PerformanceTask>().Start(),
                 //ServerStatusTask.Instance.Start(ServerStatusTaskListener.Instance),
                 //AutoUpdateTask.Instance.Start(),
             };
+        }
+
+        private static void RegisterTypes(Container container)
+        {
+            // SignalR
+            GlobalHost.DependencyResolver.Register(typeof(IHubActivator), () => new SignalRHubActivator(container));
+            container.Register<IHubActivator, SignalRHubActivator>();
+
+            // Caching
+            container.RegisterSingleton<CacheHandler>();
+
+            // Background Tasks
+            container.RegisterSingleton<BackgroundTaskConfiguration>();
+            container.RegisterSingleton<PerformanceTask>();
+            container.RegisterSingleton<AutoUpdateTask>();
+            container.RegisterSingleton<ServerStatusTask>();
+
+            // Task Listeners
+            container.RegisterSingleton<IBackgroundTaskListener<PerformanceTask>, PerformanceTaskListener>();
+            container.RegisterSingleton<IBackgroundTaskListener<ServerStatusTask>, ServerStatusTaskListener>();
         }
     }
 }

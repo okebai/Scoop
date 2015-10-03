@@ -1,0 +1,12 @@
+[
+  {
+    "outputFileName": "Scripts/site/script.js",
+    "inputFiles": [
+      "Scripts/site/ConnectionService.js",
+      "Scripts/site/ConnectionViewModel.js",
+      "Scripts/site/AutoUpdateTask.js",
+      "Scripts/site/PerformanceTask.js",
+      "Scripts/site/Site.js"
+    ]
+  }
+]

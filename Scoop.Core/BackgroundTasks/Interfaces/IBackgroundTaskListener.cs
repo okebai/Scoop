@@ -1,7 +1,9 @@
-﻿namespace Scoop.Core.BackgroundTasks.Interfaces
+﻿using System.Threading.Tasks;
+
+namespace Scoop.Core.BackgroundTasks.Interfaces
 {
-    public interface IBackgroundTaskListener
+    public interface IBackgroundTaskListener<T> where T : IBackgroundTask
     {
-        void HandleResult(IBackgroundTaskResult taskResult);
+        Task HandleResult(IBackgroundTaskResult taskResult);
     }
 }

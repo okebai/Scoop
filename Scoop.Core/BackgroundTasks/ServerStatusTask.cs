@@ -5,20 +5,20 @@ using System.Text;
 using System.Threading.Tasks;
 using Scoop.Core.BackgroundTasks.Interfaces;
 using Scoop.Core.BackgroundTasks.ServerStatus;
+using Scoop.Core.Caching;
 using Scoop.Core.Configuration;
 using WUApiLib;
 
 namespace Scoop.Core.BackgroundTasks
 {
-    public class ServerStatusTask : BackgroundTask
+    public class ServerStatusTask : BackgroundTask<ServerStatusTask>
     {
-        private static readonly Lazy<ServerStatusTask> _instance = new Lazy<ServerStatusTask>(() => new ServerStatusTask());
-        public static ServerStatusTask Instance => _instance.Value;
+        public ServerStatusTask(CacheHandler cacheHandler, IBackgroundTaskListener<ServerStatusTask> taskListener, BackgroundTaskConfiguration backgroundTaskConfiguration)
+            : base(cacheHandler, taskListener, backgroundTaskConfiguration)
+        { }
 
-        private ServerStatusTask() { }
-
-        protected override int HistoryMaxItemCount() { return BackgroundTaskConfiguration.Instance.PerformanceHistoryMaxItemCount; }
-        protected override TimeSpan Interval() { return BackgroundTaskConfiguration.Instance.PerformanceInterval; }
+        protected override int HistoryMaxItemCount() { return BackgroundTaskConfiguration.PerformanceHistoryMaxItemCount; }
+        protected override TimeSpan Interval() { return BackgroundTaskConfiguration.PerformanceInterval; }
 
         public override string Name => "ServerStatusTask";
         public override string FriendlyName => "Server status";
@@ -34,7 +34,7 @@ namespace Scoop.Core.BackgroundTasks
 
             SaveHistory<ServerStatusTask>(serverStatusTaskResult);
 
-            TaskListener.HandleResult(serverStatusTaskResult);
+            await TaskListener.HandleResult(serverStatusTaskResult);
 
             return this;
         }

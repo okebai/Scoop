@@ -111,4 +111,3 @@ var Scoop;
     })();
     Scoop.PerformanceTask = PerformanceTask;
 })(Scoop || (Scoop = {}));
-//# sourceMappingURL=PerformanceTask.js.map
