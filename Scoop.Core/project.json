@@ -1,0 +1,23 @@
+{
+  "version": "1.0.0-*",
+  "description": "Scoop.Core Class Library",
+  "authors": [ "Jan" ],
+  "tags": [ "" ],
+  "projectUrl": "",
+  "licenseUrl": "",
+
+  "dependencies": {
+    "Interop.WUApiLib": "1.0.0",
+    "Microsoft.AspNet.Hosting.Abstractions": "1.0.0-beta5",
+    "Microsoft.Framework.Caching.Memory": "1.0.0-beta5",
+    "Newtonsoft.Json": "7.0.1",
+    "Nito.AsyncEx": "3.0.1",
+    "Octokit": "0.16.0",
+    "semver": "1.1.2",
+    "Westwind.Utilities.Configuration": "2.25.0"
+  },
+
+  "frameworks": {
+    "dnx451": { }
+  }
+}

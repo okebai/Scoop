@@ -1,0 +1,11 @@
+{
+  "projects": [
+    "wrap",
+    "."
+  ],
+  "sdk": {
+    "version": "1.0.0-beta5",
+    "architecture": "x64",
+    "runtime": "clr"
+  }
+}
