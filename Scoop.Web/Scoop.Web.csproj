@@ -196,6 +196,8 @@
     <Content Include="Content\bootstrap\bootstrap.less" />
     <Content Include="Content\bootstrap\badges.less" />
     <Content Include="Content\bootstrap\alerts.less" />
+    <Content Include=".bowerrc" />
+    <Content Include="bower.json" />
     <None Include="Content\chartist\chartist.scss" />
     <Content Include="Content\chartist\chartist.css">
       <DependentUpon>chartist.scss</DependentUpon>
@@ -210,7 +212,6 @@
     <Content Include="Content\select2\select2.min.css">
       <DependentUpon>select2.css</DependentUpon>
     </Content>
-    <Content Include="Content\Site.css" />
     <Content Include="Content\Site.min.css" />
     <Content Include="fonts\fontawesome-webfont.svg" />
     <Content Include="Global.asax" />
@@ -238,6 +239,7 @@
     <Content Include="fonts\fontawesome-webfont.ttf" />
     <Content Include="fonts\fontawesome-webfont.eot" />
     <Content Include="package.json" />
+    <None Include="Properties\PublishProfiles\File_Debug.pubxml" />
     <None Include="Scripts\jquery-2.1.4.intellisense.js" />
     <Content Include="Scripts\jquery-2.1.4.js" />
     <Content Include="Scripts\jquery-2.1.4.min.js">
@@ -259,7 +261,6 @@
     <Content Include="Scripts\moment-with-locales.min.js" />
     <Content Include="Scripts\moment.js" />
     <Content Include="Scripts\moment.min.js" />
-    <Content Include="Scripts\script.js" />
     <Content Include="Scripts\script.min.js" />
     <Content Include="Scripts\select2\select2.js" />
     <Content Include="Scripts\select2\select2.min.js">

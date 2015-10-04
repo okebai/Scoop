@@ -1,24 +1,27 @@
-﻿/// <binding ProjectOpened='watch:js, watch:css' />
-/*
+﻿/*
 This file in the main entry point for defining grunt tasks and using grunt plugins.
 Click here to learn more. http://go.microsoft.com/fwlink/?LinkID=513275&clcid=0x409
 */
+var timer = require('grunt-timer');
+
 module.exports = function (grunt) {
+    grunt.loadNpmTasks('grunt-timer');
     grunt.loadNpmTasks('grunt-contrib-clean');
-    grunt.loadNpmTasks('grunt-contrib-concat');
     grunt.loadNpmTasks('grunt-contrib-uglify');
     grunt.loadNpmTasks('grunt-contrib-less');
     grunt.loadNpmTasks('grunt-contrib-cssmin');
     grunt.loadNpmTasks('grunt-typescript');
     grunt.loadNpmTasks('grunt-contrib-watch');
 
+    timer.init(grunt);
+
     grunt.initConfig({
         clean: {
-            js: ['Scripts/script.*', 'Scripts/site/*.js'],
-            css: ['Content/Site.*css'],
+            ts: ['Scripts/script.*', 'Scripts/site/*.js'],
+            less: ['Content/Site.*css'],
         },
         typescript: {
-            js: {
+            ts: {
                 src: ['Scripts/site/*.ts', 'Scripts/typings/**/*.d.ts'],
                 dest: 'Scripts/script.js',
                 options: {
@@ -27,51 +30,41 @@ module.exports = function (grunt) {
             }
         },
         less: {
-            css: {
+            less: {
                 files: {
                     'Content/Site.css': 'Content/Site.less'
                 }
             }
         },
         cssmin: {
-            css: {
+            less: {
                 src: 'Content/Site.css',
                 dest: 'Content/Site.min.css'
             }
         },
-        //concat: {
-        //    js: {
-        //        src: ['Scripts/Site/*.js'],
-        //        dest: 'Scripts/script.js'
-        //    },
-        //    css: {
-        //        src: ['Content/Site.css'],
-        //        dest: 'Content/Site.css'
-        //    }
-        //},
         uglify: {
-            js: {
+            ts: {
                 src: ['Scripts/script.js'],
                 dest: 'Scripts/script.min.js'
             },
-            css: {
+            less: {
                 src: ['Content/Site.css'],
                 dest: 'Content/Site.min.css'
             },
         },
         watch: {
-            js: {
+            ts: {
                 files: ['Scripts/Site/*.ts'],
-                tasks: ['js']
+                tasks: ['recompileTypeScript']
             },
-            css: {
+            less: {
                 files: ['Content/Site.less'],
-                tasks: ['css']
+                tasks: ['recompileLess']
             },
         }
     });
 
 
-    grunt.registerTask('js', ['clean:js', 'typescript:js', 'uglify:js']);
-    grunt.registerTask('css', ['clean:css', 'less:css', 'cssmin:css']);
+    grunt.registerTask('recompileTypeScript', ['clean:ts', 'typescript:ts', 'uglify:ts']);
+    grunt.registerTask('recompileLess', ['clean:less', 'less:less', 'cssmin:less']);
 };
