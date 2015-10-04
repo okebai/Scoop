@@ -1,15 +1,10 @@
 ﻿<div class="modal fade" id="connectModal" tabindex="-1" role="dialog" aria-labelledby="connectModalTitle">
     <div class="modal-dialog" role="document">
         <div class="modal-content">
-            <div class="modal-header">
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-                <h4 class="modal-title" id="connectModalTitle">Connect to server</h4>
-            </div>
             <div class="modal-body">
-
-                <ul class="nav nav-tabs" role="tablist" id="myTab">
-                    <li role="presentation" class="active"><a href="#connectModalTabMyServers" aria-controls="home" role="tab" data-toggle="tab">My servers</a></li>
-                    <li role="presentation"><a href="#connectModalTabAddNewServer" aria-controls="profile" role="tab" data-toggle="tab">Add new server</a></li>
+                <ul class="nav nav-tabs nav-tabs-material-blue" role="tablist" id="myTab">
+                    <li role="presentation" class="nav-tab nav-tab-material-blue active"><a href="#connectModalTabMyServers" aria-controls="home" role="tab" data-toggle="tab">Available servers</a></li>
+                    <li role="presentation" class="nav-tab nav-tab-material-blue"><a href="#connectModalTabAddNewServer" aria-controls="profile" role="tab" data-toggle="tab">Add server</a></li>
                 </ul>
 
                 <div class="tab-content">
@@ -29,8 +24,8 @@
                                     <div class="ellipsis">
                                         <code class="connect-uri">
                                             <span class="text-warning" data-bind="if: hasConnectionProblem"><i class="fa fa-fw fa-warning"></i></span>
-                                            <span class="text-success" data-bind="if: !hasConnectionProblem()"><i class="fa fa-fw fa-check"></i></span>
-                                            <span class="text-dark" data-bind="text: uri"></span>
+                                            <span class="text-success" data-bind="if: !hasConnectionProblem()"><i class="fa fa-fw fa-globe"></i></span>
+                                            <span data-bind="text: uri, css: { 'text-primary': !hasConnectionProblem(), 'text-warning': hasConnectionProblem }"></span>
                                         </code>
                                     </div>
                                     <div data-bind="if: hasConnectionProblem">
@@ -44,32 +39,34 @@
                         </div>
                     </div>
                     <div role="tabpanel" class="tab-pane" id="connectModalTabAddNewServer">
-                        <div class="row">
-                            <div class="col-x-12">
-                                <form id="connectModalForm" data-bind="submit: addConnection">
-                                    @Html.AntiForgeryToken()
-                                    <div class="form-group">
-                                        <label for="connectionName">Name</label>
-                                        <input type="text" class="form-control" id="connectionName" data-bind="textInput: newConnection.name, uniqueName: true" />
-                                    </div>
-                                    <div class="form-group">
-                                        <label for="connectionUri">Uri</label>
-                                        <input type="url" class="form-control" id="connectionUri" data-bind="textInput: newConnection.uri, uniqueName: true" />
-                                    </div>
-                                    <div class="checkbox">
+                        <form id="connectModalForm" data-bind="submit: addConnection">
+                            <div class="row ">
+                                <div class="col-xs-6 form-group">
+                                    <label for="connectionName">Name</label>
+                                    <input type="text" class="form-control" id="connectionName" data-bind="textInput: newConnection.name, uniqueName: true" />
+                                </div>
+                                <div class="col-xs-6 form-group">
+                                    <label for="connectionUri">Uri</label>
+                                    <input type="url" class="form-control" id="connectionUri" data-bind="textInput: newConnection.uri, uniqueName: true" />
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-xs-6 form-group">
+                                    <div class="togglebutton">
                                         <label>
-                                            <input type="checkbox" data-bind="checked: newConnection.autoConnect" /> Auto connect
+                                            <input type="checkbox" data-bind="checked: newConnection.autoConnect"><i class="fa fa-fw fa-arrow-circle-o-up auto-connect-on-icon"></i>Auto connect
                                         </label>
                                     </div>
-                                    <button type="submit" class="btn btn-primary">Add</button>
-                                </form>
+                                </div>
                             </div>
-                        </div>
+                            <div class="row">
+                                <div class="col-xs-12 form-group text-center">
+                                    <button type="submit" class="btn btn-raised btn-success"><i class="fa fa-fw fa-plus"></i>Add connection</button>
+                                </div>
+                            </div>
+                        </form>
                     </div>
                 </div>
-            </div>
-            <div class="modal-footer">
-                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
             </div>
         </div>
     </div>

@@ -72,7 +72,7 @@ module Scoop {
         }
 
         private updatePerformanceChart(connection: IConnection) {
-            console.log('updatePerformanceChart', connection.name(), connection.guid());
+            //console.log('updatePerformanceChart', connection.name(), connection.guid());
             var series = [];
             var connectionGuid = connection.guid();
             for (var i = 0; i < this.performanceData[connectionGuid].length; i++) {
@@ -97,18 +97,21 @@ module Scoop {
             var chartContainer = $('.chart-container', '.performance-task-template').clone();
             chartContainer.attr('id', 'chart-container-' + connection.guid());
 
-            $('.name', chartContainer).text(connection.name());
-            $('.uri', chartContainer).text(connection.uri());
-
             var chartTarget = $('.chart-target', chartContainer);
             chartTarget.attr('id', chartTargetId);
 
             $('.dashboard-container').append(chartContainer);
+            console.log(connection.uri());
+
+            $(() => {
+                ko.applyBindings(connection, chartContainer[0]);
+            });
 
             var chart = new Chartist.Line('#' + chartTargetId, data,
                 {
                     showArea: true,
                     showPoint: false,
+                    fullWidth: true,
                     axisX:
                     {
                         type: Chartist.FixedScaleAxis,

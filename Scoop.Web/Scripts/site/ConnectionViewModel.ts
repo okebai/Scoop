@@ -41,16 +41,6 @@
 
         private updateAllConnectionsFromStore = () => {
             var connectionsSerializable = this.connectionService.getConnectionsFromStore();
-            //var connections = <KnockoutObservableArray<IConnection>>ko.viewmodel.fromModel(data,
-            //    {
-            //        extend: {
-            //            '{root}[i]': (item: IConnection) => {
-            //                item.isConnected = ko.observable(false);
-            //                item.currentHubConnection = null;
-            //                item.chosenTasks = ko.observableArray<ITask>([]);
-            //            }
-            //        }
-            //    });
 
             this.connections.remove((currentConnection) => {
                 return $.grep(connectionsSerializable, (connection, n) => { return connection.guid == currentConnection.guid() }).length == 0;
@@ -101,7 +91,7 @@
                             connection.availableTasks = availableTasks;
                             connection.chosenTasks = availableTasks;
                             this.connections.push(connection);
-
+                            console.log(connection.uri());
                             if (connection.autoConnect())
                                 this.connect(connection);
                         }
@@ -239,7 +229,7 @@
         }
 
         connect = (connection: IConnection) => {
-            console.log('connect');
+            console.log('connect', connection);
 
             this.connectionService.connect(connection)
                 .done(() => {

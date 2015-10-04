@@ -128,8 +128,20 @@
   <ItemGroup>
     <Content Include=".bowerrc" />
     <Content Include="bower.json" />
+    <Content Include="Content\icons\system-monitor-114-195650.png" />
+    <Content Include="Content\icons\system-monitor-120-195650.png" />
+    <Content Include="Content\icons\system-monitor-144-195650.png" />
+    <Content Include="Content\icons\system-monitor-152-195650.png" />
+    <Content Include="Content\icons\system-monitor-16-195650.png" />
+    <Content Include="Content\icons\system-monitor-24-195650.png" />
+    <Content Include="Content\icons\system-monitor-32-195650.png" />
+    <Content Include="Content\icons\system-monitor-48-195650.png" />
+    <Content Include="Content\icons\system-monitor-57-195650.png" />
+    <Content Include="Content\icons\system-monitor-64-195650.png" />
+    <Content Include="Content\icons\system-monitor-72-195650.png" />
     <Content Include="Content\lib.min.css" />
     <Content Include="Content\site.min.css" />
+    <Content Include="favicon.ico" />
     <Content Include="Global.asax" />
     <Content Include="gruntfile.js" />
     <Content Include="gulpfile.js" />
@@ -163,7 +175,8 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
-    <Folder Include="Content\fonts\" />
+    <Folder Include="Content\img\" />
+    <Folder Include="fonts\" />
     <Folder Include="Views\Connection\" />
   </ItemGroup>
   <ItemGroup>
@@ -184,6 +197,7 @@
     <TypeScriptCompile Include="Scripts\site\ConnectionService.ts" />
     <TypeScriptCompile Include="Scripts\site\ConnectionViewModel.ts" />
     <TypeScriptCompile Include="Scripts\site\PerformanceTask.ts" />
+    <TypeScriptCompile Include="Scripts\typings\bootstrap-material.design\bootstrap-material-design.d.ts" />
     <TypeScriptCompile Include="Scripts\typings\jquery\jquery.d.ts" />
     <TypeScriptCompile Include="Scripts\typings\js-cookie\js-cookie.d.ts" />
     <TypeScriptCompile Include="Scripts\typings\knockout.viewmodel\knockout.viewmodel.d.ts" />

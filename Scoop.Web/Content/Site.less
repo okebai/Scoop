@@ -1,17 +1,8 @@
-﻿@import '../bower_components/fontawesome/less/font-awesome.less';
-@fa-font-path: "/fonts";
+﻿@import '../bower_components/bootstrap/less/variables.less';
 
-@import '../bower_components/bootstrap/less/bootstrap.less';
 @font-size-base: 14px;
-@font-family-sans-serif: 'Open Sans', sans-serif;
 @headings-font-weight: 600;
 
-@import '../bower_components/bootswatch/darkly/variables.less';
-@import '../bower_components/bootswatch/darkly/bootswatch.less';
-
-@graph1: #ffff00;
-@graph2: #5d9cff;
-@graph3: #f84dff;
 
 .tab-pane .row {
     margin-left: @grid-gutter-width / 2;
@@ -20,6 +11,151 @@
 
 .nav-tabs {
     margin-bottom: @grid-gutter-width / 2;
+}
+
+/* Material design additions */
+.nav-tabs-default,
+.nav-tab-default {
+    background-color: #ffffff;
+}
+
+.nav-tabs-black,
+.nav-tab-black {
+    background-color: #000000;
+}
+
+.nav-tabs-white,
+.nav-tab-white {
+    background-color: #ffffff;
+}
+
+.nav-tabs-inverse,
+.nav-tab-inverse {
+    background-color: #3f51b5;
+}
+
+.nav-tabs-primary,
+.nav-tab-primary {
+    background-color: #009688;
+}
+
+.nav-tabs-success,
+.nav-tab-success {
+    background-color: #4caf50;
+}
+
+.nav-tabs-info,
+.nav-tab-info {
+    background-color: #03a9f4;
+}
+
+.nav-tabs-warning,
+.nav-tab-warning {
+    background-color: #ff5722;
+}
+
+.nav-tabs-danger,
+.nav-tab-danger {
+    background-color: #f44336;
+}
+
+.nav-tabs-material-red,
+.nav-tab-material-red {
+    background-color: #f44336;
+}
+
+.nav-tabs-material-pink,
+.nav-tab-material-pink {
+    background-color: #e91e63;
+}
+
+.nav-tabs-material-purple,
+.nav-tab-material-purple {
+    background-color: #9c27b0;
+}
+
+.nav-tabs-material-deep-purple,
+.nav-tab-material-deep-purple {
+    background-color: #673ab7;
+}
+
+.nav-tabs-material-indigo,
+.nav-tab-material-indigo {
+    background-color: #3f51b5;
+}
+
+.nav-tabs-material-blue,
+.nav-tab-material-blue {
+    background-color: #2196f3;
+
+    &.active {
+        background-color: #03a9f4;
+    }
+}
+
+.nav-tabs-material-light-blue,
+.nav-tab-material-light-blue {
+    background-color: #03a9f4;
+}
+
+.nav-tabs-material-cyan,
+.nav-tab-material-cyan {
+    background-color: #00bcd4;
+}
+
+.nav-tabs-material-teal,
+.nav-tab-material-teal {
+    background-color: #009688;
+}
+
+.nav-tabs-material-green,
+.nav-tab-material-green {
+    background-color: #4caf50;
+}
+
+.nav-tabs-material-light-green,
+.nav-tab-material-light-green {
+    background-color: #8bc34a;
+}
+
+.nav-tabs-material-lime,
+.nav-tab-material-lime {
+    background-color: #cddc39;
+}
+
+.nav-tabs-material-yellow,
+.nav-tab-material-yellow {
+    background-color: #ffeb3b;
+}
+
+.nav-tabs-material-amber,
+.nav-tab-material-amber {
+    background-color: #ffc107;
+}
+
+.nav-tabs-material-orange,
+.nav-tab-material-orange {
+    background-color: #ff9800;
+}
+
+.nav-tabs-material-deep-orange,
+.nav-tab-material-deep-orange {
+    background-color: #ff5722;
+}
+
+.nav-tabs-material-brown,
+.nav-tab-material-brown {
+    background-color: #795548;
+}
+
+.nav-tabs-material-grey,
+.nav-tab-material-grey {
+    background-color: #9e9e9e;
+}
+
+.nav-tabs-material-blue-grey,
+.nav-tab-material-blue-grey {
+    background-color: #607d8b;
 }
 
 /* FontAwesome overrides */
@@ -91,13 +227,28 @@ ul.fa-ul {
 }
 
 /* Connect modal */
+.modal-content > .modal-body {
+    padding-top: 15px;
+    padding-bottom: 15px;
+}
+
+#connectModalForm > .row {
+    margin-left: 0 !important;
+    margin-right: 0 !important;
+}
+
+.connect-server-list {
+    margin-bottom: 20px;
+}
+
 .connect {
     margin-left: 0 !important;
     margin-right: 0 !important;
-    padding-top: 5px;
+    padding-top: 10px;
+    padding-bottom: 10px;
     padding-left: 2px;
     padding-right: 2px;
-    border-bottom: 1px #464545 solid;
+    border-bottom: 1px #9e9e9e dotted;
 
     &:last-child {
         border: none;
@@ -155,6 +306,10 @@ ul.fa-ul {
 }
 
 /* Chartist */
+@graph1: #00bcd4;
+@graph2: #9c27b0;
+@graph3: #4caf50;
+
 .ct-line {
     stroke-width: 1px;
 }
@@ -164,33 +319,37 @@ ul.fa-ul {
 }
 
 .ct-grid {
-    stroke: rgba(255, 255, 255, 0.2);
+    stroke: #fff;
     stroke-width: 1px;
-    stroke-dasharray: 1px;
+    stroke-opacity: 0.04;
+    stroke-dasharray: 1,0;
+    stroke-linecap: round;
+    stroke-linejoin: round;
+    shape-rendering: crispEdges;
 }
 
 .ct-series-a .ct-area {
-    fill: @brand-info;
+    fill: @graph1;
 }
 
 .ct-series-a .ct-line {
-    stroke: @brand-info;
+    stroke: @graph1;
 }
 
 .ct-series-b .ct-area {
-    fill: #803980;
+    fill: @graph2;
 }
 
 .ct-series-b .ct-line {
-    stroke: #803980;
+    stroke: @graph2;
 }
 
 .ct-series-c .ct-area {
-    fill: @brand-success;
+    fill: @graph3;
 }
 
 .ct-series-c .ct-line {
-    stroke: @brand-success;
+    stroke: @graph3;
 }
 
 /* Small devices (tablets, 768px and up) */
@@ -210,7 +369,6 @@ ul.fa-ul {
 }
 
 .chart-title {
-    float: left;
     margin: 4px 0 0 49px;
 }
 
@@ -239,27 +397,23 @@ ul.fa-ul {
 
 /* Performance */
 .chart-title {
-    color: @gray;
-
     .name {
-        color: @gray-lighter;
     }
 
     .uri {
-        color: @gray-light;
     }
 }
 
 .chart-legend > li {
     &.performance-legend-cpu > .legend-item-bullet {
-        background-color: @brand-info;
+        background-color: @graph1;
     }
 
     &.performance-legend-mem > .legend-item-bullet {
-        background-color: #803980;
+        background-color: @graph2;
     }
 
     &.performance-legend-disk > .legend-item-bullet {
-        background-color: @brand-success;
+        background-color: @graph3;
     }
 }

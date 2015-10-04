@@ -112,6 +112,8 @@ module Scoop {
 }
 
 $(() => {
+    $.material.init();
+
     ko.bindingHandlers.select2 = new function () {
         this.init = (element, valueAccessor, allBindings, viewModel, bindingContext) => {
             var options = valueAccessor();
@@ -134,5 +136,5 @@ $(() => {
     var connectionService = new Scoop.ConnectionService();
     var connectionViewModel = new Scoop.ConnectionViewModel(connectionService);
 
-    ko.applyBindings(connectionViewModel);
+    ko.applyBindings(connectionViewModel, $('#connectModal')[0]);
 });

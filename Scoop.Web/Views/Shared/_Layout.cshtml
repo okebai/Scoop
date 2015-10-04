@@ -6,13 +6,27 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>@Model.Title</title>
+
+    <link rel="icon" type="image/x-icon" href="@Url.Content("~/favicon.ico")" sizes="32x32" />
+    @*Apple iOS devices and Google Android Devices*@
+    <link rel="apple-touch-icon-precomposed" href="@Url.Content("~/Content/icons/system-monitor-152-195650.png")">
+    @*IE 10 Metro Tile Icon*@
+    <meta name="msapplication-TileColor" content="#ffffff" />
+    <meta name="msapplication-TileImage" content="@Url.Content("~/Content/icons/system-monitor-144-195650.png")">
+    @*Everything Else*@
+    <link rel="apple-touch-icon-precomposed" sizes="152x152" href="@Url.Content("~/Content/icons/system-monitor-152-195650.png")">
+    <link rel="apple-touch-icon-precomposed" sizes="144x144" href="@Url.Content("~/Content/icons/system-monitor-144-195650.png")">
+    <link rel="apple-touch-icon-precomposed" sizes="120x120" href="@Url.Content("~/Content/icons/system-monitor-120-195650.png")">
+    <link rel="apple-touch-icon-precomposed" sizes="114x114" href="@Url.Content("~/Content/icons/system-monitor-114-195650.png")">
+    <link rel="apple-touch-icon-precomposed" sizes="72x72" href="@Url.Content("~/Content/icons/system-monitor-72-195650.png")">
+    <link rel="apple-touch-icon-precomposed" href="@Url.Content("~/Content/icons/system-monitor-57-195650.png")">
+
     <link rel="stylesheet" type="text/css" href="http://fonts.googleapis.com/css?family=Open+Sans:300italic,400italic,600italic,700italic,800italic,400,700,600,800,300" />
     <link rel="stylesheet" type="text/css" href="@Url.Content("~/Content/lib.min.css")" />
-    <link rel="stylesheet" type="text/css" href="@Url.Content("~/Content/Site.min.css")" />
+    <link rel="stylesheet" type="text/css" href="@Url.Content("~/Content/site.min.css")" />
     @RenderSection("Styles", required: false)
 </head>
-<body>
-
+<body class="inverse">
     <div class="container-fluid">
         @RenderBody()
     </div>
