@@ -14,7 +14,7 @@ A copy of the server is installed in each environment that you wish to monitor.
 
 The server is composed of a few things:
 #### SignalR Host
-SignalR provides the means for allowing real-ime two-way communication between the server and any connected clients.
+SignalR provides the means for real-ime two-way communication between the server and any connected clients.
 
 By default, it runs a self-hosted HTTP server listening on port 60080.
 
