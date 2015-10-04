@@ -55,16 +55,16 @@ module.exports = function (grunt) {
         watch: {
             ts: {
                 files: ['Scripts/Site/*.ts'],
-                tasks: ['recompileTypeScript']
+                tasks: ['compileTypeScript']
             },
             less: {
                 files: ['Content/Site.less'],
-                tasks: ['recompileLess']
+                tasks: ['compileLess']
             },
         }
     });
 
 
-    grunt.registerTask('recompileTypeScript', ['clean:ts', 'typescript:ts', 'uglify:ts']);
-    grunt.registerTask('recompileLess', ['clean:less', 'less:less', 'cssmin:less']);
+    grunt.registerTask('compileTypeScript', ['clean:ts', 'typescript:ts', 'uglify:ts']);
+    grunt.registerTask('compileLess', ['clean:less', 'less:less', 'cssmin:less']);
 };

@@ -1,15 +1,17 @@
-﻿@import 'bootstrap/bootstrap.less';
-@import 'bootswatch/darkly/variables.less';
-@import 'bootswatch/darkly/bootswatch.less';
+﻿@import '../bower_components/fontawesome/less/font-awesome.less';
+@fa-font-path: "/fonts";
+
+@import '../bower_components/bootstrap/less/bootstrap.less';
+@font-size-base: 14px;
+@font-family-sans-serif: 'Open Sans', sans-serif;
+@headings-font-weight: 600;
+
+@import '../bower_components/bootswatch/darkly/variables.less';
+@import '../bower_components/bootswatch/darkly/bootswatch.less';
 
 @graph1: #ffff00;
 @graph2: #5d9cff;
 @graph3: #f84dff;
-
-/* Bootstrap overrides */
-@font-size-base: 14px;
-@font-family-sans-serif: 'Open Sans', sans-serif;
-@headings-font-weight: 600;
 
 .tab-pane .row {
     margin-left: @grid-gutter-width / 2;

@@ -8,8 +8,11 @@
 *.sln.docstates
 .vs/
 Scoop.Web/Scripts/script.*
+Scoop.Web/Scripts/lib.*
 Scoop.Web/Scripts/site/*.js
-Scoop.Web/Content/Site*.css
+Scoop.Web/Content/site*.css
+Scoop.Web/Content/lib.*
+Scoop.Web/Content/fonts
 
 # Build results
 [Dd]ebug/
