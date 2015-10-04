@@ -9,11 +9,34 @@ var stringToFunction = function (str) {
     }
 
     if (typeof fn !== 'function') {
-        throw new Error('function not found');
+        throw new Error('function not found: \'' + str + '\'');
     }
 
     return fn;
 };
+
+/**
+ * Fast UUID generator, RFC4122 version 4 compliant.
+ * @author Jeff Ward (jcward.com).
+ * @license MIT license
+ * @link http://stackoverflow.com/questions/105034/how-to-create-a-guid-uuid-in-javascript/21963136#21963136
+ **/
+var UUID = (() => {
+    var lut = []; for (var i = 0; i < 256; i++) { lut[i] = (i < 16 ? '0' : '') + (i).toString(16); }
+    var self = {
+        generate: () => {
+            var d0 = Math.random() * 0xffffffff | 0;
+            var d1 = Math.random() * 0xffffffff | 0;
+            var d2 = Math.random() * 0xffffffff | 0;
+            var d3 = Math.random() * 0xffffffff | 0;
+            return lut[d0 & 0xff] + lut[d0 >> 8 & 0xff] + lut[d0 >> 16 & 0xff] + lut[d0 >> 24 & 0xff] + '-' +
+                lut[d1 & 0xff] + lut[d1 >> 8 & 0xff] + '-' + lut[d1 >> 16 & 0x0f | 0x40] + lut[d1 >> 24 & 0xff] + '-' +
+                lut[d2 & 0x3f | 0x80] + lut[d2 >> 8 & 0xff] + '-' + lut[d2 >> 16 & 0xff] + lut[d2 >> 24 & 0xff] +
+                lut[d3 & 0xff] + lut[d3 >> 8 & 0xff] + lut[d3 >> 16 & 0xff] + lut[d3 >> 24 & 0xff];
+        }
+    };
+    return self;
+})();
 
 interface KnockoutBindingHandlers {
     select2: KnockoutBindingHandler;
@@ -45,9 +68,22 @@ module Scoop {
         autoConnect: KnockoutObservable<boolean>;
 
         isConnected: KnockoutObservable<boolean>;
+        hasConnectionProblem: KnockoutObservable<boolean>;
+        connectionProblemMessage: KnockoutObservable<string>;
         currentHubConnection: HubConnection;
         availableTasks: KnockoutObservableArray<ITask>;
         chosenTasks: KnockoutObservableArray<ITask>;
+    }
+
+    export interface IConnectionSerializable {
+        guid: string;
+        uri: string;
+        name: string;
+        autoConnect: boolean;
+
+        isConnected: boolean;
+        hasConnectionProblem: boolean;
+        connectionProblemMessage: string;
     }
 
     export interface IStatusResponse {
@@ -84,7 +120,7 @@ $(() => {
 
             el.select2(options);
 
-            ko.utils.domNodeDisposal.addDisposeCallback(element,() => {
+            ko.utils.domNodeDisposal.addDisposeCallback(element, () => {
                 el.select2('destroy');
             });
         },

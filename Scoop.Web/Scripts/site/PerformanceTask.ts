@@ -10,7 +10,7 @@ module Scoop {
 
         init(hubProxy: HubProxy, connection: IConnection) {
             if (hubProxy != null) {
-                hubProxy.on('updatePerformance',(taskName, values, timestamp) => {
+                hubProxy.on('updatePerformance', (taskName, values, timestamp) => {
                     this.updatePerformanceData(connection, taskName, values, timestamp);
                     this.updatePerformanceChart(connection);
                 });
@@ -47,9 +47,9 @@ module Scoop {
 
             var threeMinuesAgo = moment().add(-3, 'minutes');
             for (var i = 0; i < this.performanceData[connectionGuid].length; i++) {
-                this.performanceData[connectionGuid][i] = $.grep(this.performanceData[connectionGuid][i],(item: IPerformanceItem, n) =>
+                this.performanceData[connectionGuid][i] = $.grep(this.performanceData[connectionGuid][i], (item: IPerformanceItem, n) =>
                     moment(item.x).isAfter(threeMinuesAgo)
-                    );
+                );
             }
 
             this.performanceData[connectionGuid][0].push({ x: moment(timestamp).toDate(), y: values['0'] / 100.0 });
@@ -72,7 +72,7 @@ module Scoop {
         }
 
         private updatePerformanceChart(connection: IConnection) {
-            console.log('updatePerformanceChart', connection.guid());
+            console.log('updatePerformanceChart', connection.name(), connection.guid());
             var series = [];
             var connectionGuid = connection.guid();
             for (var i = 0; i < this.performanceData[connectionGuid].length; i++) {
@@ -86,16 +86,19 @@ module Scoop {
             var chartTargetId = 'chart-target-' + connectionGuid;
             var chartTarget = $('#' + chartTargetId);
             if (!chartTarget.length) {
-                this.charts[chartTargetId] = this.createChart(connectionGuid, chartTargetId, { series: series });
+                this.charts[chartTargetId] = this.createChart(connection, chartTargetId, { series: series });
             } else {
                 this.charts[chartTargetId].data = { series: series };
                 this.charts[chartTargetId].update();
             }
         }
 
-        private createChart(connectionGuid, chartTargetId, data) {
+        private createChart(connection: IConnection, chartTargetId, data) {
             var chartContainer = $('.chart-container', '.performance-task-template').clone();
-            chartContainer.attr('id', 'chart-container-' + connectionGuid);
+            chartContainer.attr('id', 'chart-container-' + connection.guid());
+
+            $('.name', chartContainer).text(connection.name());
+            $('.uri', chartContainer).text(connection.uri());
 
             var chartTarget = $('.chart-target', chartContainer);
             chartTarget.attr('id', chartTargetId);

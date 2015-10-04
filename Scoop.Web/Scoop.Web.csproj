@@ -114,7 +114,6 @@
     <Compile Include="App_Start\FilterConfig.cs" />
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="Controllers\BaseController.cs" />
-    <Compile Include="Controllers\ConnectionController.cs" />
     <Compile Include="Controllers\DashboardController.cs" />
     <Compile Include="Controllers\LoginController.cs" />
     <Compile Include="Global.asax.cs">
@@ -198,6 +197,10 @@
     <Content Include="Content\bootstrap\badges.less" />
     <Content Include="Content\bootstrap\alerts.less" />
     <None Include="bundleconfig.json" />
+    <None Include="compilerconfig.json" />
+    <Content Include="compilerconfig.json.defaults">
+      <DependentUpon>compilerconfig.json</DependentUpon>
+    </Content>
     <None Include="Content\chartist\chartist.scss" />
     <Content Include="Content\chartist\chartist.css">
       <DependentUpon>chartist.scss</DependentUpon>
@@ -250,6 +253,7 @@
     <Content Include="Scripts\jquery.signalR-2.2.0.min.js">
       <DependentUpon>jquery.signalR-2.2.0.js</DependentUpon>
     </Content>
+    <Content Include="Scripts\js-cookie\js.cookie-2.0.3.min.js" />
     <Content Include="Scripts\knockout-3.3.0.debug.js" />
     <Content Include="Scripts\knockout-3.3.0.js" />
     <Content Include="Scripts\knockout-3.3.0.min.js">
@@ -264,6 +268,9 @@
     <Content Include="Scripts\select2\select2.js" />
     <Content Include="Scripts\select2\select2.min.js">
       <DependentUpon>select2.js</DependentUpon>
+    </Content>
+    <Content Include="Scripts\site\ServerStatusTask.js">
+      <DependentUpon>ServerStatusTask.ts</DependentUpon>
     </Content>
     <Content Include="Scripts\site\AutoUpdateTask.js">
       <DependentUpon>AutoUpdateTask.ts</DependentUpon>
@@ -324,12 +331,14 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
+    <TypeScriptCompile Include="Scripts\site\ServerStatusTask.ts" />
     <TypeScriptCompile Include="Scripts\site\AutoUpdateTask.ts" />
     <TypeScriptCompile Include="Scripts\site\Site.ts" />
     <TypeScriptCompile Include="Scripts\site\ConnectionService.ts" />
     <TypeScriptCompile Include="Scripts\site\ConnectionViewModel.ts" />
     <TypeScriptCompile Include="Scripts\site\PerformanceTask.ts" />
     <TypeScriptCompile Include="Scripts\typings\jquery\jquery.d.ts" />
+    <TypeScriptCompile Include="Scripts\typings\js-cookie\js-cookie.d.ts" />
     <TypeScriptCompile Include="Scripts\typings\knockout.viewmodel\knockout.viewmodel.d.ts" />
     <TypeScriptCompile Include="Scripts\typings\knockout\knockout.d.ts" />
     <TypeScriptCompile Include="Scripts\typings\moment\moment-node.d.ts" />

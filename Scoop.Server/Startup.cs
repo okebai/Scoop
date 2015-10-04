@@ -77,8 +77,8 @@ namespace Scoop.Server
             Tasks = new List<IBackgroundTask>
             {
                 IocContainer.GetInstance<PerformanceTask>().Start(),
-                //ServerStatusTask.Instance.Start(ServerStatusTaskListener.Instance),
-                //AutoUpdateTask.Instance.Start(),
+                IocContainer.GetInstance<ServerStatusTask>().Start(),
+                //IocContainer.GetInstance<AutoUpdateTask>().Start(),
             };
         }
 

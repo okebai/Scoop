@@ -2,31 +2,40 @@ var Scoop;
 (function (Scoop) {
     var ConnectionService = (function () {
         function ConnectionService() {
+            this.connectionCookieName = 'connections';
         }
-        ConnectionService.prototype.addConnection = function (connection) {
-            var formData = new FormData();
-            formData.append('connection.name', connection.name());
-            formData.append('connection.uri', connection.uri());
-            formData.append('connection.autoConnect', connection.autoConnect());
-            formData.append('__RequestVerificationToken', $('input[name=__RequestVerificationToken]').val());
-            return $.ajax({
-                url: '/Connection/Add',
-                method: 'POST',
-                cache: false,
-                contentType: false,
-                processData: false,
-                data: formData
+        ConnectionService.prototype.storeConnection = function (connection) {
+            if (connection.guid() == null) {
+                connection.guid(UUID.generate());
+            }
+            var connectionsSerializable = Cookies.getJSON(this.connectionCookieName) || [];
+            var guid = connection.guid();
+            connectionsSerializable = connectionsSerializable.filter(function (item) {
+                return item.guid != guid;
             });
+            var connectionSerializable = this.toSerializable(connection);
+            connectionsSerializable.push(connectionSerializable);
+            this.storeCookie(connectionsSerializable);
         };
-        ConnectionService.prototype.getConnections = function () {
-            return $.ajax({
-                url: '/Connection/List',
-                method: 'GET'
+        ConnectionService.prototype.removeConnectionFromStore = function (connection) {
+            var connectionsSerializable = Cookies.getJSON(this.connectionCookieName) || [];
+            var guid = connection.guid();
+            connectionsSerializable = connectionsSerializable.filter(function (item) {
+                return item.guid != guid;
             });
+            this.storeCookie(connectionsSerializable);
         };
-        ConnectionService.prototype.getAvailableTasks = function (connection) {
+        ConnectionService.prototype.storeCookie = function (connectionsSerializable) {
+            var expires = moment().add(1, 'year').toDate();
+            Cookies.set(this.connectionCookieName, connectionsSerializable, { expires: expires });
+        };
+        ConnectionService.prototype.getConnectionsFromStore = function () {
+            var connectionsSerializable = Cookies.getJSON(this.connectionCookieName) || [];
+            return connectionsSerializable;
+        };
+        ConnectionService.prototype.getAvailableTasks = function (connectionUri) {
             return $.ajax({
-                url: connection.uri() + '/AvailableTasks',
+                url: connectionUri + '/AvailableTasks',
                 method: 'GET',
                 cache: false
             });
@@ -59,6 +68,38 @@ var Scoop;
             if (connection.currentHubConnection)
                 connection.currentHubConnection.stop();
             connection.currentHubConnection = null;
+        };
+        ConnectionService.prototype.toSerializable = function (connection) {
+            return {
+                guid: connection.guid(),
+                uri: connection.uri(),
+                name: connection.name(),
+                autoConnect: connection.autoConnect(),
+                isConnected: connection.isConnected(),
+                hasConnectionProblem: connection.hasConnectionProblem(),
+                connectionProblemMessage: connection.connectionProblemMessage()
+            };
+        };
+        ConnectionService.fromSerializable = function (connectionSerializable) {
+            var connection = ko.viewmodel.fromModel(connectionSerializable);
+            if (!connectionSerializable.hasOwnProperty('hasConnectionProblem'))
+                connection.hasConnectionProblem = ko.observable();
+            if (!connectionSerializable.hasOwnProperty('connectionProblemMessage'))
+                connection.connectionProblemMessage = ko.observable();
+            connection.availableTasks = ko.observableArray();
+            connection.isConnected = ko.observable();
+            return connection;
+        };
+        ConnectionService.clone = function (connection) {
+            return {
+                guid: ko.observable(connection.guid()),
+                uri: ko.observable(connection.uri()),
+                name: ko.observable(connection.name()),
+                autoConnect: ko.observable(connection.autoConnect()),
+                isConnected: ko.observable(connection.isConnected()),
+                hasConnectionProblem: ko.observable(connection.hasConnectionProblem()),
+                connectionProblemMessage: ko.observable(connection.connectionProblemMessage())
+            };
         };
         return ConnectionService;
     })();

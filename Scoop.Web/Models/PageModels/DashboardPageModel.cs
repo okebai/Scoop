@@ -5,7 +5,6 @@ using System.Web;
 using System.Web.Helpers;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Converters;
-using Scoop.Core.ConnectionStorage;
 
 namespace Scoop.Web.Models.PageModels
 {

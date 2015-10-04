@@ -89,10 +89,6 @@
     <Compile Include="Common\PerformanceInfo.cs" />
     <Compile Include="Common\PerformanceValues.cs" />
     <Compile Include="Configuration\BackgroundTaskConfiguration.cs" />
-    <Compile Include="ConnectionStorage\ConnectionModel.cs" />
-    <Compile Include="ConnectionStorage\CookieConnectionStorage.cs" />
-    <Compile Include="ConnectionStorage\IConnectionModel.cs" />
-    <Compile Include="ConnectionStorage\IConnectionStorage.cs" />
     <Compile Include="BackgroundTasks\AutoUpdateTask.cs" />
     <Compile Include="BackgroundTasks\Interfaces\IBackgroundTask.cs" />
     <Compile Include="BackgroundTasks\Interfaces\IBackgroundTaskListener.cs" />

@@ -50,6 +50,18 @@ ul.fa-ul {
     display: none;
 }
 
+.ellipsis {
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    width: 100%;
+    display: inline-block;
+    overflow: hidden;
+}
+
+.text-dark {
+    color: @gray-base;
+}
+
 /* Menu */
 .dashboard-menu {
     position: absolute;
@@ -77,8 +89,22 @@ ul.fa-ul {
 }
 
 /* Connect modal */
-.connect-server-list > li {
-    margin: @grid-gutter-width / 2 0;
+.connect {
+    margin-left: 0 !important;
+    margin-right: 0 !important;
+    padding-top: 5px;
+    padding-left: 2px;
+    padding-right: 2px;
+    border-bottom: 1px #464545 solid;
+
+    &:last-child {
+        border: none;
+    }
+
+    > div {
+        padding-left: 5px !important;
+        padding-right: 5px !important;
+    }
 }
 
 .connect-name,
@@ -86,6 +112,15 @@ ul.fa-ul {
     vertical-align: bottom;
 }
 
+.auto-connect-on-icon {
+    color: @brand-info;
+    cursor: pointer;
+}
+
+.auto-connect-off-icon {
+    color: @gray-light;
+    cursor: pointer;
+}
 
 .connected-icon {
     color: @brand-success;
@@ -104,6 +139,11 @@ ul.fa-ul {
     i.fa {
         margin-right: 3px;
     }
+}
+
+.remove-connection-icon {
+    color: @brand-danger;
+    cursor: pointer;
 }
 
 /* Dashboard */
@@ -196,6 +236,18 @@ ul.fa-ul {
 }
 
 /* Performance */
+.chart-title {
+    color: @gray;
+
+    .name {
+        color: @gray-lighter;
+    }
+
+    .uri {
+        color: @gray-light;
+    }
+}
+
 .chart-legend > li {
     &.performance-legend-cpu > .legend-item-bullet {
         background-color: @brand-info;

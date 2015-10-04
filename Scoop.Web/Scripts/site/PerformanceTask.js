@@ -59,7 +59,7 @@ var Scoop;
             delete this.performanceData[connectionGuid];
         };
         PerformanceTask.prototype.updatePerformanceChart = function (connection) {
-            console.log('updatePerformanceChart', connection.guid());
+            console.log('updatePerformanceChart', connection.name(), connection.guid());
             var series = [];
             var connectionGuid = connection.guid();
             for (var i = 0; i < this.performanceData[connectionGuid].length; i++) {
@@ -72,16 +72,18 @@ var Scoop;
             var chartTargetId = 'chart-target-' + connectionGuid;
             var chartTarget = $('#' + chartTargetId);
             if (!chartTarget.length) {
-                this.charts[chartTargetId] = this.createChart(connectionGuid, chartTargetId, { series: series });
+                this.charts[chartTargetId] = this.createChart(connection, chartTargetId, { series: series });
             }
             else {
                 this.charts[chartTargetId].data = { series: series };
                 this.charts[chartTargetId].update();
             }
         };
-        PerformanceTask.prototype.createChart = function (connectionGuid, chartTargetId, data) {
+        PerformanceTask.prototype.createChart = function (connection, chartTargetId, data) {
             var chartContainer = $('.chart-container', '.performance-task-template').clone();
-            chartContainer.attr('id', 'chart-container-' + connectionGuid);
+            chartContainer.attr('id', 'chart-container-' + connection.guid());
+            $('.name', chartContainer).text(connection.name());
+            $('.uri', chartContainer).text(connection.uri());
             var chartTarget = $('.chart-target', chartContainer);
             chartTarget.attr('id', chartTargetId);
             $('.dashboard-container').append(chartContainer);
