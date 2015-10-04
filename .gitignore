@@ -6,6 +6,9 @@
 *.user
 *.userosscache
 *.sln.docstates
+.vs/
+Scoop.Web/Scripts/script.*
+Scoop.Web/Scripts/site/*.js
 
 # Build results
 [Dd]ebug/

@@ -196,11 +196,6 @@
     <Content Include="Content\bootstrap\bootstrap.less" />
     <Content Include="Content\bootstrap\badges.less" />
     <Content Include="Content\bootstrap\alerts.less" />
-    <None Include="bundleconfig.json" />
-    <None Include="compilerconfig.json" />
-    <Content Include="compilerconfig.json.defaults">
-      <DependentUpon>compilerconfig.json</DependentUpon>
-    </Content>
     <None Include="Content\chartist\chartist.scss" />
     <Content Include="Content\chartist\chartist.css">
       <DependentUpon>chartist.scss</DependentUpon>
@@ -215,16 +210,12 @@
     <Content Include="Content\select2\select2.min.css">
       <DependentUpon>select2.css</DependentUpon>
     </Content>
-    <Content Include="Content\Site.css">
-      <DependentUpon>Site.less</DependentUpon>
-    </Content>
-    <Content Include="Content\Site.min.css">
-      <DependentUpon>Site.css</DependentUpon>
-    </Content>
     <Content Include="fonts\fontawesome-webfont.svg" />
     <Content Include="Global.asax" />
     <Content Include="Content\bootswatch\darkly\bootswatch.less" />
     <Content Include="Content\bootswatch\darkly\variables.less" />
+    <Content Include="gruntfile.js" />
+    <Content Include="gulpfile.js" />
     <Content Include="Scripts\bootstrap.js" />
     <Content Include="Scripts\bootstrap.min.js">
       <DependentUpon>bootstrap.js</DependentUpon>
@@ -244,6 +235,7 @@
     <Content Include="fonts\fontawesome-webfont.woff" />
     <Content Include="fonts\fontawesome-webfont.ttf" />
     <Content Include="fonts\fontawesome-webfont.eot" />
+    <Content Include="package.json" />
     <None Include="Scripts\jquery-2.1.4.intellisense.js" />
     <Content Include="Scripts\jquery-2.1.4.js" />
     <Content Include="Scripts\jquery-2.1.4.min.js">
@@ -265,31 +257,11 @@
     <Content Include="Scripts\moment-with-locales.min.js" />
     <Content Include="Scripts\moment.js" />
     <Content Include="Scripts\moment.min.js" />
+    <Content Include="Scripts\script.js" />
+    <Content Include="Scripts\script.min.js" />
     <Content Include="Scripts\select2\select2.js" />
     <Content Include="Scripts\select2\select2.min.js">
       <DependentUpon>select2.js</DependentUpon>
-    </Content>
-    <Content Include="Scripts\site\ServerStatusTask.js">
-      <DependentUpon>ServerStatusTask.ts</DependentUpon>
-    </Content>
-    <Content Include="Scripts\site\AutoUpdateTask.js">
-      <DependentUpon>AutoUpdateTask.ts</DependentUpon>
-    </Content>
-    <Content Include="Scripts\site\ConnectionService.js">
-      <DependentUpon>ConnectionService.ts</DependentUpon>
-    </Content>
-    <Content Include="Scripts\site\ConnectionViewModel.js">
-      <DependentUpon>ConnectionViewModel.ts</DependentUpon>
-    </Content>
-    <Content Include="Scripts\site\PerformanceTask.js">
-      <DependentUpon>PerformanceTask.ts</DependentUpon>
-    </Content>
-    <Content Include="Scripts\site\script.js" />
-    <Content Include="Scripts\site\script.min.js">
-      <DependentUpon>script.js</DependentUpon>
-    </Content>
-    <Content Include="Scripts\site\Site.js">
-      <DependentUpon>Site.ts</DependentUpon>
     </Content>
     <Content Include="Scripts\_references.js" />
     <Content Include="Web.config">
