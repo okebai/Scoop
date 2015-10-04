@@ -13,6 +13,9 @@ Scoop.Web/Scripts/site/*.js
 Scoop.Web/Content/site*.css
 Scoop.Web/Content/lib.*
 Scoop.Web/Content/fonts
+Scoop.Web/fonts
+Scoop.Web/Content/icons
+Scoop.Web/Content/img
 
 # Build results
 [Dd]ebug/
