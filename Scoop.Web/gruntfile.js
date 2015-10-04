@@ -9,12 +9,22 @@ module.exports = function (grunt) {
     grunt.loadNpmTasks('grunt-contrib-uglify');
     grunt.loadNpmTasks('grunt-contrib-less');
     grunt.loadNpmTasks('grunt-contrib-cssmin');
+    grunt.loadNpmTasks('grunt-typescript');
     grunt.loadNpmTasks('grunt-contrib-watch');
 
     grunt.initConfig({
         clean: {
-            js: ['Scripts/script.*'],
+            js: ['Scripts/script.*', 'Scripts/site/*.js'],
             css: ['Content/Site.*css'],
+        },
+        typescript: {
+            js: {
+                src: ['Scripts/site/*.ts', 'Scripts/typings/**/*.d.ts'],
+                dest: 'Scripts/script.js',
+                options: {
+                    target: 'es5'
+                }
+            }
         },
         less: {
             css: {
@@ -29,16 +39,16 @@ module.exports = function (grunt) {
                 dest: 'Content/Site.min.css'
             }
         },
-        concat: {
-            js: {
-                src: ['Scripts/Site/*.js'],
-                dest: 'Scripts/script.js'
-            },
-            css: {
-                src: ['Content/Site.css'],
-                dest: 'Content/Site.css'
-            }
-        },
+        //concat: {
+        //    js: {
+        //        src: ['Scripts/Site/*.js'],
+        //        dest: 'Scripts/script.js'
+        //    },
+        //    css: {
+        //        src: ['Content/Site.css'],
+        //        dest: 'Content/Site.css'
+        //    }
+        //},
         uglify: {
             js: {
                 src: ['Scripts/script.js'],
@@ -51,7 +61,7 @@ module.exports = function (grunt) {
         },
         watch: {
             js: {
-                files: ['Scripts/Site/*.js'],
+                files: ['Scripts/Site/*.ts'],
                 tasks: ['js']
             },
             css: {
@@ -62,6 +72,6 @@ module.exports = function (grunt) {
     });
 
 
-    grunt.registerTask('js', ['clean:js', 'concat:js', 'uglify:js']);
-    grunt.registerTask('css', ['clean:css', 'less:css', 'concat:css', 'cssmin:css']);
+    grunt.registerTask('js', ['clean:js', 'typescript:js', 'uglify:js']);
+    grunt.registerTask('css', ['clean:css', 'less:css', 'cssmin:css']);
 };

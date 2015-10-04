@@ -9,6 +9,7 @@
 .vs/
 Scoop.Web/Scripts/script.*
 Scoop.Web/Scripts/site/*.js
+Scoop.Web/Content/Site*.css
 
 # Build results
 [Dd]ebug/
