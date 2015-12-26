@@ -352,15 +352,6 @@
             <Component Id="cmp57BB176D4E11DC870D5FDC3024E8D23F" Guid="*">
                 <File Id="fil0C4D6073D73BE62AA67636FA599A0D2B" KeyPath="yes" Source="$(var.Scoop.Service.TargetDir)\Scoop.Service.pdb" />
             </Component>
-            <Component Id="cmpCFFE6D512234392EABED5E35B0EB1DAA" Guid="*">
-                <File Id="fil834A9CEFE137660E74BE6796E27181CE" KeyPath="yes" Source="$(var.Scoop.Service.TargetDir)\Scoop.Service.vshost.exe" />
-            </Component>
-            <Component Id="cmp0499668F8FAED5469408261C8B0CFB99" Guid="*">
-                <File Id="fil5B72070A1F3D7E62DF0F4DBAD1052C52" KeyPath="yes" Source="$(var.Scoop.Service.TargetDir)\Scoop.Service.vshost.exe.config" />
-            </Component>
-            <Component Id="cmpB40707CECBF0B9DE2DFF6FDC668C898B" Guid="*">
-                <File Id="filC7ED49DC67A483915130A58AE2E1AAE1" KeyPath="yes" Source="$(var.Scoop.Service.TargetDir)\Scoop.Service.vshost.exe.manifest" />
-            </Component>
             <Component Id="cmp49CD81232411BE906EB4919C9E0D0C08" Guid="*">
                 <File Id="filEA720AE615929C37034C1962188021D1" KeyPath="yes" Source="$(var.Scoop.Service.TargetDir)\Semver.dll" />
             </Component>
@@ -409,9 +400,6 @@
             <ComponentRef Id="cmpF5E930C57C16CD56AE76D2BF74CEEA60" />
             <ComponentRef Id="cmp70DFB797364CE04FC70573E3BA03883D" />
             <ComponentRef Id="cmp57BB176D4E11DC870D5FDC3024E8D23F" />
-            <ComponentRef Id="cmpCFFE6D512234392EABED5E35B0EB1DAA" />
-            <ComponentRef Id="cmp0499668F8FAED5469408261C8B0CFB99" />
-            <ComponentRef Id="cmpB40707CECBF0B9DE2DFF6FDC668C898B" />
             <ComponentRef Id="cmp49CD81232411BE906EB4919C9E0D0C08" />
             <ComponentRef Id="cmp7FE2DDE463D56734A68B2E3FCF197AA9" />
             <ComponentRef Id="cmp10F43A01117246F67E351CD625ABA317" />

@@ -1,8 +1,8 @@
 ﻿using System;
 using System.Diagnostics;
 using System.ServiceProcess;
-using Microsoft.Owin.Hosting;
 using Scoop.Server;
+using Microsoft.Owin.Hosting;
 
 namespace Scoop.Service
 {

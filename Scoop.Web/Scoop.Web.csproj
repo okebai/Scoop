@@ -142,11 +142,34 @@
     <Content Include="Content\lib.min.css" />
     <Content Include="Content\site.min.css" />
     <Content Include="favicon.ico" />
+    <Content Include="fonts\fontawesome-webfont.svg" />
+    <Content Include="fonts\glyphicons-halflings-regular.svg" />
+    <Content Include="fonts\Material-Design-Icons.svg" />
     <Content Include="Global.asax" />
     <Content Include="gruntfile.js" />
     <Content Include="gulpfile.js" />
     <Content Include="Content\site.less" />
     <Content Include="package.json" />
+    <Content Include="fonts\fontawesome-webfont.eot" />
+    <Content Include="fonts\fontawesome-webfont.ttf" />
+    <Content Include="fonts\fontawesome-webfont.woff" />
+    <Content Include="fonts\fontawesome-webfont.woff2" />
+    <Content Include="fonts\FontAwesome.otf" />
+    <Content Include="fonts\glyphicons-halflings-regular.eot" />
+    <Content Include="fonts\glyphicons-halflings-regular.ttf" />
+    <Content Include="fonts\glyphicons-halflings-regular.woff" />
+    <Content Include="fonts\glyphicons-halflings-regular.woff2" />
+    <Content Include="fonts\Material-Design-Icons.eot" />
+    <Content Include="fonts\Material-Design-Icons.ttf" />
+    <Content Include="fonts\Material-Design-Icons.woff" />
+    <Content Include="fonts\RobotoDraftBold.woff" />
+    <Content Include="fonts\RobotoDraftBold.woff2" />
+    <Content Include="fonts\RobotoDraftItalic.woff" />
+    <Content Include="fonts\RobotoDraftItalic.woff2" />
+    <Content Include="fonts\RobotoDraftMedium.woff" />
+    <Content Include="fonts\RobotoDraftMedium.woff2" />
+    <Content Include="fonts\RobotoDraftRegular.woff" />
+    <Content Include="fonts\RobotoDraftRegular.woff2" />
     <None Include="Properties\PublishProfiles\File_Debug.pubxml" />
     <Content Include="Scripts\knockout.viewmodel.2.0.3.js" />
     <Content Include="Scripts\knockout.viewmodel.2.0.3.min.js" />
@@ -172,11 +195,11 @@
     <Content Include="Views\Login\Login.cshtml" />
     <Content Include="Views\Shared\_ConnectionModal.cshtml" />
     <Content Include="Views\Dashboard\_PerformanceTask.cshtml" />
+    <None Include="Properties\PublishProfiles\File_Release.pubxml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
     <Folder Include="Content\img\" />
-    <Folder Include="fonts\" />
     <Folder Include="Views\Connection\" />
   </ItemGroup>
   <ItemGroup>
