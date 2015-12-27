@@ -69,7 +69,7 @@ module Scoop {
 
         isConnected: KnockoutObservable<boolean>;
         hasConnectionProblem: KnockoutObservable<boolean>;
-        connectionProblemMessage: KnockoutObservable<string>;
+        connectionMessage: KnockoutObservable<string>;
         currentHubConnection: HubConnection;
         availableTasks: KnockoutObservableArray<ITask>;
         chosenTasks: KnockoutObservableArray<ITask>;
@@ -83,7 +83,7 @@ module Scoop {
 
         isConnected: boolean;
         hasConnectionProblem: boolean;
-        connectionProblemMessage: string;
+        connectionMessage: string;
     }
 
     export interface IStatusResponse {

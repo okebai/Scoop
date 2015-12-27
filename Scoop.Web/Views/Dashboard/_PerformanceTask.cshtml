@@ -11,6 +11,7 @@
                 </div>
                 <div class="col-xs-5">
                     <code data-bind="css: { 'text-primary': !hasConnectionProblem(), 'text-warning': hasConnectionProblem }"><i class="fa fa-fw fa-globe"></i><span data-bind="text: uri"></span></code>
+                    <small data-bind="css: { 'text-primary': !hasConnectionProblem(), 'text-warning': hasConnectionProblem }, text: connectionMessage"></small>
                 </div>
                 <div class="col-xs-3">
                     <ul class="chart-legend">

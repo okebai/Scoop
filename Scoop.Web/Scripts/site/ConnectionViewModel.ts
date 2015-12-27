@@ -25,7 +25,7 @@
                 this.newConnection.autoConnect(false);
                 this.newConnection.isConnected(false);
                 this.newConnection.hasConnectionProblem(false);
-                this.newConnection.connectionProblemMessage(null);
+                this.newConnection.connectionMessage(null);
             } else {
                 this.newConnection = ko.viewmodel.fromModel(<IConnectionSerializable>{
                     guid: null,
@@ -34,7 +34,7 @@
                     autoConnect: false,
                     isConnected: false,
                     hasConnectionProblem: false,
-                    connectionProblemMessage: ''
+                    connectionMessage: ''
                 });
             }
         }
@@ -81,7 +81,7 @@
                                         : null;
                                 }));
                                 existingConnection.hasConnectionProblem(false);
-                                existingConnection.connectionProblemMessage(null);
+                                existingConnection.connectionMessage(null);
 
                                 if (existingConnection.autoConnect())
                                     this.connect(existingConnection);
@@ -110,9 +110,9 @@
                                 existingConnection.chosenTasks.removeAll();
                                 existingConnection.hasConnectionProblem(true);
                                 if (jqXhr.status == 0)
-                                    existingConnection.connectionProblemMessage('Network error. Please check console for details.');
+                                    existingConnection.connectionMessage('Network error. Please check console for details.');
                                 else
-                                    existingConnection.connectionProblemMessage(jqXhr.status + ' ' + errorThrown);
+                                    existingConnection.connectionMessage(jqXhr.status + ' ' + errorThrown);
                             });
                         } else {
                             var connection = ConnectionService.fromSerializable(connectionSerializable);
@@ -120,9 +120,9 @@
                             connection.chosenTasks = ko.observableArray<ITask>();
                             connection.hasConnectionProblem(true);
                             if (jqXhr.status == 0)
-                                connection.connectionProblemMessage('Network error. Please check console for details.');
+                                connection.connectionMessage('Network error. Please check console for details.');
                             else
-                                connection.connectionProblemMessage(jqXhr.status + ' ' + errorThrown);
+                                connection.connectionMessage(jqXhr.status + ' ' + errorThrown);
                             this.connections.push(connection);
                         }
                     });
@@ -163,7 +163,7 @@
                                     : null;
                             }));
                             existingConnection.hasConnectionProblem(false);
-                            existingConnection.connectionProblemMessage(null);
+                            existingConnection.connectionMessage(null);
                             this.connectionService.storeConnection(existingConnection);
                             if (existingConnection.autoConnect())
                                 this.connect(existingConnection);
@@ -188,18 +188,18 @@
                             existingConnection.chosenTasks.removeAll();
                             existingConnection.hasConnectionProblem(true);
                             if (jqXhr.status == 0)
-                                existingConnection.connectionProblemMessage("Network error. Please check console for details.");
+                                existingConnection.connectionMessage("Network error. Please check console for details.");
                             else
-                                existingConnection.connectionProblemMessage(jqXhr.status + ' ' + errorThrown);
+                                existingConnection.connectionMessage(jqXhr.status + ' ' + errorThrown);
                             this.connectionService.storeConnection(existingConnection);
                         });
                     } else {
                         var newConnection = ConnectionService.clone(connection);
                         newConnection.hasConnectionProblem(true);
                         if (jqXhr.status == 0)
-                            newConnection.connectionProblemMessage("Network error. Please check console for details.");
+                            newConnection.connectionMessage("Network error. Please check console for details.");
                         else
-                            newConnection.connectionProblemMessage(jqXhr.status + ' ' + errorThrown);
+                            newConnection.connectionMessage(jqXhr.status + ' ' + errorThrown);
                         this.connections.push(newConnection);
                         this.connectionService.storeConnection(newConnection);
                     }

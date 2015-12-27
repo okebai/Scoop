@@ -78,24 +78,24 @@
         connect(connection: IConnection) {
             this.disconnect(connection);
             console.log('connect', connection.guid());
-            var hubConnection = $.hubConnection(connection.uri());
+            connection.currentHubConnection = $.hubConnection(connection.uri());
 
             var onConnectionStart = $.Deferred();
             $.each(connection.chosenTasks(), (i, task) => {
                 var hubProxy = null;
                 if (task.hubName != null) {
-                    hubProxy = hubConnection.createHubProxy(task.hubName);
-                    onConnectionStart.done(() => { task.onConnect(hubProxy); });
+                    hubProxy = connection.currentHubConnection.createHubProxy(task.hubName);
+                    onConnectionStart.done(() => {
+                        task.onConnect(hubProxy);
+                    });
                 }
                 task.init(hubProxy, connection);
             });
 
-            hubConnection.logging = false;
-            var connectionStart = hubConnection.start();
+            connection.currentHubConnection.logging = false;
+            var connectionStart = connection.currentHubConnection.start();
 
             connectionStart.done(() => {
-                connection.currentHubConnection = hubConnection;
-
                 onConnectionStart.resolve();
             });
 
@@ -103,9 +103,11 @@
         }
 
         disconnect(connection: IConnection) {
-            $.each(connection.chosenTasks(), (i, task) => {
-                task.onDisconnect(connection);
-            });
+            if (connection.chosenTasks != null) {
+                $.each(connection.chosenTasks(), (i, task) => {
+                    task.onDisconnect(connection);
+                });
+            }
 
             if (connection.currentHubConnection)
                 connection.currentHubConnection.stop();
@@ -121,7 +123,7 @@
                 autoConnect: connection.autoConnect(),
                 isConnected: connection.isConnected(),
                 hasConnectionProblem: connection.hasConnectionProblem(),
-                connectionProblemMessage: connection.connectionProblemMessage()
+                connectionMessage: connection.connectionMessage()
             };
         }
 
@@ -131,8 +133,8 @@
             if (!connectionSerializable.hasOwnProperty('hasConnectionProblem'))
                 connection.hasConnectionProblem = ko.observable<boolean>();
 
-            if (!connectionSerializable.hasOwnProperty('connectionProblemMessage'))
-                connection.connectionProblemMessage = ko.observable<string>();
+            if (!connectionSerializable.hasOwnProperty('connectionMessage'))
+                connection.connectionMessage = ko.observable<string>();
 
             connection.availableTasks = ko.observableArray<ITask>();
             connection.isConnected = ko.observable<boolean>();
@@ -148,7 +150,7 @@
                 autoConnect: ko.observable<boolean>(connection.autoConnect()),
                 isConnected: ko.observable<boolean>(connection.isConnected()),
                 hasConnectionProblem: ko.observable<boolean>(connection.hasConnectionProblem()),
-                connectionProblemMessage: ko.observable<string>(connection.connectionProblemMessage())
+                connectionMessage: ko.observable<string>(connection.connectionMessage())
             };
         }
     }

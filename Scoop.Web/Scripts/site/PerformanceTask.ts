@@ -7,8 +7,13 @@ module Scoop {
         hubName = 'performanceHub';
         charts: IChartHolder = {};
         performanceData: IPerformanceData = {};
+        pendingConnectionSlowReset = false;
 
         init(hubProxy: HubProxy, connection: IConnection) {
+            var connectionGuid = connection.guid();
+            var chartTargetId = 'chart-target-' + connectionGuid;
+            this.initWidget(connection, chartTargetId);
+
             if (hubProxy != null) {
                 hubProxy.on('updatePerformance', (taskName, values, timestamp) => {
                     this.updatePerformanceData(connection, taskName, values, timestamp);
@@ -24,15 +29,62 @@ module Scoop {
                     this.updatePerformanceChart(connection);
                 });
             }
+
+            this.onConnectionSlow(connection);
+            this.onConnectionStateChange(connection);
         }
 
         onConnect(hubProxy: HubProxy) {
-            if (hubProxy != null)
+            if (hubProxy != null) {
                 hubProxy.invoke('GetPerformanceHistory');
+            }
         }
 
         onDisconnect(connection: IConnection) {
             this.removePerformanceChart(connection);
+        }
+
+        onConnectionSlow(connection: IConnection) {
+            connection.currentHubConnection.connectionSlow(() => {
+                connection.hasConnectionProblem(true);
+                connection.connectionMessage('Connection is slow...');
+
+                this.pendingConnectionSlowReset = true;
+                setTimeout(() => {
+                    if (this.pendingConnectionSlowReset)
+                        connection.connectionMessage('');
+                }, 10000);
+            });
+        }
+
+        onConnectionStateChange(connection: IConnection) {
+            connection.currentHubConnection.stateChanged((change: SignalRStateChange) => {
+                this.pendingConnectionSlowReset = false;
+
+                switch (change.newState) { // connecting: 0, connected: 1, reconnecting: 2, disconnected: 4
+                    case $.signalR.connectionState.connecting:
+                        connection.hasConnectionProblem(false);
+                        connection.connectionMessage('Connecting...');
+                        break;
+                    case $.signalR.connectionState.reconnecting:
+                        connection.hasConnectionProblem(true);
+                        connection.connectionMessage('Reconnecting...');
+                        break;
+                    case $.signalR.connectionState.connected:
+                        connection.hasConnectionProblem(false);
+                        connection.connectionMessage('Connected');
+
+                        setTimeout(() => {
+                            if (!connection.hasConnectionProblem())
+                                connection.connectionMessage('');
+                        }, 5000);
+                        break;
+                    case $.signalR.connectionState.disconnected:
+                        connection.hasConnectionProblem(true);
+                        connection.connectionMessage('Disconnected');
+                        break;
+                }
+            });
         }
 
         private clearPerformanceData(connection: IConnection) {
@@ -75,17 +127,19 @@ module Scoop {
             //console.log('updatePerformanceChart', connection.name(), connection.guid());
             var series = [];
             var connectionGuid = connection.guid();
-            for (var i = 0; i < this.performanceData[connectionGuid].length; i++) {
-                if (this.performanceData[connectionGuid][i] != null)
-                    series.push({
-                        name: 'series' + i,
-                        data: this.performanceData[connectionGuid][i]
-                    });
+
+            if (this.performanceData[connectionGuid] != null) {
+                for (var i = 0; i < this.performanceData[connectionGuid].length; i++) {
+                    if (this.performanceData[connectionGuid][i] != null)
+                        series.push({
+                            name: 'series' + i,
+                            data: this.performanceData[connectionGuid][i]
+                        });
+                }
             }
 
             var chartTargetId = 'chart-target-' + connectionGuid;
-            var chartTarget = $('#' + chartTargetId);
-            if (!chartTarget.length) {
+            if (this.charts[chartTargetId] == null) {
                 this.charts[chartTargetId] = this.createChart(connection, chartTargetId, { series: series });
             } else {
                 this.charts[chartTargetId].data = { series: series };
@@ -93,20 +147,21 @@ module Scoop {
             }
         }
 
-        private createChart(connection: IConnection, chartTargetId, data) {
+        private initWidget(connection: IConnection, chartTargetId) {
             var chartContainer = $('.chart-container', '.performance-task-template').clone();
             chartContainer.attr('id', 'chart-container-' + connection.guid());
 
             var chartTarget = $('.chart-target', chartContainer);
             chartTarget.attr('id', chartTargetId);
 
-            $('.dashboard-container').append(chartContainer);
-            console.log(connection.uri());
+            $('#dashboardContainerMiddle').append(chartContainer);
 
             $(() => {
                 ko.applyBindings(connection, chartContainer[0]);
             });
+        }
 
+        private createChart(connection: IConnection, chartTargetId, data) {
             var chart = new Chartist.Line('#' + chartTargetId, data,
                 {
                     showArea: true,
