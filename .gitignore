@@ -7,15 +7,8 @@
 *.userosscache
 *.sln.docstates
 .vs/
-Scoop.Web/Scripts/script.*
-Scoop.Web/Scripts/lib.*
-Scoop.Web/Scripts/site/*.js
-Scoop.Web/Content/site*.css
-Scoop.Web/Content/lib.*
-Scoop.Web/Content/fonts
-Scoop.Web/fonts
-Scoop.Web/Content/icons
-Scoop.Web/Content/img
+Scoop.Web/build
+Scoop.Web/dist
 
 # Build results
 [Dd]ebug/
