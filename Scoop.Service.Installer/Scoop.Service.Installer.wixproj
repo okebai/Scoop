@@ -61,7 +61,7 @@
     </CreateProperty>
     <!-- http://www.talksharp.com/wix-toolset-append-product-version -->
     <!-- Rename the .msi file -->
-    <CreateProperty Value="$(OutputName)-v%(AssemblyInfo.Version)">
+    <CreateProperty Value="$(OutputName)-v%(AssemblyInfo.Version)-pre">
       <Output TaskParameter="Value" PropertyName="TargetName" />
     </CreateProperty>
     <!-- Rename the .wixpdb file -->
