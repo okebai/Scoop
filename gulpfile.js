@@ -6,15 +6,12 @@ Click here to learn more. http://go.microsoft.com/fwlink/?LinkId=518007
 
 var gulp = require('gulp'),
     less = require('gulp-less'),
-    minifyCss = require('gulp-minify-css'),
-    rename = require('gulp-rename'),
     ts = require('gulp-typescript'),
     uglify = require('gulp-uglify'),
-    concat = require('gulp-concat'),
     plumber = require('gulp-plumber'),
     usemin = require('gulp-usemin'),
-    minifyHtml = require('gulp-minify-html'),
-    clean = require('gulp-clean'),
+    htmlmin = require('gulp-htmlmin'),
+    del = require('del'),
     merge = require('merge-stream');
 
 var bowerRoot = 'bower_components/';
@@ -24,13 +21,11 @@ var buildRoot = projectRoot + 'build/';
 var distRoot = projectRoot + 'dist/';
 
 gulp.task('cleanDist', function () {
-    return gulp.src(distRoot)
-        .pipe(clean({ read: false }));
+    return del(distRoot);
 });
 
 gulp.task('cleanBuild', function () {
-    return gulp.src(buildRoot)
-        .pipe(clean({ read: false }));
+    return del(buildRoot);
 });
 
 gulp.task('copyHtmlToBuild', function() {
@@ -100,7 +95,7 @@ gulp.task('dist', ['build', 'copyAssetsToDist'], function () {
     return gulp.src(buildRoot + '/*.html')
       .pipe(usemin({
           //css: [rev()],
-          html: [minifyHtml({ empty: true })],
+          html: [htmlmin({collapseWhitespace: true})],
           js: [uglify()],
           //inlinejs: [uglify()],
           //inlinecss: [minifyCss(), 'concat']
