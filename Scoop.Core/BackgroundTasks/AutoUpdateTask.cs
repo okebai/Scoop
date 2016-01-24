@@ -33,11 +33,15 @@ namespace Scoop.Core.BackgroundTasks
 
         public override async Task<IBackgroundTask> Execute(object state)
         {
-            var latestRelease = await GetLatestRelease();
+            if (!IsEnabled())
+                return this;
 
-            var latestVersion = ParseVersionFromRelease(latestRelease);
             var currentversion = ParseVersionFromAssembly(GetType().Assembly);
+            if (currentversion.Major <= 0)
+                return this;
 
+            var latestRelease = await GetLatestRelease();
+            var latestVersion = ParseVersionFromRelease(latestRelease);
             if (latestVersion.Major > 0 && latestVersion > currentversion)
             {
                 var asset = await GetUpdateAsset(latestRelease);
@@ -50,6 +54,12 @@ namespace Scoop.Core.BackgroundTasks
             }
 
             return this;
+        }
+
+        private bool IsEnabled()
+        {
+            var setting = ConfigurationManager.AppSettings.Get("BackgroundTask.AutoUpdate.Enabled");
+            return setting != null && setting.Equals("true", StringComparison.OrdinalIgnoreCase);
         }
 
         private void StartInstallProcess(string updateInstallerPath, SemVersion currentversion, SemVersion latestVersion)
