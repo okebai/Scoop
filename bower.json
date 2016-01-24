@@ -11,6 +11,7 @@
     "fontawesome": "^4.4.0",
     "select2": "^4.0.0",
     "chartist": "^0.9.4",
-    "js-cookie": "^2.0.3"
+    "js-cookie": "^2.0.3",
+    "admin-lte": "^2.3.2"
   }
 }
