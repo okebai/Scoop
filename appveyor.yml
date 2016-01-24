@@ -1,0 +1,54 @@
+version: 1.0.{build}
+branches:
+  only:
+  - master
+configuration: Release
+platform: Any CPU
+shallow_clone: true
+assembly_info:
+  patch: true
+  file: '**\AssemblyInfo.*'
+  assembly_version: '{version}'
+  assembly_file_version: '{version}'
+  assembly_informational_version: '{version}'
+install:
+- cmd: >-
+    npm install -g bower
+
+    npm install -g gulp
+cache:
+- bower_components
+- node_modules
+- C:\projects\scoop\packages
+before_build:
+- cmd: >-
+    nuget restore
+
+    npm install
+
+    bower install
+
+    gulp dist
+build:
+  project: Scoop.sln
+  verbosity: minimal
+after_build:
+- cmd: 7z a %APPVEYOR_BUILD_FOLDER%\Scoop.Web\dist\Scoop.Web-v%APPVEYOR_BUILD_VERSION%-pre.zip %APPVEYOR_BUILD_FOLDER%\Scoop.Web\dist\*
+artifacts:
+- path: Scoop.Service.Installer\bin\Debug\Scoop.Service.Installer*.msi
+  name: Scoop.Service.Installer-Debug
+- path: Scoop.Service.Installer\bin\Release\Scoop.Service.Installer*.msi
+  name: Scoop.Service.Installer-Release
+- path: Scoop.Web\dist\Scoop.Web*.zip
+  name: Scoop.Web
+deploy:
+- provider: GitHub
+  release: Scoop-v$(appveyor_build_version)-pre
+  description: Scoop v$(appveyor_build_version) Pre-release
+  auth_token:
+    secure: z12QquPQdMfGqwEUq1RO2CyCf7jYDhE5JnZSs7zX1ZcOgEBaqxEmWuR4sDqmTVCb
+  artifact: Scoop.Service.Installer-Release,Scoop.Web
+  draft: true
+  prerelease: true
+  on:
+    branch: master
