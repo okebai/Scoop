@@ -16,8 +16,8 @@ module Scoop {
             this.initWidget(connection, chartTargetId);
 
             if (hubProxy != null) {
-                hubProxy.on('updatePerformance', (taskName, values, timestamp) => {
-                    this.updatePerformanceData(connection, taskName, values, timestamp);
+                hubProxy.on('updatePerformance', (taskName: string, timestamp: string, cpu: number, memory: number, disk: number) => {
+                    this.updatePerformanceData(connection, taskName, timestamp, cpu, memory, disk);
                     this.updatePerformanceChart(connection);
                 });
 
@@ -25,7 +25,7 @@ module Scoop {
                     this.clearPerformanceData(connection);
                     for (var i = 0; i < taskResultHistory.length; i++) {
                         var taskResult = taskResultHistory[i];
-                        this.updatePerformanceData(connection, taskResult.Name, taskResult.Values, taskResult.Timestamp);
+                        this.updatePerformanceData(connection, taskResult.Name, taskResult.Timestamp, taskResult.Cpu, taskResult.Memory, taskResult.Disk);
                     }
                     this.updatePerformanceChart(connection);
                 });
@@ -92,7 +92,7 @@ module Scoop {
             delete this.performanceData[connection.guid()];
         }
 
-        private updatePerformanceData(connection: IConnection, taskName: string, values, timestamp) {
+        private updatePerformanceData(connection: IConnection, taskName: string, timestamp: string, cpu: number, memory: number, disk: number) {
             var connectionGuid = connection.guid();
             if (!this.performanceData[connectionGuid]) {
                 this.performanceData[connectionGuid] = [[], [], []];
@@ -105,9 +105,9 @@ module Scoop {
                 );
             }
 
-            this.performanceData[connectionGuid][0].push({ x: moment(timestamp).toDate(), y: values['0'] / 100.0 });
-            this.performanceData[connectionGuid][1].push({ x: moment(timestamp).toDate(), y: values['1'] });
-            this.performanceData[connectionGuid][2].push({ x: moment(timestamp).toDate(), y: values['2'] / 0.100 });
+            this.performanceData[connectionGuid][0].push({ x: moment(timestamp).toDate(), y: cpu / 100.0 });
+            this.performanceData[connectionGuid][1].push({ x: moment(timestamp).toDate(), y: memory });
+            this.performanceData[connectionGuid][2].push({ x: moment(timestamp).toDate(), y: disk / 0.100 });
         }
 
         private removePerformanceChart(connection: IConnection) {
