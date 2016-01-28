@@ -44,11 +44,6 @@ var UUID = (() => {
     return self;
 })();
 
-interface KnockoutBindingHandlers {
-    select2: KnockoutBindingHandler;
-}
-
-
 module Scoop {
     declare var Chartist: any;
 
@@ -97,6 +92,21 @@ module Scoop {
         payload: any;
     }
 
+    export interface ITaskResultValue {
+        [key: string]: number;
+    }
+
+    export interface ITaskResultMessage {
+        [key: string]: string;
+    }
+
+    export interface ITaskResult {
+        values: ITaskResultValue[];
+        messages: ITaskResultValue[];
+        timeStamp: string;
+        taskName: string;
+   }
+
     export interface IPerformanceData {
         [guid: string]: IPerformanceItem[][];
     }
@@ -120,26 +130,7 @@ module Scoop {
 $(() => {
     $.material.init();
 
-    ko.bindingHandlers.select2 = new function () {
-        this.init = (element, valueAccessor, allBindings, viewModel, bindingContext) => {
-            var options = valueAccessor();
-
-            var el = $(element);
-
-            el.select2(options);
-
-            ko.utils.domNodeDisposal.addDisposeCallback(element, () => {
-                el.select2('destroy');
-            });
-        },
-        this.update = (element, valueAccessor, allBindings, viewModel, bindingContext) => {
-            allBindings().selectedOptions();
-
-            $(element).trigger('change');
-        }
-    };
-
-    var connectionService = new Scoop.ConnectionService(); 
+    var connectionService = new Scoop.ConnectionService();
     var connectionViewModel = new Scoop.ConnectionViewModel(connectionService);
 
     ko.applyBindings(connectionViewModel, $('#connectModal')[0]);
