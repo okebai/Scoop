@@ -11,7 +11,9 @@ using Scoop.Core.Configuration;
 
 namespace Scoop.Core.BackgroundTasks
 {
-    public abstract class BackgroundTask<T> : IBackgroundTask where T : IBackgroundTask
+    public abstract class BackgroundTask<TListener, TResult> : IBackgroundTask<TResult>
+        where TListener : class, IBackgroundTaskListener<TResult>
+        where TResult : class, IBackgroundTaskResult
     {
         private readonly CacheHandler _cacheHandler;
 
@@ -25,10 +27,10 @@ namespace Scoop.Core.BackgroundTasks
 
         protected Timer Timer { get; private set; }
         private readonly object _timerLock;
-        protected IBackgroundTaskListener<T> TaskListener { get; set; }
+        protected TListener TaskListener { get; set; }
         protected BackgroundTaskConfiguration BackgroundTaskConfiguration { get; set; }
 
-        protected BackgroundTask(CacheHandler cacheHandler, IBackgroundTaskListener<T> taskListener, BackgroundTaskConfiguration backgroundTaskConfiguration)
+        protected BackgroundTask(CacheHandler cacheHandler, TListener taskListener, BackgroundTaskConfiguration backgroundTaskConfiguration)
         {
             _cacheHandler = cacheHandler;
             _timerLock = new object();
@@ -49,18 +51,14 @@ namespace Scoop.Core.BackgroundTasks
             Timer.Change(TimeSpan.FromMilliseconds(-1), Interval());
         }
 
-        public IBackgroundTask Start()
+        public void Start()
         {
             RestartTimer();
-
-            return this;
         }
-        public IBackgroundTask Stop()
+        public void Stop()
         {
             TaskListener = null;
             PauseTimer();
-
-            return this;
         }
 
         private void TimerTrigger(object state)
@@ -79,7 +77,7 @@ namespace Scoop.Core.BackgroundTasks
             }
         }
 
-        public abstract Task<IBackgroundTask> Execute(object state);
+        public abstract Task Execute(object state);
 
         public void Stop(bool immediate)
         {
@@ -89,18 +87,19 @@ namespace Scoop.Core.BackgroundTasks
             //HostingEnvironment.UnregisterObject(this);
         }
 
-        public BackgroundTaskResultHistory<T> GetHistory<T>() where T : class, IBackgroundTask
+
+        public BackgroundTaskResultHistory<TResult> GetHistory()
         {
-            return _cacheHandler.Get<BackgroundTaskResultHistory<T>>();
+            return _cacheHandler.Get<BackgroundTaskResultHistory<TResult>>();
         }
 
-        public BackgroundTaskResultHistory<T> SaveHistory<T>(IBackgroundTaskResult taskResult) where T : class, IBackgroundTask
+        public BackgroundTaskResultHistory<TResult> SaveHistory(TResult taskResult)
         {
-            var taskResultHistory = GetHistory<T>();
+            var taskResultHistory = GetHistory();
             var historyMaxItemCount = HistoryMaxItemCount();
 
             if (taskResultHistory.TaskResults == null)
-                taskResultHistory.TaskResults = new List<IBackgroundTaskResult>(historyMaxItemCount);
+                taskResultHistory.TaskResults = new List<TResult>(historyMaxItemCount);
 
             if (taskResultHistory.TaskResults.Any() && (taskResultHistory.TaskResults.Count + 1) > historyMaxItemCount)
                 taskResultHistory.TaskResults.RemoveRange(0, taskResultHistory.TaskResults.Count - historyMaxItemCount);

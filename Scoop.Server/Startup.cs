@@ -13,6 +13,7 @@ using Scoop.Core.BackgroundTasks;
 using Scoop.Core.BackgroundTasks.Interfaces;
 using Scoop.Server.Tasks;
 using Microsoft.Owin.Cors;
+using Scoop.Core.BackgroundTasks.ServerStatus;
 using Scoop.Core.Caching;
 using Scoop.Core.Configuration;
 using SimpleInjector;
@@ -72,14 +73,19 @@ namespace Scoop.Server
             InitializeTasks();
         }
 
-        public void InitializeTasks()
+        private void InitializeTasks()
         {
             Tasks = new List<IBackgroundTask>
             {
-                IocContainer.GetInstance<PerformanceTask>().Start(),
-                //IocContainer.GetInstance<ServerStatusTask>().Start(),
-                IocContainer.GetInstance<AutoUpdateTask>().Start(),
+                IocContainer.GetInstance<PerformanceTask>(),
+                //IocContainer.GetInstance<ServerStatusTask>(),
+                IocContainer.GetInstance<AutoUpdateTask>(),
             };
+
+            foreach (var task in Tasks)
+            {
+                task.Start();
+            }
         }
 
         private static void RegisterTypes(Container container)
@@ -98,8 +104,8 @@ namespace Scoop.Server
             container.RegisterSingleton<ServerStatusTask>();
 
             // Task Listeners
-            container.RegisterSingleton<IBackgroundTaskListener<PerformanceTask>, PerformanceTaskListener>();
-            container.RegisterSingleton<IBackgroundTaskListener<ServerStatusTask>, ServerStatusTaskListener>();
+            container.RegisterSingleton<IBackgroundTaskListener<PerformanceTaskResult>, PerformanceTaskListener>();
+            container.RegisterSingleton<IBackgroundTaskListener<ServerStatusTaskResult>, ServerStatusTaskListener>();
         }
     }
 }

@@ -8,9 +8,10 @@ using Scoop.Core.BackgroundTasks.Interfaces;
 
 namespace Scoop.Core.BackgroundTasks
 {
-    public class BackgroundTaskResultHistory<T> : ICacheHandlerItem where T : class, IBackgroundTask
+    public class BackgroundTaskResultHistory<TResult> : ICacheHandlerItem
+        where TResult : class, IBackgroundTaskResult
     {
-        public List<IBackgroundTaskResult> TaskResults { get; set; }
-        public string CacheKey => "BackgroundTaskResultHistory_" + typeof(T).FullName;
+        public List<TResult> TaskResults { get; set; }
+        public string CacheKey => "BackgroundTaskResultHistory_" + typeof(TResult).FullName;
     }
 }

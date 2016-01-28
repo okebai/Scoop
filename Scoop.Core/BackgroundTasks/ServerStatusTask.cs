@@ -11,9 +11,9 @@ using WUApiLib;
 
 namespace Scoop.Core.BackgroundTasks
 {
-    public class ServerStatusTask : BackgroundTask<ServerStatusTask>
+    public class ServerStatusTask : BackgroundTask<IBackgroundTaskListener<ServerStatusTaskResult>, ServerStatusTaskResult>
     {
-        public ServerStatusTask(CacheHandler cacheHandler, IBackgroundTaskListener<ServerStatusTask> taskListener, BackgroundTaskConfiguration backgroundTaskConfiguration)
+        public ServerStatusTask(CacheHandler cacheHandler, IBackgroundTaskListener<ServerStatusTaskResult> taskListener, BackgroundTaskConfiguration backgroundTaskConfiguration)
             : base(cacheHandler, taskListener, backgroundTaskConfiguration)
         { }
 
@@ -26,17 +26,15 @@ namespace Scoop.Core.BackgroundTasks
 
         private WindowsUpdateStatus _lastWindowsUpdateStatus = new WindowsUpdateStatus();
 
-        public override async Task<IBackgroundTask> Execute(object state)
+        public override async Task Execute(object state)
         {
             _lastWindowsUpdateStatus = await ReadWindowsUpdateStatus();
 
             var serverStatusTaskResult = new ServerStatusTaskResult(this, _lastWindowsUpdateStatus);
 
-            SaveHistory<ServerStatusTask>(serverStatusTaskResult);
+            SaveHistory(serverStatusTaskResult);
 
             await TaskListener.HandleResult(serverStatusTaskResult);
-
-            return this;
         }
 
         private async Task<WindowsUpdateStatus> ReadWindowsUpdateStatus()

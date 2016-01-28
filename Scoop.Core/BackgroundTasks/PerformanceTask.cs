@@ -12,9 +12,9 @@ using Scoop.Core.Configuration;
 
 namespace Scoop.Core.BackgroundTasks
 {
-    public class PerformanceTask : BackgroundTask<PerformanceTask>
+    public class PerformanceTask : BackgroundTask<IBackgroundTaskListener<PerformanceTaskResult>, PerformanceTaskResult>
     {
-        public PerformanceTask(CacheHandler cacheHandler, IBackgroundTaskListener<PerformanceTask> taskListener, BackgroundTaskConfiguration backgroundTaskConfiguration)
+        public PerformanceTask(CacheHandler cacheHandler, IBackgroundTaskListener<PerformanceTaskResult> taskListener, BackgroundTaskConfiguration backgroundTaskConfiguration)
             : base(cacheHandler, taskListener, backgroundTaskConfiguration)
         { }
 
@@ -39,15 +39,13 @@ namespace Scoop.Core.BackgroundTasks
             InstanceName = "_Total"
         };
 
-        public override async Task<IBackgroundTask> Execute(object state)
+        public override async Task Execute(object state)
         {
             var taskResult = ReadPerformance();
 
-            SaveHistory<PerformanceTask>(taskResult);
+            SaveHistory(taskResult);
 
             await TaskListener.HandleResult(taskResult);
-
-            return this;
         }
 
         private PerformanceTaskResult ReadPerformance()

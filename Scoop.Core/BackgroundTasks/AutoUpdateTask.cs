@@ -16,7 +16,7 @@ using Semver;
 
 namespace Scoop.Core.BackgroundTasks
 {
-    public class AutoUpdateTask : BackgroundTask<AutoUpdateTask>
+    public class AutoUpdateTask : BackgroundTask<IBackgroundTaskListener<BackgroundTaskResult>, BackgroundTaskResult>
     {
         protected override int HistoryMaxItemCount() { return BackgroundTaskConfiguration.AutoUpdateHistoryMaxItemCount; }
         protected override TimeSpan Interval() { return BackgroundTaskConfiguration.AutoUpdateInterval; }
@@ -31,14 +31,14 @@ namespace Scoop.Core.BackgroundTasks
             _gitHubClient = new GitHubClient(new ProductHeaderValue("Scoop.Service-UpdateCheck"));
         }
 
-        public override async Task<IBackgroundTask> Execute(object state)
+        public override async Task Execute(object state)
         {
             if (!IsEnabled())
-                return this;
+                return;
 
             var currentversion = ParseVersionFromAssembly(GetType().Assembly);
             if (currentversion.Major <= 0)
-                return this;
+                return;
 
             var latestRelease = await GetLatestRelease();
             var latestVersion = ParseVersionFromRelease(latestRelease);
@@ -52,8 +52,6 @@ namespace Scoop.Core.BackgroundTasks
                     StartInstallProcess(updateInstallerPath, currentversion, latestVersion);
                 }
             }
-
-            return this;
         }
 
         private bool IsEnabled()

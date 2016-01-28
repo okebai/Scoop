@@ -17,7 +17,7 @@ namespace Scoop.Server.Hubs
 
         public void GetServerStatusHistory()
         {
-            var taskResultHistory = _serverStatusTask.GetHistory<ServerStatusTask>();
+            var taskResultHistory = _serverStatusTask.GetHistory();
 
             Clients.Caller.updatePerformanceHistory(taskResultHistory.TaskResults);
         }

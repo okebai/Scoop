@@ -7,7 +7,7 @@ using Scoop.Core.BackgroundTasks.Interfaces;
 
 namespace Scoop.Core.BackgroundTasks
 {
-    public class VoidTaskListener : IBackgroundTaskListener<IBackgroundTask>
+    public class VoidTaskListener : IBackgroundTaskListener<IBackgroundTaskResult>
     {
         public async Task HandleResult(IBackgroundTaskResult taskResult)
         {

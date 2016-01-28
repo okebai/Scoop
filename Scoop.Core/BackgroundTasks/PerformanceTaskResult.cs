@@ -9,13 +9,16 @@ namespace Scoop.Core.BackgroundTasks
 {
     public class PerformanceTaskResult : BackgroundTaskResult
     {
-        public PerformanceTaskResult(IBackgroundTask task, params double[] values)
+        public double Cpu => Values["cpu"];
+        public double Memory => Values["memory"];
+        public double Disk => Values["disk"];
+
+        public PerformanceTaskResult(PerformanceTask task, double cpuValue, double memValue, double diskValue)
             : base(task)
         {
-            for (var i = 0; i < values.Length; i++)
-            {
-                Values.Add(i.ToString(), values[i]);
-            }
+            Values.Add("cpu", cpuValue);
+            Values.Add("memory", memValue);
+            Values.Add("disk", diskValue);
         }
     }
 }

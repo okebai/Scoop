@@ -4,6 +4,13 @@ using Newtonsoft.Json;
 
 namespace Scoop.Core.BackgroundTasks.Interfaces
 {
+    public interface IBackgroundTask<TResult> : IBackgroundTask
+        where TResult : class, IBackgroundTaskResult
+    {
+        BackgroundTaskResultHistory<TResult> GetHistory();
+        BackgroundTaskResultHistory<TResult> SaveHistory(TResult taskResult);
+    }
+
     public interface IBackgroundTask
     {
         Guid Guid { get; }
@@ -15,13 +22,10 @@ namespace Scoop.Core.BackgroundTasks.Interfaces
 
         void RestartTimer();
         void PauseTimer();
-        IBackgroundTask Start();
-        IBackgroundTask Stop();
+        void Start();
+        void Stop();
 
-        Task<IBackgroundTask> Execute(object state);
+        Task Execute(object state);
         void Stop(bool immediate);
-
-        BackgroundTaskResultHistory<T> GetHistory<T>() where T : class, IBackgroundTask;
-        BackgroundTaskResultHistory<T> SaveHistory<T>(IBackgroundTaskResult taskResult) where T : class, IBackgroundTask;
     }
 }

@@ -10,7 +10,7 @@ using Scoop.Server.Hubs;
 
 namespace Scoop.Server.Tasks
 {
-    public class PerformanceTaskListener : IBackgroundTaskListener<PerformanceTask>
+    public class PerformanceTaskListener : IBackgroundTaskListener<PerformanceTaskResult>
     {
         private readonly IHubContext _hubContext;
 
@@ -19,9 +19,14 @@ namespace Scoop.Server.Tasks
             _hubContext = GlobalHost.ConnectionManager.GetHubContext<PerformanceHub>();
         }
 
-        public async Task HandleResult(IBackgroundTaskResult taskResult)
+        public async Task HandleResult(PerformanceTaskResult taskResult)
         {
-            await _hubContext.Clients.All.updatePerformance(taskResult.TaskName, taskResult.Values, taskResult.Timestamp);
+            await _hubContext.Clients.All.updatePerformance(
+                taskResult.TaskName,
+                taskResult.Timestamp,
+                taskResult.Cpu,
+                taskResult.Memory,
+                taskResult.Disk);
         }
     }
 }
