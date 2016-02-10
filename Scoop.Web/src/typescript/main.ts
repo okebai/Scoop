@@ -1,12 +1,4 @@
-﻿/// <reference path="../vendor/typings/knockout/knockout.d.ts" />
-/// <reference path="../vendor/typings/signalr/signalr.d.ts" />
-/// <reference path="../vendor/typings/moment/moment.d.ts" />
-/// <reference path="../vendor/typings/js-cookie/js-cookie.d.ts" />
-/// <reference path="../vendor/typings/knockout.viewmodel/knockout.viewmodel.d.ts" />
-/// <reference path="../vendor/typings/select2/select2.d.ts" />
-/// <reference path="../vendor/typings/bootstrap-material.design/bootstrap-material-design.d.ts" />
-
-var stringToFunction = function (str) {
+﻿var stringToFunction = function (str: string) {
     var arr = str.split('.');
 
     var fn = (window || this);
@@ -15,7 +7,7 @@ var stringToFunction = function (str) {
     }
 
     if (typeof fn !== 'function') {
-        throw new Error('function not found: \'' + str + '\'');
+        throw new Error(`function not found: '${str}'`);
     }
 
     return fn;
@@ -28,7 +20,7 @@ var stringToFunction = function (str) {
  * @link http://stackoverflow.com/questions/105034/how-to-create-a-guid-uuid-in-javascript/21963136#21963136
  **/
 var UUID = (() => {
-    var lut = []; for (var i = 0; i < 256; i++) { lut[i] = (i < 16 ? '0' : '') + (i).toString(16); }
+    var lut: string[] = []; for (var i = 0; i < 256; i++) { lut[i] = (i < 16 ? '0' : '') + (i).toString(16); }
     var self = {
         generate: () => {
             var d0 = Math.random() * 0xffffffff | 0;
@@ -45,8 +37,6 @@ var UUID = (() => {
 })();
 
 module Scoop {
-    declare var Chartist: any;
-
     export interface ITask {
         guid: string;
         name: string;
@@ -116,14 +106,8 @@ module Scoop {
         y: number;
     }
 
-    export interface IChartistChart {
-        detach: () => void;
-        update: () => void;
-        data: any;
-    }
-
     export interface IChartHolder {
-        [chartTargetId: string]: IChartistChart;
+        [chartTargetId: string]: Chartist.IChartistLineChart;
     }
 }
 

@@ -51,9 +51,9 @@
                     .done((tasks, textStatus, jqXhr) => {
 
                         var taskInstances = $.map(tasks, (task) => {
-                            var taskInstance = null;
+                            var taskInstance: ITask = null;
                             if (this.tasksCache[task.guid]) {
-                                taskInstance = this.tasksCache[task.guid];
+                                taskInstance = ko.unwrap(this.tasksCache[task.guid]);
                             } else if (task.name != null) {
                                 var taskClass = stringToFunction('Scoop.' + task.name);
                                 if (taskClass)
@@ -137,9 +137,9 @@
             return this.connectionService.getAvailableTasks(connection.uri())
                 .done((tasks, textStatus, jqXhr) => {
                     var taskInstances = $.map(tasks, (task) => {
-                        var taskInstance = null;
+                        var taskInstance: ITask = null;
                         if (this.tasksCache[task.guid]) {
-                            taskInstance = this.tasksCache[task.guid];
+                            taskInstance = ko.unwrap(this.tasksCache[task.guid]);
                         } else if (task.name != null) {
                             var taskClass = stringToFunction('Scoop.' + task.name);
                             if (taskClass)

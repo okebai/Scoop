@@ -1,9 +1,9 @@
 ﻿module Scoop {
     export class ServerStatusTask implements ITask {
-        guid;
-        name;
-        friendlyName;
-        hubName;
+        guid: string;
+        name: string;
+        friendlyName: string;
+        hubName: string;
 
         init(hubProxy: HubProxy, connection: IConnection) { }
 

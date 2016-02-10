@@ -82,7 +82,7 @@
 
             var onConnectionStart = $.Deferred();
             $.each(connection.chosenTasks(), (i, task) => {
-                var hubProxy = null;
+                var hubProxy: HubProxy = null;
                 if (task.hubName != null) {
                     hubProxy = connection.currentHubConnection.createHubProxy(task.hubName);
                     onConnectionStart.done(() => {

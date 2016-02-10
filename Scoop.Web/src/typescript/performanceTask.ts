@@ -1,10 +1,8 @@
-﻿declare var Chartist: any;
-
-module Scoop {
+﻿module Scoop {
     export class PerformanceTask implements ITask {
-        guid;
-        name;
-        friendlyName;
+        guid: string;
+        name: string;
+        friendlyName: string;
         hubName = 'performanceHub';
         charts: IChartHolder = {};
         performanceData: IPerformanceData = {};
@@ -100,7 +98,7 @@ module Scoop {
 
             var threeMinuesAgo = moment().add(-3, 'minutes');
             for (var i = 0; i < this.performanceData[connectionGuid].length; i++) {
-                this.performanceData[connectionGuid][i] = $.grep(this.performanceData[connectionGuid][i], (item: IPerformanceItem, n) =>
+                this.performanceData[connectionGuid][i] = $.grep(this.performanceData[connectionGuid][i], (item: IPerformanceItem, n: number) =>
                     moment(item.x).isAfter(threeMinuesAgo)
                 );
             }
@@ -126,7 +124,7 @@ module Scoop {
 
         private updatePerformanceChart(connection: IConnection) {
             //console.log('updatePerformanceChart', connection.name(), connection.guid());
-            var series = [];
+            var series: any[] = [];
             var connectionGuid = connection.guid();
 
             if (this.performanceData[connectionGuid] != null) {
@@ -141,14 +139,14 @@ module Scoop {
 
             var chartTargetId = 'chart-target-' + connectionGuid;
             if (this.charts[chartTargetId] == null) {
-                this.charts[chartTargetId] = this.createChart(connection, chartTargetId, { series: series });
+                this.charts[chartTargetId] = this.createLineChart(connection, chartTargetId, { series: series });
             } else {
                 this.charts[chartTargetId].data = { series: series };
                 this.charts[chartTargetId].update();
             }
         }
 
-        private initWidget(connection: IConnection, chartTargetId) {
+        private initWidget(connection: IConnection, chartTargetId: string) {
             var chartContainer = $('.chart-container', '.performance-task-template').clone();
             chartContainer.attr('id', 'chart-container-' + connection.guid());
 
@@ -162,7 +160,7 @@ module Scoop {
             });
         }
 
-        private createChart(connection: IConnection, chartTargetId, data) {
+        private createLineChart(connection: IConnection, chartTargetId: string, data: Chartist.IChartistData) {
             var chart = new Chartist.Line('#' + chartTargetId, data,
                 {
                     showArea: true,
@@ -172,7 +170,7 @@ module Scoop {
                     {
                         type: Chartist.FixedScaleAxis,
                         divisor: 6,
-                        labelInterpolationFnc(value) {
+                        labelInterpolationFnc(value: any) {
                             return moment(value).format('HH:mm:ss');
                         }
                     },
@@ -182,7 +180,7 @@ module Scoop {
                         high: 1,
                         low: 0,
                         ticks: [0, 0.1, 0.25, 0.5, 0.75, 0.9, 1],
-                        labelInterpolationFnc(value) {
+                        labelInterpolationFnc(value: any) {
                             return Math.round(value * 100) + ' %';
                         },
                     },
