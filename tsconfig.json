@@ -1,0 +1,11 @@
+﻿{
+  "compilerOptions": {
+    "noImplicitAny": true,
+    "removeComments": true,
+    "preserveConstEnums": true
+  },
+  "exclude": [
+    "node_modules",
+    "bower_components"
+  ]
+}

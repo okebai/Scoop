@@ -12,7 +12,10 @@ var gulp = require('gulp'),
     usemin = require('gulp-usemin'),
     htmlmin = require('gulp-htmlmin'),
     del = require('del'),
-    merge = require('merge-stream');
+    merge = require('merge-stream'),
+    flatten = require('gulp-flatten'),
+    sourcemaps = require('gulp-sourcemaps'),
+    foreach = require('gulp-foreach');
 
 var bowerRoot = 'bower_components/';
 var projectRoot = 'Scoop.Web/';
@@ -28,7 +31,7 @@ gulp.task('cleanBuild', function () {
     return del(buildRoot);
 });
 
-gulp.task('copyHtmlToBuild', function() {
+gulp.task('copyHtmlToBuild', function () {
     return gulp.src(srcRoot + '*.html')
         .pipe(gulp.dest(buildRoot));
 });
@@ -91,16 +94,21 @@ gulp.task('copyBowerToBuild', function () {
     return merge(js, css);
 });
 
-gulp.task('dist', ['build', 'copyAssetsToDist'], function () {
+gulp.task('dist', ['copyAssetsToDist'], function() {
     return gulp.src(buildRoot + '/*.html')
-      .pipe(usemin({
-          //css: [rev()],
-          html: [htmlmin({collapseWhitespace: true})],
-          js: [uglify()],
-          //inlinejs: [uglify()],
-          //inlinecss: [minifyCss(), 'concat']
-      }))
-      .pipe(gulp.dest(distRoot));
+        // foreach is because usemin 0.3.11 won't manipulate multiple files as an array
+        .pipe(foreach(function(stream, file) {
+            return stream
+                .pipe(usemin({
+                    //css: [rev()],
+                    html: [htmlmin({ collapseWhitespace: true })],
+                    js_lib: [uglify()],
+                    js_main: [uglify()]
+                    //inlinejs: [uglify()],
+                    //inlinecss: [minifyCss(), 'concat']
+                }))
+                .pipe(gulp.dest(distRoot));
+        }));
 });
 
 gulp.task('build', ['copyAssetsToBuild', 'copyBowerToBuild', 'compileLess', 'compileTypeScript']);
@@ -112,12 +120,15 @@ gulp.task('compileLess', function () {
     .pipe(gulp.dest(buildRoot + 'css'));
 });
 
+var tsProject = ts.createProject('tsconfig.json');
 gulp.task('compileTypeScript', function () {
-    return gulp.src([srcRoot + 'typescript/*.ts', 'vendor/typings/**/*.d.ts'])
-        .pipe(plumber({ errorHandler: handleError }))
-        .pipe(ts({
-            target: 'ES5',
-        }))
+    var tsResult = tsProject.src()
+        .pipe(sourcemaps.init())
+        .pipe(ts(tsProject));
+
+    return tsResult.js
+        .pipe(sourcemaps.write())
+        .pipe(flatten())
         .pipe(gulp.dest(buildRoot + 'js'));
 });
 
