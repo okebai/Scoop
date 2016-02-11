@@ -25,19 +25,21 @@ namespace Scoop.Server
     public class Startup
     {
         public const string Url = "http://*:60080";
-        public static List<IBackgroundTask> Tasks { get; set; }
-        private readonly JsonSerializerSettings _jsonSerializerSettings = new JsonSerializerSettings { ContractResolver = new CamelCasePropertyNamesContractResolver() };
+        public static List<IBackgroundTask> Tasks { get; private set; }
+        private readonly JsonSerializerSettings _jsonSerializerSettings;
+        private readonly JsonSerializer _serializer;
+        private readonly Container _container;
 
-        private static readonly Lazy<Container> _container = new Lazy<Container>(() =>
+        public Startup()
         {
-            var container = new Container();
+            _jsonSerializerSettings = new JsonSerializerSettings {ContractResolver = new SignalRContractResolver()};
+            _serializer = JsonSerializer.Create(_jsonSerializerSettings);
+            _container = new Container();
 
-            RegisterTypes(container);
+            RegisterTypes(_container);
+        }
 
-            return container;
-        });
-
-        public static Container IocContainer => _container.Value; public void Configuration(IAppBuilder app)
+        public void Configuration(IAppBuilder app)
         {
             app.UseCors(CorsOptions.AllowAll);
 
@@ -77,9 +79,9 @@ namespace Scoop.Server
         {
             Tasks = new List<IBackgroundTask>
             {
-                IocContainer.GetInstance<PerformanceTask>(),
-                //IocContainer.GetInstance<ServerStatusTask>(),
-                IocContainer.GetInstance<AutoUpdateTask>(),
+                _container.GetInstance<PerformanceTask>(),
+                //_container.GetInstance<ServerStatusTask>(),
+                _container.GetInstance<AutoUpdateTask>(),
             };
 
             foreach (var task in Tasks)
@@ -88,10 +90,11 @@ namespace Scoop.Server
             }
         }
 
-        private static void RegisterTypes(Container container)
+        private void RegisterTypes(Container container)
         {
             // SignalR
             GlobalHost.DependencyResolver.Register(typeof(IHubActivator), () => new SignalRHubActivator(container));
+            GlobalHost.DependencyResolver.Register(typeof(JsonSerializer), () => _serializer);
             container.Register<IHubActivator, SignalRHubActivator>();
 
             // Caching
