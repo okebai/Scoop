@@ -15,6 +15,7 @@ namespace Scoop.Server.Hubs
             _serverStatusTask = serverStatusTask;
         }
 
+        // ReSharper disable once UnusedMember.Global
         public void GetServerStatusHistory()
         {
             var taskResultHistory = _serverStatusTask.GetHistory();

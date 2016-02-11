@@ -8,6 +8,7 @@ namespace Scoop.Server.Hubs
 {
     public class ServerHub : BaseHub
     {
+        // ReSharper disable once UnusedMember.Global
         public void GetAvailableTasks()
         {
             var availableTasks = Startup.Tasks.Select(task => task.FriendlyName);
