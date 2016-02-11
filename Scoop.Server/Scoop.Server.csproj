@@ -109,8 +109,8 @@
     <Compile Include="SignalRContractResolver.cs" />
     <Compile Include="SignalRHubActivator.cs" />
     <Compile Include="Startup.cs" />
-    <Compile Include="Tasks\PerformanceTaskListener.cs" />
-    <Compile Include="Tasks\ServerStatusTaskListener.cs" />
+    <Compile Include="TaskListeners\PerformanceTaskListener.cs" />
+    <Compile Include="TaskListeners\ServerStatusTaskListener.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config">

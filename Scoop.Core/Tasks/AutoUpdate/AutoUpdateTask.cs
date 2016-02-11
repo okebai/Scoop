@@ -1,20 +1,17 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Configuration;
 using System.Diagnostics;
 using System.IO;
 using System.Linq;
 using System.Net.Http;
 using System.Reflection;
-using System.Text;
 using System.Threading.Tasks;
 using Octokit;
-using Scoop.Core.BackgroundTasks.Interfaces;
 using Scoop.Core.Caching;
 using Scoop.Core.Configuration;
 using Semver;
 
-namespace Scoop.Core.BackgroundTasks
+namespace Scoop.Core.Tasks.AutoUpdate
 {
     public class AutoUpdateTask : BackgroundTask<IBackgroundTaskListener<BackgroundTaskResult>, BackgroundTaskResult>
     {

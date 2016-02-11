@@ -1,15 +1,12 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Configuration;
 using System.Linq;
-using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 using Scoop.Core.Caching;
-using Scoop.Core.BackgroundTasks.Interfaces;
 using Scoop.Core.Configuration;
 
-namespace Scoop.Core.BackgroundTasks
+namespace Scoop.Core.Tasks
 {
     public abstract class BackgroundTask<TListener, TResult> : IBackgroundTask<TResult>
         where TListener : class, IBackgroundTaskListener<TResult>

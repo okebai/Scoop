@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Microsoft.AspNet.SignalR;
-using Scoop.Core.BackgroundTasks;
+using Scoop.Core.Tasks.Performance;
 
 namespace Scoop.Server.Hubs
 {

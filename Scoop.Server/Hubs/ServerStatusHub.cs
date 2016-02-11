@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using Scoop.Core.BackgroundTasks;
+using Scoop.Core.Tasks.ServerStatus;
 
 namespace Scoop.Server.Hubs
 {

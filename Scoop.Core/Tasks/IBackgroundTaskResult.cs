@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 
-namespace Scoop.Core.BackgroundTasks.Interfaces
+namespace Scoop.Core.Tasks
 {
     public interface IBackgroundTaskResult
     {

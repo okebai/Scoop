@@ -1,11 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using Scoop.Core.BackgroundTasks.Interfaces;
+﻿using System.Threading.Tasks;
+using Scoop.Core.Tasks;
 
-namespace Scoop.Core.BackgroundTasks
+namespace Scoop.Core.TaskListeners
 {
     public class VoidTaskListener : IBackgroundTaskListener<IBackgroundTaskResult>
     {

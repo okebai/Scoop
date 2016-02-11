@@ -1,11 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using Scoop.Core.BackgroundTasks.Interfaces;
-
-namespace Scoop.Core.BackgroundTasks.ServerStatus
+﻿namespace Scoop.Core.Tasks.ServerStatus
 {
     public class ServerStatusTaskResult : BackgroundTaskResult
     {

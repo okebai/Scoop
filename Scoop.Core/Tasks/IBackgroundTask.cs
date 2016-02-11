@@ -2,7 +2,7 @@
 using System.Threading.Tasks;
 using Newtonsoft.Json;
 
-namespace Scoop.Core.BackgroundTasks.Interfaces
+namespace Scoop.Core.Tasks
 {
     public interface IBackgroundTask<TResult> : IBackgroundTask
         where TResult : class, IBackgroundTaskResult

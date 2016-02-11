@@ -1,16 +1,10 @@
 ﻿using System;
-using System.Threading;
-using System.Collections.Generic;
 using System.Diagnostics;
-using System.Linq;
-using System.Text;
 using System.Threading.Tasks;
 using Scoop.Core.Caching;
-using Scoop.Core.Common;
-using Scoop.Core.BackgroundTasks.Interfaces;
 using Scoop.Core.Configuration;
 
-namespace Scoop.Core.BackgroundTasks
+namespace Scoop.Core.Tasks.Performance
 {
     public class PerformanceTask : BackgroundTask<IBackgroundTaskListener<PerformanceTaskResult>, PerformanceTaskResult>
     {

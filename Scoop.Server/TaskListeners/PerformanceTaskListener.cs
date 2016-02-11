@@ -1,14 +1,10 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.Threading.Tasks;
 using Microsoft.AspNet.SignalR;
-using Scoop.Core.BackgroundTasks;
-using Scoop.Core.BackgroundTasks.Interfaces;
+using Scoop.Core.Tasks;
+using Scoop.Core.Tasks.Performance;
 using Scoop.Server.Hubs;
 
-namespace Scoop.Server.Tasks
+namespace Scoop.Server.TaskListeners
 {
     public class PerformanceTaskListener : IBackgroundTaskListener<PerformanceTaskResult>
     {

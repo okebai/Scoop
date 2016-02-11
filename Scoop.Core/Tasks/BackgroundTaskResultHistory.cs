@@ -1,12 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.Collections.Generic;
 using Scoop.Core.Caching;
-using Scoop.Core.BackgroundTasks.Interfaces;
 
-namespace Scoop.Core.BackgroundTasks
+namespace Scoop.Core.Tasks
 {
     public class BackgroundTaskResultHistory<TResult> : ICacheHandlerItem
         where TResult : class, IBackgroundTaskResult

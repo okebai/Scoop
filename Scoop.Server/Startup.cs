@@ -9,13 +9,14 @@ using Owin;
 using Scoop.Server;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Serialization;
-using Scoop.Core.BackgroundTasks;
-using Scoop.Core.BackgroundTasks.Interfaces;
-using Scoop.Server.Tasks;
 using Microsoft.Owin.Cors;
-using Scoop.Core.BackgroundTasks.ServerStatus;
 using Scoop.Core.Caching;
 using Scoop.Core.Configuration;
+using Scoop.Core.Tasks;
+using Scoop.Core.Tasks.AutoUpdate;
+using Scoop.Core.Tasks.Performance;
+using Scoop.Core.Tasks.ServerStatus;
+using Scoop.Server.TaskListeners;
 using SimpleInjector;
 
 [assembly: OwinStartup(typeof(Startup))]

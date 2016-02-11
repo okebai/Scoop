@@ -1,4 +1,4 @@
-﻿namespace Scoop.Core.Common
+﻿namespace Scoop.Core.Tasks.Performance
 {
     public class PerformanceValues
     {

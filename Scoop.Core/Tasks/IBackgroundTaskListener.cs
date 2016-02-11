@@ -1,6 +1,6 @@
 ﻿using System.Threading.Tasks;
 
-namespace Scoop.Core.BackgroundTasks.Interfaces
+namespace Scoop.Core.Tasks
 {
     public interface IBackgroundTaskListener<in TResult>
         where TResult : class, IBackgroundTaskResult

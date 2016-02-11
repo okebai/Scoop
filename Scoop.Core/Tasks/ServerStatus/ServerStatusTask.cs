@@ -1,15 +1,11 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Linq;
-using System.Text;
 using System.Threading.Tasks;
-using Scoop.Core.BackgroundTasks.Interfaces;
-using Scoop.Core.BackgroundTasks.ServerStatus;
 using Scoop.Core.Caching;
 using Scoop.Core.Configuration;
 using WUApiLib;
 
-namespace Scoop.Core.BackgroundTasks
+namespace Scoop.Core.Tasks.ServerStatus
 {
     public class ServerStatusTask : BackgroundTask<IBackgroundTaskListener<ServerStatusTaskResult>, ServerStatusTaskResult>
     {
