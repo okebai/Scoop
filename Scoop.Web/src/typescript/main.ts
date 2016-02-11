@@ -95,7 +95,13 @@ module Scoop {
         messages: ITaskResultValue[];
         timeStamp: string;
         taskName: string;
-   }
+    }
+
+    export interface IPerformanceTaskResult extends ITaskResult {
+        cpu: number;
+        memory: number;
+        disk: number;
+    }
 
     export interface IPerformanceData {
         [guid: string]: IPerformanceItem[][];

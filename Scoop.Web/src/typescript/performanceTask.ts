@@ -14,16 +14,16 @@
             this.initWidget(connection, chartTargetId);
 
             if (hubProxy != null) {
-                hubProxy.on('updatePerformance', (taskName: string, timestamp: string, cpu: number, memory: number, disk: number) => {
-                    this.updatePerformanceData(connection, taskName, timestamp, cpu, memory, disk);
+                hubProxy.on('updatePerformance', (taskResult: IPerformanceTaskResult) => {
+                    this.updatePerformanceData(connection, taskResult);
                     this.updatePerformanceChart(connection);
                 });
 
-                hubProxy.on('updatePerformanceHistory', taskResultHistory => {
+                hubProxy.on('updatePerformanceHistory', (taskResultHistory: IPerformanceTaskResult[]) => {
                     this.clearPerformanceData(connection);
                     for (var i = 0; i < taskResultHistory.length; i++) {
                         var taskResult = taskResultHistory[i];
-                        this.updatePerformanceData(connection, taskResult.Name, taskResult.Timestamp, taskResult.Cpu, taskResult.Memory, taskResult.Disk);
+                        this.updatePerformanceData(connection, taskResult);
                     }
                     this.updatePerformanceChart(connection);
                 });
@@ -90,7 +90,7 @@
             delete this.performanceData[connection.guid()];
         }
 
-        private updatePerformanceData(connection: IConnection, taskName: string, timestamp: string, cpu: number, memory: number, disk: number) {
+        private updatePerformanceData(connection: IConnection, taskResult: IPerformanceTaskResult) {
             var connectionGuid = connection.guid();
             if (!this.performanceData[connectionGuid]) {
                 this.performanceData[connectionGuid] = [[], [], []];
@@ -103,21 +103,21 @@
                 );
             }
 
-            this.performanceData[connectionGuid][0].push({ x: moment(timestamp).toDate(), y: cpu / 100.0 });
-            this.performanceData[connectionGuid][1].push({ x: moment(timestamp).toDate(), y: memory });
-            this.performanceData[connectionGuid][2].push({ x: moment(timestamp).toDate(), y: disk / 0.100 });
+            this.performanceData[connectionGuid][0].push({ x: moment(taskResult.timeStamp).toDate(), y: taskResult.cpu / 100.0 });
+            this.performanceData[connectionGuid][1].push({ x: moment(taskResult.timeStamp).toDate(), y: taskResult.memory });
+            this.performanceData[connectionGuid][2].push({ x: moment(taskResult.timeStamp).toDate(), y: taskResult.disk / 0.100 });
         }
 
         private removePerformanceChart(connection: IConnection) {
             var connectionGuid = connection.guid();
-            var chartTargetId = 'chart-target-' + connectionGuid;
+            var chartTargetId = `chart-target-${connectionGuid}`;
 
             if (this.charts[chartTargetId]) {
                 this.charts[chartTargetId].detach();
                 delete this.charts[chartTargetId];
             }
 
-            $('#chart-container-' + connectionGuid).remove();
+            $(`#chart-container-${connectionGuid}`).remove();
 
             delete this.performanceData[connectionGuid];
         }
@@ -131,13 +131,13 @@
                 for (var i = 0; i < this.performanceData[connectionGuid].length; i++) {
                     if (this.performanceData[connectionGuid][i] != null)
                         series.push({
-                            name: 'series' + i,
+                            name: `series${i}`,
                             data: this.performanceData[connectionGuid][i]
                         });
                 }
             }
 
-            var chartTargetId = 'chart-target-' + connectionGuid;
+            var chartTargetId = `chart-target-${connectionGuid}`;
             if (this.charts[chartTargetId] == null) {
                 this.charts[chartTargetId] = this.createLineChart(connection, chartTargetId, { series: series });
             } else {
@@ -148,7 +148,7 @@
 
         private initWidget(connection: IConnection, chartTargetId: string) {
             var chartContainer = $('.chart-container', '.performance-task-template').clone();
-            chartContainer.attr('id', 'chart-container-' + connection.guid());
+            chartContainer.attr('id', `chart-container-${connection.guid()}`);
 
             var chartTarget = $('.chart-target', chartContainer);
             chartTarget.attr('id', chartTargetId);
@@ -161,7 +161,7 @@
         }
 
         private createLineChart(connection: IConnection, chartTargetId: string, data: Chartist.IChartistData) {
-            var chart = new Chartist.Line('#' + chartTargetId, data,
+            var chart = new Chartist.Line(`#${chartTargetId}`, data,
                 {
                     showArea: true,
                     showPoint: false,

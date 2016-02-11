@@ -21,12 +21,7 @@ namespace Scoop.Server.Tasks
 
         public async Task HandleResult(PerformanceTaskResult taskResult)
         {
-            await _hubContext.Clients.All.updatePerformance(
-                taskResult.TaskName,
-                taskResult.Timestamp,
-                taskResult.Cpu,
-                taskResult.Memory,
-                taskResult.Disk);
+            await _hubContext.Clients.All.updatePerformance(taskResult);
         }
     }
 }
