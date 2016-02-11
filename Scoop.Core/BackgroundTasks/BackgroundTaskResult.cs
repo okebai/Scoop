@@ -12,14 +12,14 @@ namespace Scoop.Core.BackgroundTasks
     {
         public Dictionary<string, double> Values { get; private set; }
         public Dictionary<string, string> Messages { get; private set; }
-        public DateTime Timestamp { get; private set; }
+        public DateTime TimeStamp { get; private set; }
         public string TaskName { get; private set; }
 
         protected BackgroundTaskResult(IBackgroundTask task)
         {
             Values = new Dictionary<string, double>();
             Messages = new Dictionary<string, string>();
-            Timestamp = DateTime.Now;
+            TimeStamp = DateTime.Now;
             TaskName = task.Name;
         }
     }

@@ -10,6 +10,6 @@ namespace Scoop.Core.BackgroundTasks.Interfaces
         Dictionary<string, double> Values { get; }
         Dictionary<string, string> Messages { get; }
 
-        DateTime Timestamp { get; }
+        DateTime TimeStamp { get; }
     }
 }

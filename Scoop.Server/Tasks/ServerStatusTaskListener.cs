@@ -22,7 +22,7 @@ namespace Scoop.Server.Tasks
 
         public async Task HandleResult(ServerStatusTaskResult taskResult)
         {
-            await _hubContext.Clients.All.updateServerStatus(taskResult.TaskName, taskResult.Values, taskResult.Timestamp);
+            await _hubContext.Clients.All.updateServerStatus(taskResult.TaskName, taskResult.Values, taskResult.TimeStamp);
         }
     }
 }
