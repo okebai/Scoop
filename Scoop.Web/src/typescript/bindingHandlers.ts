@@ -1,4 +1,6 @@
-﻿interface KnockoutBindingHandlers {
+﻿// ReSharper disable InconsistentNaming
+interface KnockoutBindingHandlers {
+// ReSharper restore InconsistentNaming
     select2: KnockoutBindingHandler;
     performanceChart: KnockoutBindingHandler;
 }
