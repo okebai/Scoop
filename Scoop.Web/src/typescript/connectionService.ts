@@ -29,7 +29,7 @@
 
             var guid = connection.guid();
             connectionsSerializable = connectionsSerializable.filter((item) => {
-                return item.guid != guid;
+                return item.guid !== guid;
             });
 
             var connectionSerializable = this.toSerializable(connection);
